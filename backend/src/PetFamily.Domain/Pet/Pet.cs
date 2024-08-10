@@ -6,7 +6,7 @@ public class Pet
 
     public string Name { get; private set; } = null!;
     
-    public string View { get; private set; } = null!;
+    public string Species { get; private set; } = null!;
     
     public string Description { get; private set; } = null!;
     
@@ -24,19 +24,21 @@ public class Pet
 
     public string PhoneNumber { get; private set; } = null!;
     
-    public bool isNeutered { get; private set; }
+    public bool IsNeutered { get; private set; }
     
     public DateOnly DateOfBirth { get; private set; }
     
-    public bool isVactine { get; private set; }
+    public bool IsVaccine { get; private set; }
 
-    public enum Status
+    public string Status { get; private set; } = null!;
+    
+    public enum Info
     {
         NeedsHelp,
         LookingForHome,
         FoundHome
     }
-
+    
     public List<Requisite> Requisites { get; private set; } = [];
     
     public DateOnly DateCreate { get; private set; }
