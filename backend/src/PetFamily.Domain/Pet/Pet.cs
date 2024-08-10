@@ -2,41 +2,42 @@
 
 public class Pet
 {
-    private Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
-    private string Name { get; set; } = null!;
+    public string Name { get; private set; } = null!;
     
-    private string View { get; set; } = null!;
+    public string View { get; private set; } = null!;
     
-    private string Description { get; set; } = null!;
+    public string Description { get; private set; } = null!;
     
-    private string Breed { get; set; } = null!;
+    public string Breed { get; private set; } = null!;
 
-    private string Color { get; set; } = null!;
+    public string Color { get; private set; } = null!;
 
-    private string PetHealthInfo { get; set; } = null!;
+    public string PetHealthInfo { get; private set; } = null!;
 
-    private string Address { get; set; } = null!;
+    public string Address { get; private set; } = null!;
 
-    private float Weight { get; set; } = 0!;
+    public float Weight { get; private set; } = 0!;
 
-    private float Height { get; set; } = 0!;
+    public float Height { get; private set; } = 0!;
 
-    private string PhoneNumber { get; set; } = null!;
+    public string PhoneNumber { get; private set; } = null!;
     
-    private bool isNeutered { get; set; }
+    public bool isNeutered { get; private set; }
     
-    private DateOnly DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; private set; }
     
-    private bool isVactine { get; set; }
+    public bool isVactine { get; private set; }
 
-    private enum Status
+    public enum Status
     {
         NeedsHelp,
         LookingForHome,
         FoundHome
     }
 
-    private List<Requisite> Requisites { get; set; } = [];
-    private DateOnly DateCreate { get; set; }
+    public List<Requisite> Requisites { get; private set; } = [];
+    
+    public DateOnly DateCreate { get; private set; }
 }

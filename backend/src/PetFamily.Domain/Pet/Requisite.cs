@@ -2,7 +2,7 @@ namespace PetFamily.Domain.Pet;
 
 public class Requisite
 {
-    private string Name { get; set; } = null!;
+    public string Name { get; private set; } = null!;
 
-    private string Title { get; set; } = null!;
+    public string Title { get; private set; } = null!;
 }
