@@ -2,37 +2,41 @@
 
 public class Pet
 {
-    public Guid Id { get; set; }
+    private Guid Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    private string Name { get; set; } = null!;
     
-    public string King { get; set; } = null!;
+    private string View { get; set; } = null!;
     
-    public string Description { get; set; } = null!;
+    private string Description { get; set; } = null!;
     
-    public string Breed { get; set; } = null!;
+    private string Breed { get; set; } = null!;
 
-    public string Color { get; set; } = null!;
+    private string Color { get; set; } = null!;
 
-    public string PetHealthInfo { get; set; } = null!;
+    private string PetHealthInfo { get; set; } = null!;
 
-    public string Address { get; set; } = null!;
+    private string Address { get; set; } = null!;
 
-    public int Weight { get; set; } = 0!;
+    private float Weight { get; set; } = 0!;
 
-    public int Height { get; set; } = 0!;
+    private float Height { get; set; } = 0!;
+
+    private string PhoneNumber { get; set; } = null!;
     
-    public decimal PhoneNumber { get; set; }
+    private bool isNeutered { get; set; }
     
-    public bool Neutered { get; set; }
+    private DateOnly DateOfBirth { get; set; }
     
-    public DateOnly DateOfBirth { get; set; }
-    
-    public bool Vactine { get; set; }
+    private bool isVactine { get; set; }
 
-    public string Status { get; set; } = null!;
+    private enum Status
+    {
+        NeedsHelp,
+        LookingForHome,
+        FoundHome
+    }
 
-    public List<Details> Detail { get; set; } = [];
-
-    public DateOnly DateCreate { get; set; }
+    private List<Requisite> Requisites { get; set; } = [];
+    private DateOnly DateCreate { get; set; }
 }
