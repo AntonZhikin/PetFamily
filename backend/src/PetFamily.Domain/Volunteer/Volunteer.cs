@@ -1,24 +1,25 @@
 namespace PetFamily.Domain.Volunteer;
+using PetFamily.Domain.Pet;
 
 public class Volunteer
 {
     public Guid Id { get; private set; }
 
-    public string Fio { get; private set; } = null!;
+    public string FullName { get; private set; } = null!;
 
     public string Descriptions { get; private set; } = null!;
 
-    public int ExperienceYears { get; private set; } = 0!;
+    public int ExperienceYears { get; private set; }
 
-    public int CountPetsInHome { get; private set; } = 0!;
+    public int CountPetInHome { get; private set; }
 
-    public int CountPetsFoundHome { get; private set; } = 0!;
+    public int CountPetFoundHome { get; private set; }
 
-    public int CountPetsHealing { get; private set; } = 0!;
+    public int CountPetHealing { get; private set; }
 
-    public string PhoneNumbers { get; private set; } = null!;
+    public string PhoneNumber { get; private set; } = null!;
 
-    public List<string> CountPets { get; private set; } = [];
+    public List<Pet> Pets { get; private set; } = [];
 
     public List<SocialMedia> SocialMedias { get; private set; } = [];
 
