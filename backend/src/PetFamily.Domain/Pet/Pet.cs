@@ -42,4 +42,6 @@ public class Pet
     public List<Requisite> Requisites { get; private set; } = [];
     
     public DateOnly DateCreate { get; private set; }
+
+    public List<PetPhoto> PetPhotos { get; private set; } = [];
 }
