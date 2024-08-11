@@ -30,7 +30,7 @@ public class Pet
     
     public bool IsVaccine { get; private set; }
 
-    public string Status { get; private set; } = null!;
+    public Info Status { get; private set; }
     
     public enum Info
     {
@@ -42,4 +42,6 @@ public class Pet
     public List<Requisite> Requisites { get; private set; } = [];
     
     public DateOnly DateCreate { get; private set; }
+
+    public List<PetPhoto> PetPhotos { get; private set; } = [];
 }
