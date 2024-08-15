@@ -1,9 +1,8 @@
 ﻿namespace PetFamily.Domain.Pet;
 
-public class Pet
+public sealed class Pet
 {
     public Guid Id { get; private set; }
-
     public string Name { get; private set; } = null!;
     
     public string Species { get; private set; } = null!;
