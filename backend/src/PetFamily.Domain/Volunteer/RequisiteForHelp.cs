@@ -1,7 +1,14 @@
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Volunteer;
 
-public class RequisiteForHelp
+public class RequisiteForHelp : Entity
 {
+    private RequisiteForHelp(Guid id) : base(id)
+    {
+        Id = id;
+    }
+    
     public Guid Id { get; private set; }
     
     public string Name { get; private set; } = null!;

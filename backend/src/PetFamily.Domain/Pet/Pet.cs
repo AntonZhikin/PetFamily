@@ -1,8 +1,16 @@
-﻿namespace PetFamily.Domain.Pet;
+﻿using PetFamily.Domain.Shared;
 
-public sealed class Pet
+namespace PetFamily.Domain.Pet;
+
+public sealed class Pet : Entity
 {
+    public Pet(Guid id) : base(id)
+    {
+        Id = id;
+    }
+    
     public Guid Id { get; private set; }
+    
     public string Name { get; private set; } = null!;
     
     public string Species { get; private set; } = null!;

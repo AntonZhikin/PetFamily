@@ -1,8 +1,15 @@
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Pet;
 
-public class Volunteer
+public class Volunteer : Entity
 {
+    private Volunteer(Guid id) : base(id)
+    {
+        Id = id;
+    }
+    
     public Guid Id { get; private set; }
 
     public string FullName { get; private set; } = null!;
