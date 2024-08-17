@@ -3,16 +3,16 @@ using PetFamily.Domain.Shared;
 namespace PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Pet;
 
-public class Volunteer : Entity
+public class Volunteer : Entity<VolunteerId>
 {
-    private Volunteer(Guid id) : base(id)
+    private Volunteer(VolunteerId volunteerId, string descriptions) : base(volunteerId)
     {
-        Id = id;
+        Descriptions = descriptions;
     }
     
-    public Guid Id { get; private set; }
+    //public Guid Id { get; private set; }
 
-    public string FullName { get; private set; } = null!;
+    public FullNameValue FullName;
 
     public string Descriptions { get; private set; } = null!;
 
@@ -28,7 +28,7 @@ public class Volunteer : Entity
 
     public List<Pet> Pets { get; private set; } = [];
 
-    public List<SocialMedia> SocialMedias { get; private set; } = [];
+    public VolSoc SocDetails;
 
-    public List<RequisiteForHelp> RequisiteForHelps { get; private set; } = [];
+    public VolReq ReqDetails;
 }

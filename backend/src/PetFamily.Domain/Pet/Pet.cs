@@ -2,53 +2,56 @@
 
 namespace PetFamily.Domain.Pet;
 
-public sealed class Pet : Entity
+public sealed class Pet : Entity<PetId>
 {
-    public Pet(Guid id) : base(id)
+    //ef core
+    private Pet(PetId id) : base(id)
     {
-        Id = id;
+    }
+
+    private Pet(PetId petId, NameValue name) : base(petId)
+    {
+        Name = name;
     }
     
-    public Guid Id { get; private set; }
+    public NameValue Name;
     
-    public string Name { get; private set; } = null!;
+    public SpeciesValue Species;
     
-    public string Species { get; private set; } = null!;
+    public DescriptionValue Description;
     
-    public string Description { get; private set; } = null!;
-    
-    public string Breed { get; private set; } = null!;
+    public BreedValue Breed;
 
-    public string Color { get; private set; } = null!;
+    public ColorValue Color;
 
-    public string PetHealthInfo { get; private set; } = null!;
+    public PetHealthInfoValue PetHealthInfo;
 
-    public string Address { get; private set; } = null!;
+    public AddressValue Address;
 
-    public float Weight { get; private set; } = 0!;
+    public WeightValue Weight;
 
-    public float Height { get; private set; } = 0!;
+    public HeightValue Height;
 
-    public string PhoneNumber { get; private set; } = null!;
-    
-    public bool IsNeutered { get; private set; }
+    public PhoneNumberValue PhoneNumber;
+
+    public IsNauteredValue IsNeutered;
     
     public DateOnly DateOfBirth { get; private set; }
     
     public bool IsVaccine { get; private set; }
 
-    public Info Status { get; private set; }
+    public InfoValue Status { get; private set; }
     
-    public enum Info
-    {
-        NeedsHelp,
-        LookingForHome,
-        FoundHome
-    }
+    // public enum Info
+    // {
+    //     NeedsHelp,
+    //     LookingForHome,
+    //     FoundHome
+    // }
     
-    public List<Requisite> Requisites { get; private set; } = [];
+    public ReqList ReqDetails { get; private set; }
     
     public DateOnly DateCreate { get; private set; }
 
-    public List<PetPhoto> PetPhotos { get; private set; } = [];
+    public PetList Details { get; private set; }
 }

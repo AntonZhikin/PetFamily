@@ -2,14 +2,15 @@ using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Volunteer;
 
-public class SocialMedia : Entity
+public class SocialMedia : Entity<SocialMediaId>
 {
-    private SocialMedia(Guid id) : base(id)
+    private SocialMedia(SocialMediaId socialMediaId, string path, string name) : base(socialMediaId)
     {
-        Id = id;
+        Path = path;
+        Name = name;
     }
     
-    public Guid Id { get; private set; }
+    //public Guid Id { get; private set; }
     
     public string Path { get; private set; } = null!;
 
