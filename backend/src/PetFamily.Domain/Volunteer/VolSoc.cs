@@ -2,5 +2,5 @@ namespace PetFamily.Domain.Volunteer;
 
 public record VolSoc()
 {
-    public List<SocialMedia> SocialMedias { get; private set; }
+    public List<SocialMedia> SocialMedias { get; }
 }

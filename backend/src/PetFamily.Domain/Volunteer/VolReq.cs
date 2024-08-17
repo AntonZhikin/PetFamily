@@ -2,5 +2,5 @@ namespace PetFamily.Domain.Volunteer;
 
 public record VolReq()
 {
-    public List<RequisiteForHelp> RequisiteForHelps { get; private set; }
+    public List<RequisiteForHelp> RequisiteForHelps { get; }
 }
