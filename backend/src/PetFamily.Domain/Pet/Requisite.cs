@@ -2,14 +2,15 @@ using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Pet;
 
-public class Requisite : Entity
+public class Requisite : Entity<RequisiteId>
 {
-    private Requisite(Guid id) : base(id)
+    private Requisite(RequisiteId requisiteId, string name, string title) : base(requisiteId)
     {
-        Id = id;
+        Name = name;
+        Title = title;
     }
     
-    public Guid Id { get; private set; }
+    //public Guid Id { get; private set; }
     
     public string Name { get; private set; } = null!;
 

@@ -13,9 +13,13 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.HasKey(v => v.Id);
 
-        builder.Property(v => v.FullName)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+        builder.ComplexProperty(v => v.FullName, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Name).HasColumnName("Name");
+            g.Property(c => c.Surname).HasColumnName("Surname");
+            g.Property(c => c.SecondName).HasColumnName("SecondName");
+        });
         
         builder.Property(v => v.Descriptions)
             .IsRequired()
@@ -45,12 +49,45 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .WithOne()
             .HasForeignKey("vol_id");
 
-        builder.HasMany(v => v.SocialMedias)
-            .WithOne()
-            .HasForeignKey("vol_id");
+        builder.OwnsOne(r => r.ReqDetails, rb => 
+        {
+            rb.ToJson();
 
-        builder.HasMany(v => v.RequisiteForHelps)
-            .WithOne()
-            .HasForeignKey("vol_id");
+            rb.OwnsMany(s => s.RequisiteForHelps, rf =>
+            {
+                rf.Property(g => g.Name)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                rf.Property(g => g.Description)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
+            });
+        });
+        
+        builder.OwnsOne(s => s.SocDetails, sb => 
+        {
+            sb.ToJson();
+
+            sb.OwnsMany(s => s.SocialMedias, sf =>
+            {
+                sf.Property(g => g.Name)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                sf.Property(g => g.Path)
+                    .IsRequired()
+                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
+            });
+        });
+
+        
+        
+        
+        // builder.HasMany(v => v.SocialMedias)
+        //     .WithOne()
+        //     .HasForeignKey("vol_id");
+        //
+        // builder.HasMany(v => v.RequisiteForHelps)
+        //     .WithOne()
+        //     .HasForeignKey("vol_id");
     }
 }
