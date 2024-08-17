@@ -66,7 +66,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(c => c.Height, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Height).HasColumnName("Heigh").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Height).HasColumnName("Height").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
         builder.ComplexProperty(c => c.IsNeutered, b =>
@@ -126,8 +126,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
             });
         });
-
-
         // builder.HasMany(p => p.Requisites)
         //     .WithOne()
         //     .HasForeignKey("pet_id");

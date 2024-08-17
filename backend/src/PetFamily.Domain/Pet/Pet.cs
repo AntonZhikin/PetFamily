@@ -16,11 +16,11 @@ public sealed class Pet : Entity<PetId>
     
     public NameValue Name;
     
-    public SpeciesValue Species;
+    //public SpeciesValue Species;
     
     public DescriptionValue Description;
     
-    public BreedValue Breed;
+    //public BreedValue Breed;
 
     public ColorValue Color;
 
@@ -29,6 +29,10 @@ public sealed class Pet : Entity<PetId>
     public AddressValue Address;
 
     public WeightValue Weight;
+
+    public BreedValue Breed;
+
+    public SpeciesValueObj Species;
 
     public HeightValue Height;
 
