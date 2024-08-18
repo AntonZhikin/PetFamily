@@ -1,4 +1,5 @@
 ﻿using PetFamily.Domain.Shared;
+using PetFamily.Domain.ValueObject;
 
 namespace PetFamily.Domain.Pet;
 
@@ -9,42 +10,42 @@ public sealed class Pet : Entity<PetId>
     {
     }
 
-    private Pet(PetId petId, NameValue name) : base(petId)
+    private Pet(PetId petId, Name name) : base(petId)
     {
         Name = name;
     }
     
-    public NameValue Name;
+    public Name Name;
     
     //public SpeciesValue Species;
     
-    public DescriptionValue Description;
+    public Description Description;
     
     //public BreedValue Breed;
 
-    public ColorValue Color;
+    public Color Color;
 
-    public PetHealthInfoValue PetHealthInfo;
+    public PetHealthInfo PetHealthInfo;
 
-    public AddressValue Address;
+    public Address Address;
 
-    public WeightValue Weight;
+    public Weight Weight;
 
-    public BreedValue Breed;
+    public Breed Breed;
 
-    public SpeciesValueObj Species;
+    public SpeciesForPet Species;
 
-    public HeightValue Height;
+    public Height Height;
 
-    public PhoneNumberValue PhoneNumber;
+    public PhoneNumber PhoneNumber;
 
-    public IsNauteredValue IsNeutered;
+    public IsNautered IsNeutered;
     
     public DateOnly DateOfBirth { get; private set; }
     
     public bool IsVaccine { get; private set; }
 
-    public InfoValue Status { get; private set; }
+    public Info Status { get; private set; }
     
     // public enum Info
     // {

@@ -5,9 +5,9 @@ using PetFamily.Domain.Speciess;
 
 namespace PetFamily.Infrastructure.Configurations;
 
-public class SpeciesConfigurations : IEntityTypeConfiguration<SpeciesValue>
+public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
 {
-    public void Configure(EntityTypeBuilder<SpeciesValue> builder)
+    public void Configure(EntityTypeBuilder<Species> builder)
     {
         builder.ToTable("species");
 
@@ -21,7 +21,7 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<SpeciesValue>
             {
                 pf.HasKey(pf => pf.Id);
                 
-                pf.Property(f => f.Breed)
+                pf.Property(f => f.Breeds)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
             });

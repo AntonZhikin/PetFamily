@@ -5,15 +5,15 @@ using PetFamily.Domain.Speciess;
 
 namespace PetFamily.Infrastructure.Configurations;
 
-public class BreedConfiguration : IEntityTypeConfiguration<BreedValue>
+public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 {
-    public void Configure(EntityTypeBuilder<BreedValue> builder)
+    public void Configure(EntityTypeBuilder<Breed> builder)
     {
         builder.ToTable("breeds");
 
         builder.HasKey(b => b.Id);
 
-        builder.Property(b => b.Breed)
+        builder.Property(b => b.Breeds)
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
     }

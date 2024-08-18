@@ -16,9 +16,9 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         builder.ComplexProperty(v => v.FullName, g =>
         {
             g.IsRequired();
-            g.Property(c => c.Name).HasColumnName("Name");
-            g.Property(c => c.Surname).HasColumnName("Surname");
-            g.Property(c => c.SecondName).HasColumnName("SecondName");
+            g.Property(c => c.Name).HasColumnName("name");
+            g.Property(c => c.Surname).HasColumnName("surname");
+            g.Property(c => c.SecondName).HasColumnName("secondName");
         });
         
         builder.Property(v => v.Descriptions)
@@ -49,7 +49,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .WithOne()
             .HasForeignKey("vol_id");
 
-        builder.OwnsOne(r => r.ReqDetails, rb => 
+        builder.OwnsOne(r => r.ReqListDetails, rb => 
         {
             rb.ToJson();
 
