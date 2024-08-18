@@ -12,7 +12,7 @@ public class Volunteer : Entity<VolunteerId>
     
     //public Guid Id { get; private set; }
 
-    public FullNameValue FullName;
+    public FullName FullName;
 
     public string Descriptions { get; private set; } = null!;
 
@@ -28,7 +28,7 @@ public class Volunteer : Entity<VolunteerId>
 
     public List<Pet> Pets { get; private set; } = [];
 
-    public VolSoc SocDetails;
+    public VoluunterSocialList SocDetails;
 
-    public VolReq ReqDetails;
+    public VoluunterReqList ReqListDetails;
 }

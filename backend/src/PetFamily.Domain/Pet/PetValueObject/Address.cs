@@ -1,11 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class AddressValue
+public class Address
 {
     public string City { get; }
     public string Street { get; }
 
-    public AddressValue(string city, string street)
+    public Address(string city, string street)
     {
         City = city;
         Street = street;
