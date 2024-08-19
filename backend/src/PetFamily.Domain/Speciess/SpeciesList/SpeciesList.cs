@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Speciess;
 
-public class SpeciesList
+public record SpeciesList
 {
     public List<SpeciesList> Species{ get; }
 }

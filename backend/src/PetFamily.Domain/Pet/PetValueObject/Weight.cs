@@ -4,8 +4,7 @@ public class Weight
 {
     public float Weights { get; }
 
-    public Weight(float weight)
+    public Weight()
     {
-        Weights = weight;
     }
 }

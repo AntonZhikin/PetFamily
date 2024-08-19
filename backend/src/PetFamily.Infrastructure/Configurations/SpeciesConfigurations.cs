@@ -11,7 +11,10 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
     {
         builder.ToTable("species");
 
-        builder.HasKey(s => s.Id);
+        builder.Property(p => p.Id)
+            .HasConversion(
+                id => id.Value,
+                value => SpeciesId.Create(value));
 
         builder.OwnsOne(p => p.Breeds, pb =>
         {
@@ -19,8 +22,6 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
 
             pb.OwnsMany(d =>d.Breeds, pf=>
             {
-                pf.HasKey(pf => pf.Id);
-                
                 pf.Property(f => f.Breeds)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);

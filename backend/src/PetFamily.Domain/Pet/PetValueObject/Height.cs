@@ -4,8 +4,7 @@ public class Height
 {
     public float Heights { get; }
 
-    public Height(float height)
+    public Height()
     {
-        Heights = height;
     }
 }

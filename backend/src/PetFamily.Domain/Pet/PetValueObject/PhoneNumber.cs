@@ -4,8 +4,7 @@ public class PhoneNumber
 {
     private string PhoneNumbers { get; }
 
-    public PhoneNumber(string phoneNumber)
+    public PhoneNumber()
     {
-        PhoneNumbers = phoneNumber;
     }
 }

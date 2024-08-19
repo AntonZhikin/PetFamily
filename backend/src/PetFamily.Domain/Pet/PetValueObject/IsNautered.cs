@@ -4,8 +4,7 @@ public class IsNautered
 {
     public bool IsNautereds { get; }
 
-    public IsNautered(bool isNautered)
+    public IsNautered()
     {
-        IsNautereds = isNautered;
     }
 }

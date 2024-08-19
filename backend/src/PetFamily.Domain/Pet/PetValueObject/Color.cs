@@ -4,8 +4,7 @@ public class Color
 {
     public string Colors { get; }
 
-    private Color(string color)
+    private Color()
     {
-        Colors = color;
     }
 }

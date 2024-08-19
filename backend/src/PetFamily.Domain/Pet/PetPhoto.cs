@@ -2,15 +2,12 @@ using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Pet;
 
-public class PetPhoto : Entity<PetPhotoId>
+public class PetPhoto
 {
-
-    private PetPhoto(PetPhotoId petPhotoId, string path, bool ismain) : base(petPhotoId)
+    private PetPhoto()
     {
-        Path = path;
-        IsMain = ismain;
-    }
         
+    }
     public string Path { get; }
     
     public bool IsMain { get; }

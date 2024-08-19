@@ -5,6 +5,11 @@ using PetFamily.Domain.Pet;
 
 public class Volunteer : Entity<VolunteerId>
 {
+    private Volunteer(VolunteerId id) : base(id)
+    {
+        
+    }
+    
     private Volunteer(VolunteerId volunteerId, string descriptions) : base(volunteerId)
     {
         Descriptions = descriptions;

@@ -1,6 +1,4 @@
 ﻿using PetFamily.Domain.Shared;
-using PetFamily.Domain.ValueObject;
-
 namespace PetFamily.Domain.Pet;
 
 public sealed class Pet : Entity<PetId>
@@ -30,10 +28,6 @@ public sealed class Pet : Entity<PetId>
     public Address Address;
 
     public Weight Weight;
-
-    public Breed Breed;
-
-    public SpeciesForPet Species;
 
     public Height Height;
 

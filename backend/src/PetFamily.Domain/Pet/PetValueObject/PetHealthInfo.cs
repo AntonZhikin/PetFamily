@@ -4,8 +4,7 @@ public class PetHealthInfo
 {
     public string PetHealthInfos { get; }
 
-    private PetHealthInfo(string petHealthInfo)
+    private PetHealthInfo()
     {
-        PetHealthInfos = petHealthInfo;
     }
 }
