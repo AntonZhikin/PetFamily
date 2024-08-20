@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class PetHealthInfo
+public record PetHealthInfo
 {
-    public string PetHealthInfos { get; }
+    public string Value { get; }
 
-    private PetHealthInfo()
+    private PetHealthInfo(string value)
     {
+        Value = value;
     }
 }

@@ -16,38 +16,54 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 id => id.Value,
                 value => VolunteerId.Create(value));
 
-        builder.ComplexProperty(v => v.FullName, g =>
+        builder.ComplexProperty(v => v.FullNames, g =>
         {
             g.IsRequired();
             g.Property(c => c.Name).HasColumnName("name");
             g.Property(c => c.Surname).HasColumnName("surname");
             g.Property(c => c.SecondName).HasColumnName("secondName");
         });
-        
-        builder.Property(v => v.Descriptions)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
 
-        builder.Property(v => v.ExperienceYears)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+        builder.ComplexProperty(p => p.PhoneNumbers, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("phonenumber");
+        });
         
-        builder.Property(v => v.CountPetInHome)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+        builder.ComplexProperty(p => p.Descriptions, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("description");
+        });
         
-        builder.Property(v => v.CountPetFoundHome)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+        builder.ComplexProperty(p => p.ExperienceYears, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("experienceyears");
+        });
+
+        /*builder.ComplexProperty(p => p.CountPetInHomes, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("countPetInHome");
+        });
+        
+        builder.ComplexProperty(p => p.CountPetFoundHomes, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("countPetFoundHome");
+        });
+        
+        builder.ComplexProperty(p => p.CountPetHealing, g =>
+        {
+            g.IsRequired();
+            g.Property(c => c.Value).HasColumnName("countPetHealing");
+        });
         
         builder.Property(v => v.CountPetHealing)
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);*/
         
-        builder.Property(v => v.PhoneNumber)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-
         builder.HasMany(v => v.Pets)
             .WithOne()
             .HasForeignKey("vol_id");

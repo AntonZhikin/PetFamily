@@ -10,26 +10,39 @@ public class Volunteer : Entity<VolunteerId>
         
     }
     
-    private Volunteer(VolunteerId volunteerId, string descriptions) : base(volunteerId)
+    public Volunteer(
+        VolunteerId volunteerId, 
+        Description description, 
+        PhoneNumber phoneNumber, 
+        ExperienceYear experienceYears, 
+        FullName fullName) 
+        : base(volunteerId)
     {
-        Descriptions = descriptions;
+        Descriptions = description;
+        PhoneNumbers = phoneNumber;
+        ExperienceYears = experienceYears;
+        FullNames = fullName;
     }
     
     //public Guid Id { get; private set; }
 
-    public FullName FullName;
+    public FullName FullNames;
 
-    public string Descriptions { get; private set; } = null!;
+    public Description Descriptions;
 
-    public int ExperienceYears { get; private set; }
+    public ExperienceYear ExperienceYears;
 
-    public int CountPetInHome { get; private set; }
+    private readonly List<Pet> _pets = [];
 
-    public int CountPetFoundHome { get; private set; }
+    public IReadOnlyList<Pet> Pet => _pets;
+    
+    public int GetPetsInHome() => _pets.Count(p => p.HelpStatus == HelpStatus.InHome);
+    
+    public int GetPetFoundHome() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
 
-    public int CountPetHealing { get; private set; }
+    public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
 
-    public string PhoneNumber { get; private set; } = null!;
+    public PhoneNumber PhoneNumbers { get; private set; } = null!;
 
     public List<Pet> Pets { get; private set; } = [];
 
