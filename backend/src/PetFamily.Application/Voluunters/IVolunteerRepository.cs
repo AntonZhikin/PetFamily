@@ -6,5 +6,5 @@ public interface IVolunteerRepository
 {
     Task<Guid> Add(Volunteer volunteer, CancellationToken cancellationToken = default);
 
-    Task<Volunteer> GetById(VolunteerId volunteerId);
+    Task<Volunteer> GetById(VolunteerId volunteerId, CancellationToken cancellationToken);
 }

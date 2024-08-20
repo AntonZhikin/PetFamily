@@ -15,18 +15,12 @@ public class Volunteer : Entity<VolunteerId>
         Description description, 
         PhoneNumber phoneNumber, 
         ExperienceYear experienceYears, 
-        CountPetInHome countPetInHome, 
-        CountPetFoundHome countPetFoundHomes, 
-        CountPetHealing countPetHealing, 
         FullName fullName) 
         : base(volunteerId)
     {
         Descriptions = description;
         PhoneNumbers = phoneNumber;
         ExperienceYears = experienceYears;
-        CountPetInHomes = countPetInHome;
-        CountPetFoundHomes = countPetFoundHomes;
-        CountPetHealing = countPetHealing;
         FullNames = fullName;
     }
     
@@ -38,11 +32,15 @@ public class Volunteer : Entity<VolunteerId>
 
     public ExperienceYear ExperienceYears;
 
-    public CountPetInHome CountPetInHomes;
+    private readonly List<Pet> _pets = [];
 
-    public CountPetFoundHome CountPetFoundHomes;
+    public IReadOnlyList<Pet> Pet => _pets;
+    
+    public int GetPetsInHome() => _pets.Count(p => p.HelpStatus == HelpStatus.InHome);
 
-    public CountPetHealing CountPetHealing;
+    public int GetPetFoundHome() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
+
+    public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
 
     public PhoneNumber PhoneNumbers { get; private set; } = null!;
 
@@ -51,9 +49,4 @@ public class Volunteer : Entity<VolunteerId>
     public VoluunterSocialList SocDetails;
 
     public VoluunterReqList ReqListDetails;
-
-    // public static Volunteer Create(VolunteerId volunteerId, Description descriptions, PhoneNumber phoneNumbers)
-    // {
-    //     return new Volunteer(volunteerId, descriptions, phoneNumbers);
-    // }
 }

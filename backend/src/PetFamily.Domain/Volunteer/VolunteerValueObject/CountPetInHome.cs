@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Volunteer;
 
-public record CountPetInHome
+public class CountPetInHome
 {
     public string Value { get; }
 

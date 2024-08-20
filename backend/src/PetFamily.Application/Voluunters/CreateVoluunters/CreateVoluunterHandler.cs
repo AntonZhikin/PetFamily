@@ -24,12 +24,6 @@ public class CreateVoluunterHandler
 
         var experienceYearsResult = ExperienceYear.Create(request.experienceYears);
 
-        var countPetInHomeResult = CountPetInHome.Create(request.countPetInHome);
-
-        var countPetFoundHomeResult = CountPetFoundHome.Create(request.countPetFoundHomes);
-
-        var countPetHealingResult = CountPetHealing.Create(request.countPetHealing);
-
         var fullNameResult = FullName.Create(request.name, request.surname, request.secondname);
 
         var volunteer = new Volunteer(
@@ -37,9 +31,6 @@ public class CreateVoluunterHandler
             descriptionsResult, 
             phoneNumberResult, 
             experienceYearsResult, 
-            countPetInHomeResult, 
-            countPetFoundHomeResult, 
-            countPetHealingResult,
             fullNameResult
             );
 

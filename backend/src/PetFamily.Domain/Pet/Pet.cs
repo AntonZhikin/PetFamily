@@ -39,7 +39,7 @@ public sealed class Pet : Entity<PetId>
     
     public bool IsVaccine { get; private set; }
 
-    public Info Status { get; private set; }
+    public HelpStatus HelpStatus { get; private set; }
     
     // public enum Info
     // {

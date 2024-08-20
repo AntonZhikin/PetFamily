@@ -42,7 +42,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.Property(c => c.Value).HasColumnName("experienceyears");
         });
 
-        builder.ComplexProperty(p => p.CountPetInHomes, g =>
+        /*builder.ComplexProperty(p => p.CountPetInHomes, g =>
         {
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("countPetInHome");
@@ -62,7 +62,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         
         builder.Property(v => v.CountPetHealing)
             .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);*/
         
         builder.HasMany(v => v.Pets)
             .WithOne()
