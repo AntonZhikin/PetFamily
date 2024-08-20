@@ -1,3 +1,7 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+using PetFamily.Domain.Volunteer;
+
 namespace PetFamily.Domain.Volunteer;
 
 public record Description
@@ -9,8 +13,11 @@ public record Description
         Value = value;
     }
 
-    public static Description Create(string description)
+    public static Result<Description, Error> Create(string value)
     {
-        return new Description(description);
+        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LENGHT)
+            return Errors.General.ValueIsInvalid("Description");
+        
+        return new Description(value);
     }
 }

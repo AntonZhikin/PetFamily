@@ -5,6 +5,8 @@ using PetFamily.Domain.Pet;
 
 public class Volunteer : Entity<VolunteerId>
 {
+    public const int MAX_LENGHT = 100;
+    
     private Volunteer(VolunteerId id) : base(id)
     {
         

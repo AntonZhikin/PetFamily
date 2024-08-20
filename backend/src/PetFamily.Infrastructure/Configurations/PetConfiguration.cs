@@ -141,12 +141,5 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
             });
         });
-        // builder.HasMany(p => p.Requisites)
-        //     .WithOne()
-        //     .HasForeignKey("pet_id");
-
-        // builder.HasMany(p => p.PetPhotos)
-        //     .WithOne()
-        //     .HasForeignKey("pet_id");
     }
 }

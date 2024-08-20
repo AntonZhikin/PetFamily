@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GcaXjXuJG6dRo09ZTm5t70D+eYo8eB8q7JZWiAXghkkqrUaQ73TPIvtpk9LHsn3WBU1ydVdUQNSTGmECztoaTw==",
+  "dgSpecHash": "bQ93LhiGi+Qz2EuhyHF6ms5axaCVxx31852pIlwnwc7lsH7Yq6igWq5bSGenAqZ/vhbAxa6pU2SW99P0mlYplQ==",
   "success": true,
   "projectFilePath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj",
   "expectedPackageFiles": [
+    "/Users/antonzhikin/.nuget/packages/csharpfunctionalextensions/2.42.5/csharpfunctionalextensions.2.42.5.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

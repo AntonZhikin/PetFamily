@@ -1,3 +1,6 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Volunteer;
 
 public record PhoneNumber
@@ -9,8 +12,11 @@ public record PhoneNumber
         Value = value;
     }
 
-    public static PhoneNumber Create(string phonenumber)
+    public static Result<PhoneNumber, Error> Create(string value)
     {
-        return new PhoneNumber(phonenumber);
+        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LENGHT)
+            return Errors.General.ValueIsInvalid("PhoneNumber");
+        
+        return new PhoneNumber(value);
     }
 }

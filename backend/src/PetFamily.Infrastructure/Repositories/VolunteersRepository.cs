@@ -1,13 +1,16 @@
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using PetFamily.Application.Voluunters;
+using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 
 namespace PetFamily.Infrastructure.Repositories;
 
-public class VoluuntersRepository
+public class VolunteersRepository : IVolunteerRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public VoluuntersRepository(ApplicationDbContext dbContext)
+    public VolunteersRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -21,7 +24,9 @@ public class VoluuntersRepository
         return volunteer.Id;
     }
     
-    public async Task<Volunteer> GetById(VolunteerId volunteerId)
+    public async Task<Result<Volunteer, Error>> GetById(
+        VolunteerId volunteerId,
+        CancellationToken cancellationToken = default)
     {
         var volunteer = await _dbContext.Volunteers
             .Include(v =>v.Pets)
@@ -29,7 +34,7 @@ public class VoluuntersRepository
 
         if (volunteer is null)
         {
-            throw new Exception("Voluunter can not made null");
+            return Errors.General.NotFound(volunteerId);
         }
 
         return volunteer;

@@ -1,3 +1,6 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Volunteer;
 
 public record FullName
@@ -13,13 +16,16 @@ public record FullName
         SecondName = secondName;
     }
 
-    public static FullName Create(string name, string surname, string secondname)
+    public static Result<FullName, Error> Create(string name, string surname, string secondname)
     {
-        if(string.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException(nameof(name));
+        if (string.IsNullOrWhiteSpace(name))
+            return Errors.General.ValueIsInvalid("Name");
         
         if(string.IsNullOrWhiteSpace(surname))
-            throw new ArgumentNullException(nameof(surname));
+            return Errors.General.ValueIsInvalid("Surname");
+        
+        if(string.IsNullOrWhiteSpace(secondname))
+            return Errors.General.ValueIsInvalid("Secondname");
         
         return new FullName(name, surname, secondname);
     }

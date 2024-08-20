@@ -41,13 +41,6 @@ public sealed class Pet : Entity<PetId>
 
     public HelpStatus HelpStatus { get; private set; }
     
-    // public enum Info
-    // {
-    //     NeedsHelp,
-    //     LookingForHome,
-    //     FoundHome
-    // }
-    
     public ReqList ReqDetails { get; private set; }
     
     public DateOnly DateCreate { get; private set; }
