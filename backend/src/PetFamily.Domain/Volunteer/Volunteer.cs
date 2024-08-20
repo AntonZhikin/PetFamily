@@ -37,7 +37,7 @@ public class Volunteer : Entity<VolunteerId>
     public IReadOnlyList<Pet> Pet => _pets;
     
     public int GetPetsInHome() => _pets.Count(p => p.HelpStatus == HelpStatus.InHome);
-
+    
     public int GetPetFoundHome() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
 
     public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
