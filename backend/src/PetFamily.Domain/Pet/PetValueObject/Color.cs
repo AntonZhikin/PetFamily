@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class Color
+public record Color
 {
-    public string Colors { get; }
+    public string Value { get; }
 
-    private Color()
+    private Color(string value)
     {
+        Value = value;
     }
 }

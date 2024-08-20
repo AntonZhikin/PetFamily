@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class Weight
+public record Weight
 {
-    public float Weights { get; }
+    public float Value { get; }
 
-    public Weight()
+    public Weight(float value)
     {
+        Value = value;
     }
 }

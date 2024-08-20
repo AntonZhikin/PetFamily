@@ -32,7 +32,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(c => c.Description, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Descriptions).HasColumnName("description").HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("description").HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
         });
 
         // builder.ComplexProperty(c => c.Breed, b =>
@@ -44,13 +44,13 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(c => c.Color, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Colors).HasColumnName("color").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("color").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
         builder.ComplexProperty(c => c.PetHealthInfo, b =>
         {
             b.IsRequired();
-            b.Property(p => p.PetHealthInfos).HasColumnName("petHealthInfo").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("petHealthInfo").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
         builder.ComplexProperty(c => c.Address, b =>
@@ -63,19 +63,19 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(c => c.Weight, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Weights).HasColumnName("weight").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("weight").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
         builder.ComplexProperty(c => c.Height, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Heights).HasColumnName("height").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("height").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
         builder.ComplexProperty(c => c.IsNeutered, b =>
         {
             b.IsRequired();
-            b.Property(p => p.IsNautereds).HasColumnName("isNeutered").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+            b.Property(p => p.Value).HasColumnName("isNeutered").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
 
         
@@ -97,8 +97,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property(p => p.DateCreate)
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-
-        
 
         builder.OwnsOne(p => p.Details, pb =>
         {

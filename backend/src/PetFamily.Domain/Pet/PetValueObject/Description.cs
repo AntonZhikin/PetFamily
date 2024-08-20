@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class Description
+public record Description
 {
-    public string Descriptions { get; }
+    public string Value { get; }
 
-    private Description()
+    private Description(string value)
     {
+        Value = value;
     }
 }

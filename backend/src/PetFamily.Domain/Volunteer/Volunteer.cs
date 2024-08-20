@@ -10,30 +10,50 @@ public class Volunteer : Entity<VolunteerId>
         
     }
     
-    private Volunteer(VolunteerId volunteerId, string descriptions) : base(volunteerId)
+    public Volunteer(
+        VolunteerId volunteerId, 
+        Description description, 
+        PhoneNumber phoneNumber, 
+        ExperienceYear experienceYears, 
+        CountPetInHome countPetInHome, 
+        CountPetFoundHome countPetFoundHomes, 
+        CountPetHealing countPetHealing, 
+        FullName fullName) 
+        : base(volunteerId)
     {
-        Descriptions = descriptions;
+        Descriptions = description;
+        PhoneNumbers = phoneNumber;
+        ExperienceYears = experienceYears;
+        CountPetInHomes = countPetInHome;
+        CountPetFoundHomes = countPetFoundHomes;
+        CountPetHealing = countPetHealing;
+        FullNames = fullName;
     }
     
     //public Guid Id { get; private set; }
 
-    public FullName FullName;
+    public FullName FullNames;
 
-    public string Descriptions { get; private set; } = null!;
+    public Description Descriptions;
 
-    public int ExperienceYears { get; private set; }
+    public ExperienceYear ExperienceYears;
 
-    public int CountPetInHome { get; private set; }
+    public CountPetInHome CountPetInHomes;
 
-    public int CountPetFoundHome { get; private set; }
+    public CountPetFoundHome CountPetFoundHomes;
 
-    public int CountPetHealing { get; private set; }
+    public CountPetHealing CountPetHealing;
 
-    public string PhoneNumber { get; private set; } = null!;
+    public PhoneNumber PhoneNumbers { get; private set; } = null!;
 
     public List<Pet> Pets { get; private set; } = [];
 
     public VoluunterSocialList SocDetails;
 
     public VoluunterReqList ReqListDetails;
+
+    // public static Volunteer Create(VolunteerId volunteerId, Description descriptions, PhoneNumber phoneNumbers)
+    // {
+    //     return new Volunteer(volunteerId, descriptions, phoneNumbers);
+    // }
 }

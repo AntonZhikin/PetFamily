@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class IsNautered
+public record IsNautered
 {
-    public bool IsNautereds { get; }
+    public bool Value { get; }
 
-    public IsNautered()
+    public IsNautered(bool value)
     {
+        Value = value;
     }
 }

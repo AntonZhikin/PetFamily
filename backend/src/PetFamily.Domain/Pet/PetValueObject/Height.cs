@@ -1,10 +1,11 @@
 namespace PetFamily.Domain.Pet;
 
-public class Height
+public record Height
 {
-    public float Heights { get; }
+    public float Value { get; }
 
-    public Height()
+    public Height(float value)
     {
+        Value = value;
     }
 }
