@@ -1,3 +1,4 @@
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Domain.Shared;
 
@@ -5,8 +6,15 @@ namespace PetFamily.API.Extensions;
 
 public static class ResponseExtensions
 {
-    public static ActionResult ToResponce(this Error error)
+    public static ActionResult ToResponse<T>(this Result<T, Error> result)
     {
+        if (result.IsSuccess)
+        {
+            return new OkObjectResult(result.Value);
+        }
+
+        var error = result.Error;
+
         var statusCode = error.Type switch
         {
             ErrorType.Validation => StatusCodes.Status400BadRequest,
@@ -15,7 +23,7 @@ public static class ResponseExtensions
             ErrorType.Failure => StatusCodes.Status500InternalServerError,
             _ => StatusCodes.Status500InternalServerError
         };
-        
+
         return new ObjectResult(error)
         {
             StatusCode = statusCode

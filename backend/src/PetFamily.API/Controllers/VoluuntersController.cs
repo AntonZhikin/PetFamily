@@ -19,9 +19,6 @@ public class VoluuntersController : ControllerBase
     {
         //вызов сервис для создания волонтера(вызов бизнес логики)
         var result = await handler.Handle(request, cancellationToken);
-
-        if (result.IsFailure)
-            return result.Error.ToResponce();
         
         if (result.IsFailure)
             return BadRequest(result.Error);
