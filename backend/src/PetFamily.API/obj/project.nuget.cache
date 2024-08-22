@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cXfKKa7mZjzPobkOGwbH4nTulplXu0oBTZZ21YRCfmhEMYFMY/5OcesHUmkpjd2MIVsTG6ZEraGaLciTsn1R2Q==",
+  "dgSpecHash": "1E5NVxD9eC9sopx1pBQyFyN0Kvr73m+DsoBj2EC86t0rkvNsUmR9AX84khS+sO+Wf1/zUBpSWUuOYn8ypaSDXw==",
   "success": true,
   "projectFilePath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/PetFamily.API.csproj",
   "expectedPackageFiles": [
+    "/Users/antonzhikin/.nuget/packages/csharpfunctionalextensions/2.42.5/csharpfunctionalextensions.2.42.5.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/entityframeworkcore.namingconventions/8.0.0/entityframeworkcore.namingconventions.8.0.0.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/antonzhikin/.nuget/packages/microsoft.aspnetcore.openapi/8.0.7/microsoft.aspnetcore.openapi.8.0.7.nupkg.sha512",

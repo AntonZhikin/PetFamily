@@ -1,3 +1,6 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Volunteer;
 
 public record ExperienceYear
@@ -9,8 +12,11 @@ public record ExperienceYear
         Value = value;
     }
 
-    public static ExperienceYear Create(string experienceYears)
+    public static Result<ExperienceYear, Error> Create(string value)
     {
-        return new ExperienceYear(experienceYears);
+        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LENGHT)
+            return Errors.General.ValueIsInvalid("ExperienceYear");
+        
+        return new ExperienceYear(value);
     }
 }
