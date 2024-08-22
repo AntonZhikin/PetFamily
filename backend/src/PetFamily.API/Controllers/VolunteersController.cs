@@ -8,7 +8,7 @@ namespace PetFamily.API.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class VoluuntersController : ControllerBase
+public class VolunteersController : ControllerBase
 {
     
     [HttpPost]
@@ -21,8 +21,8 @@ public class VoluuntersController : ControllerBase
         var result = await handler.Handle(request, cancellationToken);
         
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return result.ToResponse();
 
-        return Ok(result.Value);
+        return result.ToResponse();
     }
 }
