@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Volunteer;
 
-public record VoluunterSocialList()
+public record VolunteerSocialList()
 {
     public List<SocialMedia> SocialMedias { get; }
 }

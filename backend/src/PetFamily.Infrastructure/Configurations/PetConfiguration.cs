@@ -25,12 +25,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
 
-        // builder.ComplexProperty(c => c.Species, b =>
-        // {
-        //     b.IsRequired();
-        //     b.Property(p => p.SpeciesForPets).HasColumnName("species").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-        // });
-        
         builder.ComplexProperty(c => c.Description, b =>
         {
             b.IsRequired();
@@ -38,12 +32,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("description")
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
         });
-
-        // builder.ComplexProperty(c => c.Breed, b =>
-        // {
-        //     b.IsRequired();
-        //     b.Property(p => p.Breeds).HasColumnName("breed").HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-        // });
 
         builder.ComplexProperty(c => c.Color, b =>
         {

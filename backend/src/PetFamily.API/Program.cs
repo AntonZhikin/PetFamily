@@ -1,24 +1,17 @@
 using PetFamily.Application;
-using PetFamily.Application.Voluunters;
-using PetFamily.Application.Voluunters.CreateVoluunters;
 using PetFamily.Infrastructure;
-using PetFamily.Infrastructure.Repositories;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-builder.Services.AddScoped<ApplicationDbContext>();
-
-//builder.Services.AddScoped<CreateVolunteerHandler>();
 
 builder.Services
     .AddInfrastructure()
     .AddApplication();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -28,5 +21,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

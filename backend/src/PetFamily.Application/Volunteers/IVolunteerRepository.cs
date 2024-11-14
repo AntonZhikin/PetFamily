@@ -2,7 +2,7 @@ using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 
-namespace PetFamily.Application.Voluunters;
+namespace PetFamily.Application.Volunteers;
 
 public interface IVolunteerRepository
 {

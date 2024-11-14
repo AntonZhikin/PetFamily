@@ -48,7 +48,7 @@ public class Volunteer : Entity<VolunteerId>
 
     public List<Pet> Pets { get; private set; } = [];
 
-    public VoluunterSocialList SocDetails;
+    public VolunteerSocialList SocDetails;
 
-    public VoluunterReqList ReqListDetails;
+    public VolunteerReqList ReqListDetails;
 }
