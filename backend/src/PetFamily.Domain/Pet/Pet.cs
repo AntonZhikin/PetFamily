@@ -1,4 +1,5 @@
-﻿using PetFamily.Domain.Shared;
+﻿using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.Shared;
 namespace PetFamily.Domain.Pet;
 
 public sealed class Pet : Entity<PetId>

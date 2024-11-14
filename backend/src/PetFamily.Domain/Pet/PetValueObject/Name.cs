@@ -1,10 +1,24 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Pet;
 
 public record Name
 {
-    public string Names { get; }
+    public const int MAX_LENGHT_NAME = 50;
+    
+    public string Value { get; }
 
-    private Name()
+    private Name(string value)
     {
+        Value = value;
+    }
+
+    public static Result<Name, Error> Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value.Length < MAX_LENGHT_NAME)
+            return Errors.General.ValueIsInvalid("Name");
+
+        return new Name(value);
     }
 }

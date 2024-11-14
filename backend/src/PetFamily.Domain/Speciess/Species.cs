@@ -4,6 +4,7 @@ namespace PetFamily.Domain.Speciess;
 
 public sealed class Species : Entity<SpeciesId>
 {
+    //ef core
     public Species(SpeciesId id) : base(id)
     {
 

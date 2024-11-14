@@ -20,7 +20,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.ComplexProperty(c => c.Name, b =>
         {
             b.IsRequired();
-            b.Property(p => p.Names)
+            b.Property(p => p.Value)
                 .HasColumnName("name")
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
