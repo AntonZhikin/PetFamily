@@ -25,7 +25,7 @@ public class VolunteersController : ControllerBase
         return result.ToResponse();
     }
     
-    [HttpPost]
+    [HttpGet]
     public IActionResult Update()
     {
         return Ok();
