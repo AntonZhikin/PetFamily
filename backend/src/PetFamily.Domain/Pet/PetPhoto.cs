@@ -2,11 +2,11 @@ using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Pet;
 
-public class PetPhoto
+public sealed class PetPhoto : Entity<PetPhotoId>
 {
-    private PetPhoto()
+    //ef core
+    private PetPhoto(PetPhotoId id) : base(id)
     {
-        
     }
     public string Path { get; }
     

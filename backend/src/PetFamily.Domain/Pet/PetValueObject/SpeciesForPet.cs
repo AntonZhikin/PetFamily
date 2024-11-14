@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Pet;
 
-public class SpeciesForPet
+public record SpeciesForPet
 {
     public string SpeciesForPets { get; }
 

@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Pet;
 
-public class Address
+public record Address
 {
     public string City { get; }
     public string Street { get; }

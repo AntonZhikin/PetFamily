@@ -4,13 +4,13 @@ using PetFamily.Domain.Volunteer;
 using Description = PetFamily.Domain.Volunteer.Description;
 using PhoneNumber = PetFamily.Domain.Volunteer.PhoneNumber;
 
-namespace PetFamily.Application.Voluunters.CreateVoluunters;
+namespace PetFamily.Application.Volunteers.CreateVolunteers;
 
-public class CreateVolunteerHandler
+public class CreateVolunteerCommand
 {
     private readonly IVolunteerRepository _volunteerRepository;
     
-    public CreateVolunteerHandler(IVolunteerRepository volunteerRepository)
+    public CreateVolunteerCommand(IVolunteerRepository volunteerRepository)
     {
         _volunteerRepository = volunteerRepository;
     }
@@ -20,19 +20,19 @@ public class CreateVolunteerHandler
     {
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var descriptionResult = Description.Create(request.descriptions);
+        var descriptionResult = Description.Create(request.Descriptions);
         if (descriptionResult.IsFailure)
             return descriptionResult.Error;
 
-        var phoneNumberResult = PhoneNumber.Create(request.phoneNumbers);
+        var phoneNumberResult = PhoneNumber.Create(request.PhoneNumbers);
         if (phoneNumberResult.IsFailure)
             return phoneNumberResult.Error;
 
-        var experienceYearsResult = ExperienceYear.Create(request.experienceYears);
+        var experienceYearsResult = ExperienceYear.Create(request.ExperienceYears);
         if (experienceYearsResult.IsFailure)
             return experienceYearsResult.Error;
 
-        var fullNameResult = FullName.Create(request.name, request.surname, request.secondname);
+        var fullNameResult = FullName.Create(request.Name, request.Surname, request.SecondName);
         if (fullNameResult.IsFailure)
             return fullNameResult.Error;
 

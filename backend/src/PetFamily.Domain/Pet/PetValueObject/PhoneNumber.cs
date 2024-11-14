@@ -1,6 +1,6 @@
 namespace PetFamily.Domain.Pet;
 
-public class PhoneNumber
+public record PhoneNumber
 {
     private string PhoneNumbers { get; }
 

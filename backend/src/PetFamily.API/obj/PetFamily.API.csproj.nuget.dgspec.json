@@ -1,39 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/PetFamily.API.csproj": {}
+    "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.API\\PetFamily.API.csproj": {}
   },
   "projects": {
-    "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/PetFamily.API.csproj": {
+    "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.API\\PetFamily.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/PetFamily.API.csproj",
+        "projectUniqueName": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.API\\PetFamily.API.csproj",
         "projectName": "PetFamily.API",
-        "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/PetFamily.API.csproj",
-        "packagesPath": "/Users/antonzhikin/.nuget/packages/",
-        "outputPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.API/obj/",
+        "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.API\\PetFamily.API.csproj",
+        "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/antonzhikin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj": {
-                "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj"
+              "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj": {
+                "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj"
               },
-              "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj": {
-                "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj"
+              "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj": {
+                "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj"
               },
-              "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/PetFamily.Infrastructure.csproj": {
-                "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/PetFamily.Infrastructure.csproj"
+              "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\PetFamily.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\PetFamily.Infrastructure.csproj"
               }
             }
           }
@@ -42,6 +45,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -88,34 +96,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj": {
+    "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj",
+        "projectUniqueName": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj",
         "projectName": "PetFamily.Application",
-        "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj",
-        "packagesPath": "/Users/antonzhikin/.nuget/packages/",
-        "outputPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/obj/",
+        "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj",
+        "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/antonzhikin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj": {
-                "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj"
+              "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj": {
+                "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj"
               }
             }
           }
@@ -124,6 +135,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -135,6 +151,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -153,26 +173,29 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj": {
+    "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj",
         "projectName": "PetFamily.Domain",
-        "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/PetFamily.Domain.csproj",
-        "packagesPath": "/Users/antonzhikin/.nuget/packages/",
-        "outputPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Domain/obj/",
+        "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\PetFamily.Domain.csproj",
+        "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/antonzhikin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -185,6 +208,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -218,34 +246,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/PetFamily.Infrastructure.csproj": {
+    "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\PetFamily.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/PetFamily.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\PetFamily.Infrastructure.csproj",
         "projectName": "PetFamily.Infrastructure",
-        "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/PetFamily.Infrastructure.csproj",
-        "packagesPath": "/Users/antonzhikin/.nuget/packages/",
-        "outputPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Infrastructure/obj/",
+        "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\PetFamily.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/antonzhikin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj": {
-                "projectPath": "/Users/antonzhikin/Documents/Projects/PetFamily/backend/src/PetFamily.Application/PetFamily.Application.csproj"
+              "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj": {
+                "projectPath": "C:\\Users\\anton\\RiderProjects\\PetFamily\\backend\\src\\PetFamily.Application\\PetFamily.Application.csproj"
               }
             }
           }
@@ -254,6 +285,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -295,7 +331,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

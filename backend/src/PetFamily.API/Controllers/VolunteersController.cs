@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
-using PetFamily.Application.Voluunters.CreateVoluunters;
-using PetFamily.Domain.Shared;
+using PetFamily.Application.Volunteers.CreateVolunteers;
 
 namespace PetFamily.API.Controllers;
 
@@ -13,16 +12,24 @@ public class VolunteersController : ControllerBase
     
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
-        [FromServices] CreateVolunteerHandler handler,
+        [FromServices] CreateVolunteerCommand command,
         [FromBody] CreateVolunteerRequest request,
         CancellationToken cancellationToken = default)
     {
         //вызов сервис для создания волонтера(вызов бизнес логики)
-        var result = await handler.Handle(request, cancellationToken);
-        
+        var result = await command.Handle(request, cancellationToken);
+         
         if (result.IsFailure)
             return result.ToResponse();
 
         return result.ToResponse();
     }
+    
+    [HttpPost]
+    public IActionResult Update()
+    {
+        return Ok();
+    }
+    
+    
 }
