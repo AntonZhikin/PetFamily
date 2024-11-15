@@ -9,8 +9,8 @@ public record CreateVolunteerRequest(
     string Name, 
     string Surname, 
     string SecondName,
-    IEnumerable<SocialNetworkDto> SocialNetworks,
-    IEnumerable<AssistanceDetailDto> AssistanceDetails
+    List<SocialNetworkDto> SocialNetworks,
+    List<AssistanceDetailDto> AssistanceDetails
     );
 
 

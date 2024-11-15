@@ -7,7 +7,7 @@ public static class Inject
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<CreateVolunteerCommand>();
+        services.AddScoped<CreateVolunteerHandler>();
 
         return services;
     }

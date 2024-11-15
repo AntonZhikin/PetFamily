@@ -9,11 +9,11 @@ using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
 
 namespace PetFamily.Application.Volunteers.CreateVolunteers;
 
-public class CreateVolunteerCommand
+public class CreateVolunteerHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
     
-    public CreateVolunteerCommand(IVolunteerRepository volunteerRepository)
+    public CreateVolunteerHandler(IVolunteerRepository volunteerRepository)
     {
         _volunteerRepository = volunteerRepository;
     }
@@ -39,9 +39,32 @@ public class CreateVolunteerCommand
         if (fullNameResult.IsFailure)
             return fullNameResult.Error;
 
+
+        var socialNetwork = request.SocialNetworks
+            .Select(s => SocialNetwork.Create(s.Name, s.Path));
+        if (socialNetwork.First().IsFailure)
+            return Errors.General.ValueIsInvalid("socialNetworks");
+        
+        var socialNetworks = new VolunteerSocialNetworks(socialNetwork
+            .Select(x => x.Value).ToList());
+        if (socialNetworks is null)
+            return Errors.General.ValueIsInvalid("socialNetworksList");
         
         
-        var socialNetworks = new List<SocialNetwork>();
+        
+        var assistanceDetail = request.AssistanceDetails
+            .Select(a => AssistanceDetail.Create(a.Name, a.Description));
+        if (assistanceDetail.First().IsFailure)
+            return Errors.General.ValueIsInvalid("assistanceDetails");
+        
+        var assistanceDetails = new VolunteerAssistanceDetails(assistanceDetail
+            .Select(x => x.Value).ToList());
+        if(assistanceDetails is null)
+            return Errors.General.ValueIsInvalid("assistanceDetailsList");
+        
+            
+        
+        /*var socialNetworks = new List<SocialNetwork>();
         if (request.SocialNetworks != null)
         {
             var details = request.SocialNetworks.Select(sn => SocialNetwork.Create(sn.Path, sn.Name).Value);
@@ -50,14 +73,13 @@ public class CreateVolunteerCommand
         var voluunterSocialNetworks = new VolunteerSocialNetworks(socialNetworks);
         
         
-        
         var assistanceDetails = new List<AssistanceDetail>();
         if (request.AssistanceDetails!= null)
         {
             var details = request.AssistanceDetails.Select(ad => AssistanceDetail.Create(ad.Name, ad.Description).Value);
             assistanceDetails.AddRange(details);
         }
-        var volunteerAssistanceDetails = new VolunteerAssistanceDetails(assistanceDetails);
+        var volunteerAssistanceDetails = new VolunteerAssistanceDetails(assistanceDetails);*/
 
         
         
@@ -67,8 +89,8 @@ public class CreateVolunteerCommand
             phoneNumberResult.Value, 
             experienceYearsResult.Value, 
             fullNameResult.Value,
-            voluunterSocialNetworks,
-            volunteerAssistanceDetails
+            socialNetworks,
+            assistanceDetails
             );
 
         await _volunteerRepository.Add(volunteer, cancellationToken);

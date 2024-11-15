@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Domain.Volunteer;
+namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record SocialNetwork 
 {
@@ -17,8 +17,12 @@ public record SocialNetwork
     
     public static Result<SocialNetwork, Error> Create(string name, string link)
     {
-        var newSocialNetwork = SocialNetwork.Create(name, link);
+        if (string.IsNullOrWhiteSpace(name))
+            return Errors.General.ValueIsInvalid("name");
+
+        if (string.IsNullOrWhiteSpace(link))
+            return Errors.General.ValueIsInvalid("link");
         
-        return newSocialNetwork;
+        return new SocialNetwork(name, link);
     }
 }
