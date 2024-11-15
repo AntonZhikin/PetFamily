@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
+using PetFamily.Domain.Volunteer.VolunteerID;
 
 namespace PetFamily.Application.Volunteers;
 

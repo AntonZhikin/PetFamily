@@ -1,4 +1,10 @@
+using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Volunteer.VolunteerID;
+using PetFamily.Domain.Volunteer.VolunteerList;
+using PetFamily.Domain.Volunteer.VolunteerValueObject;
+using Description = PetFamily.Domain.Volunteer.VolunteerValueObject.Description;
+using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
 
 namespace PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Pet;
@@ -17,16 +23,19 @@ public class Volunteer : Entity<VolunteerId>
         Description description, 
         PhoneNumber phoneNumber, 
         ExperienceYear experienceYears, 
-        FullName fullName) 
+        FullName fullName,
+        VolunteerSocialNetworks socialNetworks,
+        VolunteerAssistanceDetails assistanceDetails
+        ) 
         : base(volunteerId)
     {
         Descriptions = description;
         PhoneNumbers = phoneNumber;
         ExperienceYears = experienceYears;
         FullNames = fullName;
+        SocialNetworks = socialNetworks;
+        AssistanceDetails = assistanceDetails;
     }
-    
-    //public Guid Id { get; private set; }
 
     public FullName FullNames;
 
@@ -48,7 +57,7 @@ public class Volunteer : Entity<VolunteerId>
 
     public List<Pet> Pets { get; private set; } = [];
 
-    public VolunteerSocialList SocDetails;
+    public VolunteerSocialNetworks SocialNetworks { get; }
 
-    public VolunteerReqList ReqListDetails;
+    public VolunteerAssistanceDetails AssistanceDetails { get; }
 }

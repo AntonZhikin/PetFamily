@@ -1,4 +1,4 @@
-namespace PetFamily.Domain.Volunteer;
+namespace PetFamily.Domain.Volunteer.VolunteerID;
 
 public class RequisiteForHelpId
 {

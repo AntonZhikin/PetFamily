@@ -1,4 +1,6 @@
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Speciess.SpeciesID;
+using PetFamily.Domain.Speciess.SpeciesList;
 
 namespace PetFamily.Domain.Speciess;
 

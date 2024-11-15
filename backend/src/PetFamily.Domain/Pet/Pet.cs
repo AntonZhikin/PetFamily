@@ -1,4 +1,6 @@
-﻿using PetFamily.Domain.Pet.PetValueObject;
+﻿using PetFamily.Domain.Pet.PetID;
+using PetFamily.Domain.Pet.PetList;
+using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
 namespace PetFamily.Domain.Pet;
 
@@ -46,5 +48,5 @@ public sealed class Pet : Entity<PetId>
     
     public DateOnly DateCreate { get; private set; }
 
-    public PetList Details { get; private set; }
+    public PetList.PetList Details { get; private set; }
 }

@@ -1,4 +1,4 @@
-namespace PetFamily.Domain.Speciess;
+namespace PetFamily.Domain.Speciess.SpeciesList;
 
 public record SpeciesList
 {

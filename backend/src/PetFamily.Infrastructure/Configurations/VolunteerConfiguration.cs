@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
+using PetFamily.Domain.Volunteer.VolunteerID;
 
 namespace PetFamily.Infrastructure.Configurations;
 
@@ -41,38 +42,16 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("experienceyears");
         });
-
-        /*builder.ComplexProperty(p => p.CountPetInHomes, g =>
-        {
-            g.IsRequired();
-            g.Property(c => c.Value).HasColumnName("countPetInHome");
-        });
-        
-        builder.ComplexProperty(p => p.CountPetFoundHomes, g =>
-        {
-            g.IsRequired();
-            g.Property(c => c.Value).HasColumnName("countPetFoundHome");
-        });
-        
-        builder.ComplexProperty(p => p.CountPetHealing, g =>
-        {
-            g.IsRequired();
-            g.Property(c => c.Value).HasColumnName("countPetHealing");
-        });
-        
-        builder.Property(v => v.CountPetHealing)
-            .IsRequired()
-            .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);*/
         
         builder.HasMany(v => v.Pets)
             .WithOne()
             .HasForeignKey("vol_id");
 
-        builder.OwnsOne(r => r.ReqListDetails, rb => 
+        builder.OwnsOne(r => r.AssistanceDetails, rb => 
         {
             rb.ToJson();
 
-            rb.OwnsMany(s => s.RequisiteForHelps, rf =>
+            rb.OwnsMany(s => s.AssistanceDetails, rf =>
             {
                 rf.Property(g => g.Name)
                     .IsRequired()
@@ -83,30 +62,19 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             });
         });
         
-        builder.OwnsOne(s => s.SocDetails, sb => 
+        builder.OwnsOne(s => s.SocialNetworks, sb => 
         {
             sb.ToJson();
 
-            sb.OwnsMany(s => s.SocialMedias, sf =>
+            sb.OwnsMany(s => s.SocialNetworks, sf =>
             {
                 sf.Property(g => g.Name)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-                sf.Property(g => g.Path)
+                sf.Property(g => g.Link)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
             });
         });
-
-        
-        
-        
-        // builder.HasMany(v => v.SocialMedias)
-        //     .WithOne()
-        //     .HasForeignKey("vol_id");
-        //
-        // builder.HasMany(v => v.RequisiteForHelps)
-        //     .WithOne()
-        //     .HasForeignKey("vol_id");
     }
 }
