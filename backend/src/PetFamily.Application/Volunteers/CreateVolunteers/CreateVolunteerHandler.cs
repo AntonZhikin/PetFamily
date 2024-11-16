@@ -19,7 +19,8 @@ public class CreateVolunteerHandler
     }
     
     public async Task<Result<Guid, Error>> Handle(
-        CreateVolunteerRequest request, CancellationToken cancellationToken = default)
+        CreateVolunteerRequest request, 
+        CancellationToken cancellationToken = default)
     {
         var volunteerId = VolunteerId.NewVolunteerId();
 
@@ -62,26 +63,6 @@ public class CreateVolunteerHandler
         if(assistanceDetails is null)
             return Errors.General.ValueIsInvalid("assistanceDetailsList");
         
-            
-        
-        /*var socialNetworks = new List<SocialNetwork>();
-        if (request.SocialNetworks != null)
-        {
-            var details = request.SocialNetworks.Select(sn => SocialNetwork.Create(sn.Path, sn.Name).Value);
-            socialNetworks.AddRange(details);
-        }
-        var voluunterSocialNetworks = new VolunteerSocialNetworks(socialNetworks);
-        
-        
-        var assistanceDetails = new List<AssistanceDetail>();
-        if (request.AssistanceDetails!= null)
-        {
-            var details = request.AssistanceDetails.Select(ad => AssistanceDetail.Create(ad.Name, ad.Description).Value);
-            assistanceDetails.AddRange(details);
-        }
-        var volunteerAssistanceDetails = new VolunteerAssistanceDetails(assistanceDetails);*/
-
-        
         
         var volunteer = new Volunteer(
             volunteerId, 
@@ -96,9 +77,5 @@ public class CreateVolunteerHandler
         await _volunteerRepository.Add(volunteer, cancellationToken);
 
         return volunteer.Id.Value;
-
-        // создание доменной модели
-
-        // сохранение в базу данных
     }
 }
