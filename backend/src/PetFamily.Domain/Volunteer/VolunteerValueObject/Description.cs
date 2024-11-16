@@ -1,8 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Volunteer;
 
-namespace PetFamily.Domain.Volunteer;
+namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record Description
 {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PetFamily.Application.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
+using PetFamily.Domain.Volunteer.VolunteerID;
 
 namespace PetFamily.Infrastructure.Repositories;
 

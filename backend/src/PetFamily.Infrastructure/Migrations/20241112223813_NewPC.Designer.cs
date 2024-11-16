@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PetFamily.Infrastructure;
@@ -12,9 +13,11 @@ using PetFamily.Infrastructure;
 namespace PetFamily.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112223813_NewPC")]
+    partial class NewPC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,7 +123,7 @@ namespace PetFamily.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<string>("Value")
+                            b1.Property<string>("Names")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
@@ -246,7 +249,7 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasForeignKey("vol_id")
                         .HasConstraintName("fk_pets_voluunter_vol_id");
 
-                    b.OwnsOne("PetFamily.Domain.Pet.PetList.PetList", "Details", b1 =>
+                    b.OwnsOne("PetFamily.Domain.Pet.PetList", "Details", b1 =>
                         {
                             b1.Property<Guid>("PetId")
                                 .HasColumnType("uuid")
@@ -293,7 +296,7 @@ namespace PetFamily.Infrastructure.Migrations
                             b1.Navigation("PetPhotos");
                         });
 
-                    b.OwnsOne("PetFamily.Domain.Pet.PetList.ReqList", "ReqDetails", b1 =>
+                    b.OwnsOne("PetFamily.Domain.Pet.ReqList", "ReqDetails", b1 =>
                         {
                             b1.Property<Guid>("PetId")
                                 .HasColumnType("uuid")
@@ -350,7 +353,7 @@ namespace PetFamily.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Domain.Speciess.Species", b =>
                 {
-                    b.OwnsOne("PetFamily.Domain.Speciess.SpeciesList.BreedList", "Breeds", b1 =>
+                    b.OwnsOne("PetFamily.Domain.Speciess.BreedList", "Breeds", b1 =>
                         {
                             b1.Property<Guid>("SpeciesId")
                                 .HasColumnType("uuid")
@@ -399,7 +402,7 @@ namespace PetFamily.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Domain.Volunteer.Volunteer", b =>
                 {
-                    b.OwnsOne("PetFamily.Domain.Volunteer.VolunteerList.VolunteerAssistanceDetails", "AssistanceDetails", b1 =>
+                    b.OwnsOne("PetFamily.Domain.Volunteer.VoluunterReqList", "ReqListDetails", b1 =>
                         {
                             b1.Property<Guid>("VolunteerId")
                                 .HasColumnType("uuid")
@@ -409,15 +412,15 @@ namespace PetFamily.Infrastructure.Migrations
 
                             b1.ToTable("voluunter");
 
-                            b1.ToJson("AssistanceDetails");
+                            b1.ToJson("ReqListDetails");
 
                             b1.WithOwner()
                                 .HasForeignKey("VolunteerId")
                                 .HasConstraintName("fk_voluunter_voluunter_id");
 
-                            b1.OwnsMany("PetFamily.Domain.Volunteer.AssistanceDetail", "AssistanceDetails", b2 =>
+                            b1.OwnsMany("PetFamily.Domain.Volunteer.RequisiteForHelp", "RequisiteForHelps", b2 =>
                                 {
-                                    b2.Property<Guid>("VolunteerAssistanceDetailsVolunteerId")
+                                    b2.Property<Guid>("VoluunterReqListVolunteerId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<int>("Id")
@@ -434,20 +437,20 @@ namespace PetFamily.Infrastructure.Migrations
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)");
 
-                                    b2.HasKey("VolunteerAssistanceDetailsVolunteerId", "Id")
+                                    b2.HasKey("VoluunterReqListVolunteerId", "Id")
                                         .HasName("pk_voluunter");
 
                                     b2.ToTable("voluunter");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("VolunteerAssistanceDetailsVolunteerId")
-                                        .HasConstraintName("fk_voluunter_voluunter_volunteer_assistance_details_volunteer_id");
+                                        .HasForeignKey("VoluunterReqListVolunteerId")
+                                        .HasConstraintName("fk_voluunter_voluunter_voluunter_req_list_volunteer_id");
                                 });
 
-                            b1.Navigation("AssistanceDetails");
+                            b1.Navigation("RequisiteForHelps");
                         });
 
-                    b.OwnsOne("PetFamily.Domain.Volunteer.VolunteerList.VolunteerSocialNetworks", "SocialNetworks", b1 =>
+                    b.OwnsOne("PetFamily.Domain.Volunteer.VoluunterSocialList", "SocDetails", b1 =>
                         {
                             b1.Property<Guid>("VolunteerId")
                                 .HasColumnType("uuid")
@@ -457,49 +460,47 @@ namespace PetFamily.Infrastructure.Migrations
 
                             b1.ToTable("voluunter");
 
-                            b1.ToJson("SocialNetworks");
+                            b1.ToJson("SocDetails");
 
                             b1.WithOwner()
                                 .HasForeignKey("VolunteerId")
                                 .HasConstraintName("fk_voluunter_voluunter_id");
 
-                            b1.OwnsMany("PetFamily.Domain.Volunteer.SocialNetwork", "SocialNetworks", b2 =>
+                            b1.OwnsMany("PetFamily.Domain.Volunteer.SocialMedia", "SocialMedias", b2 =>
                                 {
-                                    b2.Property<Guid>("VolunteerSocialNetworksVolunteerId")
+                                    b2.Property<Guid>("VoluunterSocialListVolunteerId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<int>("Id")
                                         .ValueGeneratedOnAdd()
                                         .HasColumnType("integer");
 
-                                    b2.Property<string>("Link")
-                                        .IsRequired()
-                                        .HasMaxLength(2000)
-                                        .HasColumnType("character varying(2000)");
-
                                     b2.Property<string>("Name")
                                         .IsRequired()
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)");
 
-                                    b2.HasKey("VolunteerSocialNetworksVolunteerId", "Id")
+                                    b2.Property<string>("Path")
+                                        .IsRequired()
+                                        .HasMaxLength(2000)
+                                        .HasColumnType("character varying(2000)");
+
+                                    b2.HasKey("VoluunterSocialListVolunteerId", "Id")
                                         .HasName("pk_voluunter");
 
                                     b2.ToTable("voluunter");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("VolunteerSocialNetworksVolunteerId")
-                                        .HasConstraintName("fk_voluunter_voluunter_volunteer_social_networks_volunteer_id");
+                                        .HasForeignKey("VoluunterSocialListVolunteerId")
+                                        .HasConstraintName("fk_voluunter_voluunter_voluunter_social_list_volunteer_id");
                                 });
 
-                            b1.Navigation("SocialNetworks");
+                            b1.Navigation("SocialMedias");
                         });
 
-                    b.Navigation("AssistanceDetails")
-                        .IsRequired();
+                    b.Navigation("ReqListDetails");
 
-                    b.Navigation("SocialNetworks")
-                        .IsRequired();
+                    b.Navigation("SocDetails");
                 });
 
             modelBuilder.Entity("PetFamily.Domain.Volunteer.Volunteer", b =>

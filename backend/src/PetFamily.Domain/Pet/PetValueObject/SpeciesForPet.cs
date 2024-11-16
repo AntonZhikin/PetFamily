@@ -1,11 +1,24 @@
-namespace PetFamily.Domain.Pet;
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
+
+namespace PetFamily.Domain.Pet.PetValueObject;
 
 public record SpeciesForPet
 {
-    public string SpeciesForPets { get; }
+    public const int MAX_LENGHT_SpeciesForPet = 100;
 
-    public SpeciesForPet(string species)
+    public string Value { get; }
+
+    private SpeciesForPet(string value)
     {
-        SpeciesForPets = species;
+        Value = value;
+    }
+
+    public static Result<SpeciesForPet, Error> Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value.Length < MAX_LENGHT_SpeciesForPet)
+            return Errors.General.ValueIsInvalid("SpeciesForPet");
+
+        return new SpeciesForPet(value);
     }
 }
