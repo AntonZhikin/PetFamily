@@ -17,11 +17,11 @@ public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteer
         RuleFor(c => c.Descriptions)
             .MustBeValueObject(Description.Create);
         
-        RuleFor(c => c.ExperienceYears)
-            .MustBeValueObject(ExperienceYear.Create);
-        
         RuleFor(c => c.PhoneNumbers)
             .MustBeValueObject(PhoneNumber.Create);
+        
+        RuleFor(c => c.ExperienceYears)
+            .MustBeValueObject(ExperienceYear.Create);
         
         RuleForEach(c => c.SocialNetworks)
             .MustBeValueObject(s => SocialNetwork.Create(s.Name, s.Path));

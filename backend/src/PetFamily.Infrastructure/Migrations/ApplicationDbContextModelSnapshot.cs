@@ -415,7 +415,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasForeignKey("VolunteerId")
                                 .HasConstraintName("fk_voluunter_voluunter_id");
 
-                            b1.OwnsMany("PetFamily.Domain.Volunteer.AssistanceDetail", "AssistanceDetails", b2 =>
+                            b1.OwnsMany("PetFamily.Domain.Volunteer.VolunteerValueObject.AssistanceDetail", "AssistanceDetails", b2 =>
                                 {
                                     b2.Property<Guid>("VolunteerAssistanceDetailsVolunteerId")
                                         .HasColumnType("uuid");
@@ -463,7 +463,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasForeignKey("VolunteerId")
                                 .HasConstraintName("fk_voluunter_voluunter_id");
 
-                            b1.OwnsMany("PetFamily.Domain.Volunteer.SocialNetwork", "SocialNetworks", b2 =>
+                            b1.OwnsMany("PetFamily.Domain.Volunteer.VolunteerValueObject.SocialNetwork", "SocialNetworks", b2 =>
                                 {
                                     b2.Property<Guid>("VolunteerSocialNetworksVolunteerId")
                                         .HasColumnType("uuid");
@@ -472,15 +472,15 @@ namespace PetFamily.Infrastructure.Migrations
                                         .ValueGeneratedOnAdd()
                                         .HasColumnType("integer");
 
-                                    b2.Property<string>("Link")
-                                        .IsRequired()
-                                        .HasMaxLength(2000)
-                                        .HasColumnType("character varying(2000)");
-
                                     b2.Property<string>("Name")
                                         .IsRequired()
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)");
+
+                                    b2.Property<string>("Path")
+                                        .IsRequired()
+                                        .HasMaxLength(2000)
+                                        .HasColumnType("character varying(2000)");
 
                                     b2.HasKey("VolunteerSocialNetworksVolunteerId", "Id")
                                         .HasName("pk_voluunter");

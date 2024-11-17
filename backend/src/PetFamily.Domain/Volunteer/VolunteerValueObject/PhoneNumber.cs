@@ -5,7 +5,7 @@ namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record PhoneNumber
 {
-    public const int MAX_LENGHT_NUMBER = 12;
+    public const int MAX_LENGHT_NUMBER = 100;
     
     public string Value { get; }
 
@@ -16,7 +16,7 @@ public record PhoneNumber
 
     public static Result<PhoneNumber, Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length > MAX_LENGHT_NUMBER)
+        if (string.IsNullOrWhiteSpace(value) || value.Length < MAX_LENGHT_NUMBER)
             return Errors.General.ValueIsInvalid("PhoneNumber");
         
         return new PhoneNumber(value);
