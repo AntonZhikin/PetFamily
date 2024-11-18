@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Diagnostics;
+using PetFamily.API.Middlewares;
 using PetFamily.Application;
 using PetFamily.Infrastructure;
 using Serilog;
@@ -40,6 +42,7 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
+app.UseExceptionMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -55,5 +58,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Hello World!");
+    await next.Invoke();
+});
 
 app.Run();
