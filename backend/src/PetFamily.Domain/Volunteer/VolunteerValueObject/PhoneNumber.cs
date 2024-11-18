@@ -6,8 +6,6 @@ namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record PhoneNumber
 {
-    public const int MAX_LENGHT_NUMBER = 100;
-
     private const string PhoneRegex = @"^[+]{0,1}[0-9]{11}";
     
     public string Value { get; }
