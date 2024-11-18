@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
+using FluentValidation;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -12,34 +14,42 @@ namespace PetFamily.Application.Volunteers.CreateVolunteers;
 public class CreateVolunteerHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
-    
-    public CreateVolunteerHandler(IVolunteerRepository volunteerRepository)
+    private readonly IValidator<CreateVolunteerRequest> _validator;
+
+    public CreateVolunteerHandler(
+        IVolunteerRepository volunteerRepository,
+        IValidator<CreateVolunteerRequest> validator)
     {
         _volunteerRepository = volunteerRepository;
+        _validator = validator;
     }
     
     public async Task<Result<Guid, Error>> Handle(
         CreateVolunteerRequest request, 
         CancellationToken cancellationToken = default)
     {
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+
+        if (validationResult.IsValid == false)
+        {
+            var error = Error.Validation(
+                validationResult.Errors[0].ErrorCode,
+                validationResult.Errors[0].ErrorMessage
+                );
+
+            return error;
+        }
+        
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var descriptionResult = Description.Create(request.Descriptions);
-        if (descriptionResult.IsFailure)
-            return descriptionResult.Error;
+        var description = Description.Create(request.Descriptions).Value;
 
-        var phoneNumberResult = PhoneNumber.Create(request.PhoneNumbers);
-        if (phoneNumberResult.IsFailure)
-            return phoneNumberResult.Error;
 
-        var experienceYearsResult = ExperienceYear.Create(request.ExperienceYears);
-        if (experienceYearsResult.IsFailure)
-            return experienceYearsResult.Error;
+        var phoneNumber = PhoneNumber.Create(request.PhoneNumbers).Value;
 
-        var fullNameResult = FullName.Create(request.Name, request.Surname, request.SecondName);
-        if (fullNameResult.IsFailure)
-            return fullNameResult.Error;
-
+        var experienceYears = ExperienceYear.Create(request.ExperienceYears).Value;
+        
+        var fullName = FullName.Create(request.Name, request.Surname, request.SecondName).Value;
 
         var socialNetwork = request.SocialNetworks
             .Select(s => SocialNetwork.Create(s.Name, s.Path));
@@ -50,7 +60,6 @@ public class CreateVolunteerHandler
             .Select(x => x.Value).ToList());
         if (socialNetworks is null)
             return Errors.General.ValueIsInvalid("socialNetworksList");
-        
         
         
         var assistanceDetail = request.AssistanceDetails
@@ -66,10 +75,10 @@ public class CreateVolunteerHandler
         
         var volunteer = new Volunteer(
             volunteerId, 
-            descriptionResult.Value, 
-            phoneNumberResult.Value, 
-            experienceYearsResult.Value, 
-            fullNameResult.Value,
+            description, 
+            phoneNumber, 
+            experienceYears, 
+            fullName,
             socialNetworks,
             assistanceDetails
             );

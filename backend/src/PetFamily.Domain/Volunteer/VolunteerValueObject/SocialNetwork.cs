@@ -5,24 +5,25 @@ namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record SocialNetwork 
 {
-    public string Link { get; } = null!;
-
     public string Name { get; } = null!;
+    
+    public string Path { get; } = null!;
+    
 
-    private SocialNetwork(string link, string name)
+    private SocialNetwork(string path, string name)
     {
         Name = name;
-        Link = link;
+        Path = path;
     }
     
-    public static Result<SocialNetwork, Error> Create(string name, string link)
+    public static Result<SocialNetwork, Error> Create(string name, string path)
     {
         if (string.IsNullOrWhiteSpace(name))
             return Errors.General.ValueIsInvalid("name");
 
-        if (string.IsNullOrWhiteSpace(link))
-            return Errors.General.ValueIsInvalid("link");
+        if (string.IsNullOrWhiteSpace(path))
+            return Errors.General.ValueIsInvalid("path");
         
-        return new SocialNetwork(name, link);
+        return new SocialNetwork(name, path);
     }
 }

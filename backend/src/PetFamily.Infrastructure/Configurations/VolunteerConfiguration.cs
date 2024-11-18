@@ -71,7 +71,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 sf.Property(g => g.Name)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-                sf.Property(g => g.Link)
+                sf.Property(g => g.Path)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
             });
