@@ -1,20 +1,14 @@
-using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
+using PetFamily.API.Responce;
 using PetFamily.Domain.Shared;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace PetFamily.API.Extensions;
 
 public static class ResponseExtensions
-{
-    public static ActionResult ToResponse<T>(this Result<T, Error> result)
+{ 
+    public static ActionResult ToResponse(this Error error)
     {
-        if (result.IsSuccess)
-        {
-            return new OkObjectResult(result.Value);
-        }
-
-        var error = result.Error;
-
         var statusCode = error.Type switch
         {
             ErrorType.Validation => StatusCodes.Status400BadRequest,
@@ -23,10 +17,36 @@ public static class ResponseExtensions
             ErrorType.Failure => StatusCodes.Status500InternalServerError,
             _ => StatusCodes.Status500InternalServerError
         };
+        
+        var responceError = new ResponceError(error.Code, error.Message, null);
 
-        return new ObjectResult(error)
+        var envelope = Envelope.Error([responceError]);
+
+        return new ObjectResult(envelope)
         {
             StatusCode = statusCode
+        };
+    }
+    
+    public static ActionResult ToValidationErrorResponse(this ValidationResult result)
+    {
+        if (result.IsValid)
+            throw new InvalidOperationException("Result can not be succeed");
+        
+
+        var validationErrors = result.Errors; 
+            
+        List<ResponceError> responceErrors = [];
+        responceErrors.AddRange(from validationError in validationErrors 
+            let errorMessage = validationError.ErrorMessage 
+            let error = Error.DeSerialize(errorMessage) 
+                select new ResponceError(error.Code, error.Message, validationError.PropertyName));
+
+        var envelope = Envelope.Error(responceErrors);
+
+        return new ObjectResult(envelope)
+        {
+            StatusCode = StatusCodes.Status400BadRequest
         };
     }
 }

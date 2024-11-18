@@ -14,37 +14,21 @@ namespace PetFamily.Application.Volunteers.CreateVolunteers;
 public class CreateVolunteerHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
-    private readonly IValidator<CreateVolunteerRequest> _validator;
 
     public CreateVolunteerHandler(
-        IVolunteerRepository volunteerRepository,
-        IValidator<CreateVolunteerRequest> validator)
+        IVolunteerRepository volunteerRepository)
     {
         _volunteerRepository = volunteerRepository;
-        _validator = validator;
     }
     
     public async Task<Result<Guid, Error>> Handle(
         CreateVolunteerRequest request, 
         CancellationToken cancellationToken = default)
     {
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (validationResult.IsValid == false)
-        {
-            var error = Error.Validation(
-                validationResult.Errors[0].ErrorCode,
-                validationResult.Errors[0].ErrorMessage
-                );
-
-            return error;
-        }
-        
         var volunteerId = VolunteerId.NewVolunteerId();
 
         var description = Description.Create(request.Descriptions).Value;
-
-
+        
         var phoneNumber = PhoneNumber.Create(request.PhoneNumbers).Value;
 
         var experienceYears = ExperienceYear.Create(request.ExperienceYears).Value;

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 
@@ -5,7 +6,9 @@ namespace PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 public record PhoneNumber
 {
-    public const int MAX_LENGHT_NUMBER = 12;
+    public const int MAX_LENGHT_NUMBER = 100;
+
+    private const string PhoneRegex = @"^[+]{0,1}[0-9]{11}";
     
     public string Value { get; }
 
@@ -16,7 +19,10 @@ public record PhoneNumber
 
     public static Result<PhoneNumber, Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length > MAX_LENGHT_NUMBER)
+        if (string.IsNullOrWhiteSpace(value))
+            return Errors.General.ValueIsInvalid("PhoneNumber");
+        
+        if (Regex.IsMatch(value, PhoneRegex) == false)
             return Errors.General.ValueIsInvalid("PhoneNumber");
         
         return new PhoneNumber(value);
