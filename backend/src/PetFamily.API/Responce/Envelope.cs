@@ -22,7 +22,7 @@ public record Envelope
     public static Envelope Ok(object result = null) =>
         new Envelope(result, []);
     
-    public static Envelope Error(IEnumerable<ResponceError> errors) =>
+    public static Envelope Error(List<ResponceError> errors) =>
         new Envelope(null, errors);
     
     

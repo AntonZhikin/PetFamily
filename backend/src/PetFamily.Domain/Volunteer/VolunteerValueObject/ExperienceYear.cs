@@ -14,7 +14,7 @@ public record ExperienceYear
 
     public static Result<ExperienceYear, Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length < Constants.MAX_LENGHT)
+        if (string.IsNullOrWhiteSpace(value) || value.Length > Constants.MAX_LENGHT)
             return Errors.General.ValueIsInvalid("ExperienceYear");
         
         return new ExperienceYear(value);

@@ -10,6 +10,6 @@ public record CreateVolunteerRequest(
     string Name, 
     string Surname, 
     string SecondName,
-    IReadOnlyList<SocialNetworkDto> SocialNetworks,
-    IReadOnlyList<AssistanceDetailDto> AssistanceDetails
+    List<SocialNetworkDto> SocialNetworks,
+    List<AssistanceDetailDto> AssistanceDetails
     );

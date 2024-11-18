@@ -17,7 +17,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 id => id.Value,
                 value => VolunteerId.Create(value));
 
-        builder.ComplexProperty(v => v.FullNames, g =>
+        builder.ComplexProperty(v => v.FullName, g =>
         {
             g.IsRequired();
             g.Property(c => c.Name).HasColumnName("name");
@@ -25,19 +25,19 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.Property(c => c.SecondName).HasColumnName("secondName");
         });
 
-        builder.ComplexProperty(p => p.PhoneNumbers, g =>
+        builder.ComplexProperty(p => p.PhoneNumber, g =>
         {
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("phonenumber");
         });
         
-        builder.ComplexProperty(p => p.Descriptions, g =>
+        builder.ComplexProperty(p => p.Description, g =>
         {
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("description");
         });
         
-        builder.ComplexProperty(p => p.ExperienceYears, g =>
+        builder.ComplexProperty(p => p.ExperienceYear, g =>
         {
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("experienceyears");

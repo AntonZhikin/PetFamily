@@ -38,15 +38,15 @@ public sealed class Pet : Entity<PetId>
 
     public IsNautered IsNeutered;
     
-    public DateOnly DateOfBirth { get; private set; }
+    public DateOnly DateOfBirth { get; }
     
-    public bool IsVaccine { get; private set; }
+    public bool IsVaccine { get; }
 
-    public HelpStatus HelpStatus { get; private set; }
+    public HelpStatus HelpStatus { get;}
     
-    public ReqList ReqDetails { get; private set; }
+    public ReqList ReqDetails { get;}
     
-    public DateOnly DateCreate { get; private set; }
+    public DateOnly DateCreate { get; }
 
-    public PetList.PetList Details { get; private set; }
+    public PetList.PetList PetDetails { get; }
 }

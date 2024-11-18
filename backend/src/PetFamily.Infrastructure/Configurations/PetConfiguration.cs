@@ -101,7 +101,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
 
-        builder.OwnsOne(p => p.Details, pb =>
+        builder.OwnsOne(p => p.PetDetails, pb =>
         {
             pb.ToJson();
 

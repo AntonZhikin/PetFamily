@@ -29,19 +29,19 @@ public class Volunteer : Entity<VolunteerId>
         ) 
         : base(volunteerId)
     {
-        Descriptions = description;
-        PhoneNumbers = phoneNumber;
-        ExperienceYears = experienceYears;
-        FullNames = fullName;
+        Description = description;
+        PhoneNumber = phoneNumber;
+        ExperienceYear = experienceYears;
+        FullName = fullName;
         SocialNetworks = socialNetworks;
         AssistanceDetails = assistanceDetails;
     }
 
-    public FullName FullNames;
+    public FullName FullName { get; }
 
-    public Description Descriptions;
+    public Description Description { get; }
 
-    public ExperienceYear ExperienceYears;
+    public ExperienceYear ExperienceYear { get; }
 
     private readonly List<Pet> _pets = [];
 
@@ -53,9 +53,9 @@ public class Volunteer : Entity<VolunteerId>
 
     public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
 
-    public PhoneNumber PhoneNumbers { get; private set; } = null!;
+    public PhoneNumber PhoneNumber;
 
-    public List<Pet> Pets { get; private set; } = [];
+    public List<Pet> Pets { get; } = [];
 
     public VolunteerSocialNetworks SocialNetworks { get; }
 
