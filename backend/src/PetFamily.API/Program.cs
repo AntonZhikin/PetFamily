@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics;
+using PetFamily.API;
 using PetFamily.API.Middlewares;
 using PetFamily.Application;
 using PetFamily.Infrastructure;
@@ -49,6 +50,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    await app.ApplyMigration();
 }
 
 app.UseHttpLogging();
