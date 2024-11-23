@@ -1,5 +1,5 @@
 ﻿using PetFamily.Domain.Pet.PetID;
-using PetFamily.Domain.Pet.PetList;
+using PetFamily.Domain.Pet.PetLists;
 using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
 namespace PetFamily.Domain.Pet;
@@ -16,27 +16,23 @@ public sealed class Pet : Entity<PetId>
         Name = name;
     }
     
-    public Name Name;
+    public Name Name { get; }
     
-    //public SpeciesValue Species;
-    
-    public Description Description;
-    
-    //public BreedValue Breed;
+    public Description Description { get; }
 
-    public Color Color;
+    public Color Color { get; }
 
-    public PetHealthInfo PetHealthInfo;
+    public PetHealthInfo PetHealthInfo { get; }
 
-    public Address Address;
+    public Address Address { get; }
 
-    public Weight Weight;
+    public Weight Weight { get; }
 
-    public Height Height;
+    public Height Height { get; }
 
-    public PhoneNumber PhoneNumber;
+    public PhoneNumber PhoneNumber { get; }
 
-    public IsNautered IsNeutered;
+    public IsNautered IsNeutered { get; }
     
     public DateOnly DateOfBirth { get; }
     
@@ -44,9 +40,8 @@ public sealed class Pet : Entity<PetId>
 
     public HelpStatus HelpStatus { get;}
     
-    public ReqList ReqDetails { get;}
-    
+    public RequisiteList Requisites { get;}
     public DateOnly DateCreate { get; }
 
-    public PetList.PetList PetDetails { get; }
+    public PetPhotoList Photos { get;}
 }
