@@ -64,7 +64,6 @@ app.MapControllers();
 
 app.Use(async (context, next) =>
 {
-    Console.WriteLine("Hello World!");
     await next.Invoke();
 });
 

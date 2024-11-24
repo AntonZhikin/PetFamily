@@ -4,8 +4,10 @@ using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
 namespace PetFamily.Domain.Pet;
 
-public sealed class Pet : Entity<PetId>
+public class Pet : Entity<PetId>//, ISoftDeletable
 {
+    public bool _isDeleted { get; private set; } = false;
+    
     //ef core
     private Pet(PetId id) : base(id)
     {
@@ -44,4 +46,17 @@ public sealed class Pet : Entity<PetId>
     public DateOnly DateCreate { get; }
 
     public PetPhotoList Photos { get;}
+    public void Delete()
+    {
+        if (_isDeleted) return;
+        {
+            _isDeleted = true;
+        }
+    }
+
+    public void Restore()
+    {
+        if(_isDeleted)
+            _isDeleted = false;
+    }
 }
