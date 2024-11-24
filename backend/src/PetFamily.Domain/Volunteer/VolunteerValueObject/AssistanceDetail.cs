@@ -9,7 +9,7 @@ public record AssistanceDetail
 
     public string Description { get; } = null!;
     
-    private AssistanceDetail(string name, string description)
+    public AssistanceDetail(string name, string description)
     {
         Name = name;
         Description = description;

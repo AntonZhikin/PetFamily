@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
-using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
@@ -10,7 +8,7 @@ using PetFamily.Domain.Volunteer.VolunteerValueObject;
 using Description = PetFamily.Domain.Volunteer.VolunteerValueObject.Description;
 using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
 
-namespace PetFamily.Application.Volunteers.CreateVolunteers;
+namespace PetFamily.Application.Volunteers.Create;
 
 public class CreateVolunteerHandler
 {
@@ -40,7 +38,7 @@ public class CreateVolunteerHandler
         var fullName = FullName.Create(request.Name, request.Surname, request.SecondName).Value;
 
         var socialNetwork = request.SocialNetworks
-            .Select(s => SocialNetwork.Create(s.Name, s.Path));
+            .Select(s => SocialNetwork.Create(s.Name, s.Link));
         if (socialNetwork.First().IsFailure)
             return Errors.General.ValueIsInvalid("socialNetworks");
         

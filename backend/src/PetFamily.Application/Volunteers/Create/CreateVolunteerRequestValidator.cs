@@ -4,7 +4,7 @@ using PetFamily.Domain.Volunteer.VolunteerValueObject;
 using Description = PetFamily.Domain.Pet.PetValueObject.Description;
 using PhoneNumber = PetFamily.Domain.Pet.PetValueObject.PhoneNumber;
 
-namespace PetFamily.Application.Volunteers.CreateVolunteers;
+namespace PetFamily.Application.Volunteers.Create;
 
 public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteerRequest>
 {
@@ -24,7 +24,7 @@ public class CreateVolunteerRequestValidator : AbstractValidator<CreateVolunteer
             .MustBeValueObject(ExperienceYear.Create);
         
         RuleForEach(c => c.SocialNetworks)
-            .MustBeValueObject(s => SocialNetwork.Create(s.Name, s.Path));
+            .MustBeValueObject(s => SocialNetwork.Create(s.Name, s.Link));
         
         RuleForEach(c => c.AssistanceDetails)
             .MustBeValueObject(s => AssistanceDetail.Create(s.Name, s.Description));

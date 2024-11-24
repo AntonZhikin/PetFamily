@@ -1,24 +1,33 @@
+using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Pet;
 
-public sealed class PetPhoto //: Entity<PetPhotoId>
+public record PetPhoto //: Entity<PetPhotoId>
 {
     //ef core
     //private PetPhoto(PetPhotoId id) : base(id)
     //{
     //}
+    private PetPhoto(string path, bool isMain)
+    {
+        Path = path;
+        IsMain = isMain;
+    }
+    
+    
     public string Path { get; }
     
     public bool IsMain { get; }
 
-    public static string Create(string path)
+    public static Result<PetPhoto, Error> Create(string path, bool isMain = false)
     {
         if (string.IsNullOrWhiteSpace(path))
-        {
-            throw new Exception(); //просто заглушка пока не дошел до 5/1
-        }
+            return Errors.General.ValueIsRequired("FilePath");
 
-        return "ok";
+        if (path.Length > Constants.MAX_HIGH_TEXT_LENGHT)
+            return Errors.General.ValueIsRequired("FilePath");
+
+        return new PetPhoto(path, isMain);
     }
 }

@@ -1,3 +1,5 @@
-namespace PetFamily.Application.Volunteers.CreateVolunteers;
+namespace PetFamily.Application.Volunteers.DTOs;
 
-public record AssistanceDetailDto(string Name, string Description);
+public record AssistanceDetailDto(
+    string Name,
+    string Description);

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetFamily.Domain.Pet;
 using PetFamily.Domain.Speciess;
 using PetFamily.Domain.Volunteer;
+using PetFamily.Infrastructure.Interceptors;
 
 namespace PetFamily.Infrastructure;
 
@@ -11,12 +13,17 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     private const string DATABASE = "Database";
     
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();
+    
+    public DbSet<Pet> Pets { get; set; }
     public DbSet<Species> Species => Set<Species>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+        optionsBuilder.EnableSensitiveDataLogging();
+
+        //optionsBuilder.AddInterceptors(new SoftDeleteInterceptors());
     }
 //"Server=localhost;Port=5434;Database=pet_family;User id=postgres;Password=postgres;"
     protected override void OnModelCreating(ModelBuilder modelBuilder)

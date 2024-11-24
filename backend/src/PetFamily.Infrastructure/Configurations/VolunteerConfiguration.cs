@@ -10,12 +10,20 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 {
     public void Configure(EntityTypeBuilder<Volunteer> builder)
     {
-        builder.ToTable("voluunter");
-
+        builder.ToTable("volunteers");
+        
+        builder.HasMany(v => v.Pets)
+            .WithOne()
+            .HasForeignKey("vol_id");
+        
         builder.Property(p => p.Id)
             .HasConversion(
                 id => id.Value,
                 value => VolunteerId.Create(value));
+        
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
 
         builder.ComplexProperty(v => v.FullName, g =>
         {
@@ -42,10 +50,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("experienceyears");
         });
-        
-        builder.HasMany(v => v.Pets)
-            .WithOne()
-            .HasForeignKey("vol_id");
 
         builder.OwnsOne(r => r.AssistanceDetails, rb => 
         {
@@ -76,5 +80,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
             });
         });
+        
     }
 }
