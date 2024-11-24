@@ -105,7 +105,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value); 
     }
     
-    [HttpDelete("{id:guid}/volunteer")]
+    [HttpDelete("{id:guid}/soft-delete")]
     public async Task<ActionResult> DeleteVolunteerSoft(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHandler handler,
@@ -127,7 +127,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value); 
     }
     
-    [HttpDelete("{id:guid}/volunteer1")]
+    [HttpDelete("{id:guid}/hard-delete")]
     public async Task<ActionResult> DeleteVolunteerHard(
         [FromRoute] Guid id,
         [FromServices] DeleteVolunteerHardHandler handler,
