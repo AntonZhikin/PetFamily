@@ -1,3 +1,5 @@
 namespace PetFamily.Application.Volunteers.DTOs;
 
-public record SocialNetworkDto(string Path, string Name);
+public record SocialNetworkDto(
+    string Name,
+    string Link);

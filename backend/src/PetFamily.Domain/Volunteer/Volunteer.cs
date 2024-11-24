@@ -37,11 +37,11 @@ public class Volunteer : Entity<VolunteerId>
         AssistanceDetails = assistanceDetails;
     }
 
-    public FullName FullName { get; }
+    public FullName FullName { get; private set; }
 
-    public Description Description { get; }
+    public Description Description { get; private set; }
 
-    public ExperienceYear ExperienceYear { get; }
+    public ExperienceYear ExperienceYear { get; private set; }
 
     private readonly List<Pet> _pets = [];
 
@@ -57,7 +57,28 @@ public class Volunteer : Entity<VolunteerId>
 
     public List<Pet> Pets { get; } = [];
 
-    public VolunteerSocialNetworks SocialNetworks { get; }
+    public VolunteerSocialNetworks SocialNetworks { get; private set; }
 
-    public VolunteerAssistanceDetails AssistanceDetails { get; }
+    public VolunteerAssistanceDetails AssistanceDetails { get; private set; }
+
+    public void UpdateMainInfo(Description description, 
+        PhoneNumber phoneNumber, 
+        ExperienceYear experienceYears,
+        FullName fullName)
+    {
+        Description = description;
+        PhoneNumber = phoneNumber;
+        ExperienceYear = experienceYears;
+        FullName = fullName;
+    }
+
+    public void UpdateSocialNetworks(VolunteerSocialNetworks socialNetworks)
+    {
+        SocialNetworks = socialNetworks;
+    }
+    
+    public void UpdateAssistanceDetail(VolunteerAssistanceDetails assistanceDetail)
+    {
+        AssistanceDetails = assistanceDetail;
+    }
 }
