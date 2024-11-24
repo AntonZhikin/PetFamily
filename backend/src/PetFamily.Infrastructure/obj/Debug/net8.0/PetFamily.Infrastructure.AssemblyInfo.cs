@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PetFamily.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+302f67174c2b78162ffce415d1622dd1cd4255b8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcd295fd8964c372f6b8b0e807197b820d79503a")]
 [assembly: System.Reflection.AssemblyProductAttribute("PetFamily.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PetFamily.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
