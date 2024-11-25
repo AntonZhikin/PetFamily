@@ -18,32 +18,32 @@ public class Pet : Entity<PetId>//, ISoftDeletable
         Name = name;
     }
     
-    public Name Name { get; }
+    public Name Name { get; private set; }
     
-    public Description Description { get; }
+    public Description Description { get; private set; }
 
-    public Color Color { get; }
+    public Color Color { get; private set;}
 
-    public PetHealthInfo PetHealthInfo { get; }
+    public PetHealthInfo PetHealthInfo { get; private set;}
 
-    public Address Address { get; }
+    public Address Address { get; private set;}
 
-    public Weight Weight { get; }
+    public Weight Weight { get; private set;}
 
-    public Height Height { get; }
+    public Height Height { get; private set;}
 
-    public PhoneNumber PhoneNumber { get; }
+    public PhoneNumber PhoneNumber { get; private set;}
 
-    public IsNautered IsNeutered { get; }
+    public IsNautered IsNeutered { get; private set;}
     
-    public DateOnly DateOfBirth { get; }
+    public DateOnly DateOfBirth { get; private set;}
     
-    public bool IsVaccine { get; }
+    public bool IsVaccine { get; private set; }
 
-    public HelpStatus HelpStatus { get;}
+    public HelpStatus HelpStatus { get; private set;}
     
-    public RequisiteList Requisites { get;}
-    public DateOnly DateCreate { get; }
+    public RequisiteList Requisites { get; private set;}
+    public DateOnly DateCreate { get; private set;}
 
     public PetPhotoList Photos { get;}
     public void Delete()
