@@ -1,3 +1,5 @@
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Pet.PetID;
 using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -9,12 +11,13 @@ using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
 namespace PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Pet;
 
-public class Volunteer : Entity<VolunteerId>//, ISoftDeletable
+public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
 {
     public const int MAX_LENGHT = 100;
 
     public bool _isDeleted { get; private set; } = false;
     
+    //ef core
     private Volunteer(VolunteerId id) : base(id)
     {
         
@@ -101,5 +104,40 @@ public class Volunteer : Entity<VolunteerId>//, ISoftDeletable
     {
         if(_isDeleted)
             _isDeleted = false;
+    }
+
+    public UnitResult<Error> AddPet(Pet pet)
+    {
+        var serialNumberResult = SerialNumber.Create(_pets.Count + 1);
+        if (serialNumberResult.IsFailure)
+            return serialNumberResult.Error;
+        
+        
+        pet.SetSerialNumber(serialNumberResult.Value);
+        
+        _pets.Add(pet);
+        return Result.Success<Error>();
+    }
+    
+    public UnitResult<Error> Move(Pet pet, SerialNumber serialNumber)
+    {
+        var serialNumberResult = SerialNumber.Create(_pets.Count + 1);
+        if (serialNumberResult.IsFailure)
+            return serialNumberResult.Error;
+        
+        
+        pet.SetSerialNumber(serialNumberResult.Value);
+        
+        _pets.Add(pet);
+        return Result.Success<Error>();
+    }
+    
+    public Result<Pet, Error> GetPetById(PetId id)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == id);
+        if (pet is null)
+            return Errors.General.NotFound();
+
+        return pet;
     }
 }
