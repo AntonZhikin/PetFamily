@@ -17,7 +17,11 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasConversion(
                 id => id.Value,
                 value => PetId.Create(value));
-
+        
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
+        
         builder.ComplexProperty(c => c.Name, b =>
         {
             b.IsRequired();
@@ -133,5 +137,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                     .HasColumnName("Title");
             });
         });
+        
+        
     }
 }

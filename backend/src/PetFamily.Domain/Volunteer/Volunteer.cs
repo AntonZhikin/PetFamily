@@ -9,9 +9,11 @@ using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
 namespace PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Pet;
 
-public class Volunteer : Entity<VolunteerId>
+public class Volunteer : Entity<VolunteerId>//, ISoftDeletable
 {
     public const int MAX_LENGHT = 100;
+
+    public bool _isDeleted { get; private set; } = false;
     
     private Volunteer(VolunteerId id) : base(id)
     {
@@ -80,5 +82,24 @@ public class Volunteer : Entity<VolunteerId>
     public void UpdateAssistanceDetail(VolunteerAssistanceDetails assistanceDetail)
     {
         AssistanceDetails = assistanceDetail;
+    }
+
+    public void Delete()
+    {
+        if (_isDeleted) return;
+        {
+            _isDeleted = true;
+            foreach (var pet in _pets)
+            {
+                pet.Delete();
+            }
+        }
+            
+    }
+
+    public void Restore()
+    {
+        if(_isDeleted)
+            _isDeleted = false;
     }
 }
