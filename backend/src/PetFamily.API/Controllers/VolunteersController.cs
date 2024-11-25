@@ -1,13 +1,15 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extensions;
-using PetFamily.Application.Volunteers.CreateVolunteers;
+using PetFamily.Application.Volunteers.Create;
+using PetFamily.Application.Volunteers.UpdateAssistanceDetail;
+using PetFamily.Application.Volunteers.UpdateMainInfo;
+using PetFamily.Application.Volunteers.UpdateSocialNetworks;
+using UpdateMainInfoDto = PetFamily.Application.Volunteers.UpdateMainInfo.UpdateMainInfoDto;
 
 namespace PetFamily.API.Controllers;
 
 
-[ApiController]
-[Route("[controller]")]
 public class VolunteersController : ApplicationController
 {
     
@@ -24,8 +26,6 @@ public class VolunteersController : ApplicationController
         {
             return validationResult.ToValidationErrorResponse();
         }
-        
-        //вызов сервис для создания волонтера(вызов бизнес логики)
         var result = await handler.Handle(request, cancellationToken);
         
         if (result.IsFailure)
@@ -33,4 +33,74 @@ public class VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
+    
+    [HttpPut("{id:guid}/main-info")]
+    public async Task<ActionResult> UpdateMainInfo(
+        [FromRoute] Guid id,
+        [FromServices] UpdateMainInfoHandler handler,
+        [FromBody] UpdateMainInfoDto dto, 
+        [FromServices] IValidator<UpdateMainInfoRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var request = new UpdateMainInfoRequest(id, dto);
+        
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToValidationErrorResponse();
+        }
+        
+        var result = await handler.Handle(request, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value); 
+    }
+    
+    [HttpPut("{id:guid}/social-networks")]
+    public async Task<ActionResult> UpdateSocialNetwork(
+        [FromRoute] Guid id,
+        [FromServices] UpdateSocialNetworkHandler handler,
+        [FromBody] UpdateSocialNetworksDto dto, 
+        [FromServices] IValidator<UpdateSocialNetworkRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var request = new UpdateSocialNetworkRequest(id, dto);
+        
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToValidationErrorResponse();
+        }
+        
+        var result = await handler.Handle(request, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value); 
+    }
+    
+    [HttpPut("{id:guid}/assistance-detail")]
+    public async Task<ActionResult> UpdateAssistanceDetail(
+        [FromRoute] Guid id,
+        [FromServices] UpdateAssistanceDetailHandler handler,
+        [FromBody] UpdateAssistanceDetailDto dto, 
+        [FromServices] IValidator<UpdateAssistanceDetailRequest> validator,
+        CancellationToken cancellationToken)
+    {
+        var request = new UpdateAssistanceDetailRequest(id, dto);
+        
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToValidationErrorResponse();
+        }
+        
+        var result = await handler.Handle(request, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value); 
+    }
 }
+

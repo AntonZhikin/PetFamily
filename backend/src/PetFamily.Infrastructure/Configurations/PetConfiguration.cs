@@ -82,7 +82,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("isNeutered")
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
-
         
         builder.Property(p => p.DateOfBirth)
             .IsRequired()
@@ -101,33 +100,37 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .IsRequired()
             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
 
-        builder.OwnsOne(p => p.PetDetails, pb =>
+        builder.OwnsOne(p => p.Photos, pb =>
         {
-            pb.ToJson();
+            pb.ToJson("petphotos");
 
             pb.OwnsMany(d => d.PetPhotos, pf =>
             {
                 pf.Property(f => f.Path)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT)
+                    .HasColumnName("path");
                 pf.Property(f => f.IsMain)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT)
+                    .HasColumnName("IsMain");
             });
         });
 
-        builder.OwnsOne(p => p.ReqDetails, rb => 
+        builder.OwnsOne(p => p.Requisites, rb => 
         {
-            rb.ToJson();
+            rb.ToJson("requisite");
 
             rb.OwnsMany(r => r.Requisites, rf =>
             {
                 rf.Property(g => g.Name)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT)
+                    .HasColumnName("Name");
                 rf.Property(g => g.Title)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT)
+                    .HasColumnName("Title");
             });
         });
     }

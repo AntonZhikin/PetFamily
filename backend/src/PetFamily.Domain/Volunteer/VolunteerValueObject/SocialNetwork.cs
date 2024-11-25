@@ -10,7 +10,7 @@ public record SocialNetwork
     public string Path { get; } = null!;
     
 
-    private SocialNetwork(string path, string name)
+    public SocialNetwork(string path, string name)
     {
         Name = name;
         Path = path;
