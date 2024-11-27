@@ -1,6 +1,8 @@
-﻿using PetFamily.Domain.Pet.PetID;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Pet.PetID;
 using PetFamily.Domain.Pet.PetLists;
 using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Pet;
 
@@ -20,7 +22,7 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         Color = color;
     }
     
-    public SerialNumber SerialNumber { get; private set; }
+    public Position Position { get; private set; }
     
     public Name Name { get; private set; }
     
@@ -66,6 +68,31 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
             _isDeleted = false;
     }
     
-    public void SetSerialNumber(SerialNumber serialNumber) =>
-        SerialNumber = serialNumber;
+    public void SetPosition(Position position) =>
+        Position = position;
+
+    public UnitResult<Error> MoveForward()
+    {
+        var newPosition = Position.Forward();
+        if(newPosition.IsFailure)
+            return newPosition.Error;
+        
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+    public UnitResult<Error> MoveBack()
+    {
+        var newPosition = Position.Back();
+        if(newPosition.IsFailure)
+            return newPosition.Error;
+        
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+
+    public void Move(Position newPosition) =>
+        Position = newPosition;
+    
 }

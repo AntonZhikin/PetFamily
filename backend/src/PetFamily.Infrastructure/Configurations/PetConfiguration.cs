@@ -18,7 +18,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 id => id.Value,
                 value => PetId.Create(value));
         
-        builder.ComplexProperty(c => c.SerialNumber, b =>
+        builder.ComplexProperty(c => c.Position, b =>
         {
             b.IsRequired();
             b.Property(p => p.Value)
