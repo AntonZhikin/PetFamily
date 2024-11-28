@@ -1,27 +1,35 @@
-﻿using PetFamily.Domain.Pet.PetID;
+﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Pet.PetID;
 using PetFamily.Domain.Pet.PetLists;
 using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
+
 namespace PetFamily.Domain.Pet;
 
-public class Pet : Entity<PetId>//, ISoftDeletable
+public class Pet : Shared.Entity<PetId>//, ISoftDeletable
 {
-    public bool _isDeleted { get; private set; } = false;
-    
     //ef core
     private Pet(PetId id) : base(id)
     {
     }
 
-    private Pet(PetId petId, Name name) : base(petId)
+    public Pet(PetId petId, 
+        Name name, 
+        Color color
+        ) : base(petId)
     {
         Name = name;
+        Color = color;
     }
+    
+    public Position Position { get; private set; }
     
     public Name Name { get; private set; }
     
-    public Description Description { get; private set; }
-
+    public Description Description { get; private set;}
+    
+    public bool _isDeleted { get; private set; } = false;
+    
     public Color Color { get; private set;}
 
     public PetHealthInfo PetHealthInfo { get; private set;}
@@ -38,14 +46,14 @@ public class Pet : Entity<PetId>//, ISoftDeletable
     
     public DateOnly DateOfBirth { get; private set;}
     
-    public bool IsVaccine { get; private set; }
+    public bool IsVaccine { get; private set;}
 
     public HelpStatus HelpStatus { get; private set;}
     
     public RequisiteList Requisites { get; private set;}
     public DateOnly DateCreate { get; private set;}
-
-    public PetPhotoList Photos { get;}
+    
+    public PetPhotoList Photos { get; private set;}
     public void Delete()
     {
         if (_isDeleted) return;
@@ -59,4 +67,32 @@ public class Pet : Entity<PetId>//, ISoftDeletable
         if(_isDeleted)
             _isDeleted = false;
     }
+    
+    public void SetPosition(Position position) =>
+        Position = position;
+
+    public UnitResult<Error> MoveForward()
+    {
+        var newPosition = Position.Forward();
+        if(newPosition.IsFailure)
+            return newPosition.Error;
+        
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+    public UnitResult<Error> MoveBack()
+    {
+        var newPosition = Position.Back();
+        if(newPosition.IsFailure)
+            return newPosition.Error;
+        
+        Position = newPosition.Value;
+
+        return Result.Success<Error>();
+    }
+
+    public void Move(Position newPosition) =>
+        Position = newPosition;
+    
 }

@@ -18,6 +18,14 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 id => id.Value,
                 value => PetId.Create(value));
         
+        builder.ComplexProperty(c => c.Position, b =>
+        {
+            b.IsRequired();
+            b.Property(p => p.Value)
+                .IsRequired()
+                .HasColumnName("serial_number");
+        });
+        
         builder.Property<bool>("_isDeleted")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
@@ -60,6 +68,14 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             b.Property(p => p.City).
                 HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
             b.Property(p => p.Street)
+                .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+        });
+        
+        builder.ComplexProperty(c => c.PhoneNumber, b =>
+        {
+            b.IsRequired();
+            b.Property(p => p.Value)
+                .HasColumnName("phone_number")
                 .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
         });
         
