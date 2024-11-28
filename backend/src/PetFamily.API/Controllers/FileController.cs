@@ -1,13 +1,75 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Minio;
+using Minio.DataModel.Args;
+using PetFamily.API.Extensions;
+using PetFamily.Application.FileProvider;
+using PetFamily.Application.Volunteers.AddPet;
+using PetFamily.Application.Volunteers.FIles.DeletePet;
+using PetFamily.Application.Volunteers.FIles.GetPetFiles;
+using PetFamily.Infrastructure.Options;
 
 namespace PetFamily.API.Controllers;
 
 public class FileController : ApplicationController
 {
-    [HttpPost]
+    private readonly IMinioClient _minioClient;
 
-    public async Task<IActionResult> CreateFile([FromForm] IFormFile file)
+    public FileController(IMinioClient minioClient)
     {
-        return Ok(file);
+        _minioClient = minioClient;
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> AddPet(
+        IFormFile file, 
+        [FromServices] AddPetFilesHandler filesHandler,
+        CancellationToken cancellationToken)
+    {
+        await using var stream = file.OpenReadStream();
+
+        var path = Guid.NewGuid().ToString();
+
+        var fileData = new FileData(stream, "photos", path);
+        
+        var result = await filesHandler.Handle(fileData, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+    
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetPet(
+        Guid id,
+        [FromServices] GetPetFilesHandler filesHandler,
+        CancellationToken cancellationToken)
+    {
+        var objectName = id.ToString();
+        
+        var fileData = new FileData(null, "photos", objectName);
+        
+        var result = await filesHandler.Handle(fileData, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeletePet(
+        Guid id,
+        [FromServices] DeletePetFilesHandler filesHandler,
+        CancellationToken cancellationToken)
+    {
+        var objectName = id.ToString();
+        
+        var fileData = new FileData(null, "photos", objectName);
+        
+        var result = await filesHandler.Handle(fileData, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
     }
 }
