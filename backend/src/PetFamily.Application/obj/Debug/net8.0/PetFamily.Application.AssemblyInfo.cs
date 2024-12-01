@@ -12,9 +12,9 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("c7ef89ca-3a1f-4c67-9187-6d0d950d082b")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("PetFamily.Application")]
-[assembly: Systeкm.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a76e6d7d425c13be3df239d5d0b14e6b8140363")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af22d022edde9fa6c5aef7e53629afbaeb5bcba9")]
 [assembly: System.Reflection.AssemblyProductAttribute("PetFamily.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PetFamily.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
