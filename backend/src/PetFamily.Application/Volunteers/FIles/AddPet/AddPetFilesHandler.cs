@@ -17,8 +17,9 @@ public class AddPetFilesHandler
 
     public async Task<Result<string, Error>> Handle(
         FileData fileData,
+        string bucketName,
         CancellationToken cancellationToken = default)
     {
-        return await _fileProvider.UploadFile(fileData, cancellationToken);
+        return await _fileProvider.UploadFile(fileData, bucketName, cancellationToken);
     }
 }

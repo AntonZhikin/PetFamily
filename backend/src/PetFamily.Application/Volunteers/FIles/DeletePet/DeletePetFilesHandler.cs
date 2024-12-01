@@ -16,8 +16,9 @@ public class DeletePetFilesHandler
 
     public async Task<Result<bool, Error>> Handle(
         FileData fileData,
+        string bucketName,
         CancellationToken cancellationToken)
     {
-        return await _fileProvider.DeleteFile(fileData, cancellationToken);
+        return await _fileProvider.DeleteFile(fileData, bucketName, cancellationToken);
     }
 }

@@ -17,8 +17,9 @@ public class GetPetFilesHandler
 
     public async Task<Result<string, Error>> Handle(
         FileData fileData,
+        string bucketName,
         CancellationToken cancellationToken = default)
     {
-        return await _fileProvider.GetFile(fileData, cancellationToken);
+        return await _fileProvider.GetFile(fileData, bucketName, cancellationToken);
     }
 }

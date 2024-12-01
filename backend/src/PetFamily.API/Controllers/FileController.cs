@@ -31,9 +31,9 @@ public class FileController : ApplicationController
 
         var path = Guid.NewGuid().ToString();
 
-        var fileData = new FileData(stream, "photos", path);
+        var fileData = new FileData(stream, path);
         
-        var result = await filesHandler.Handle(fileData, cancellationToken);
+        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
@@ -48,9 +48,9 @@ public class FileController : ApplicationController
     {
         var objectName = id.ToString();
         
-        var fileData = new FileData(null, "photos", objectName);
+        var fileData = new FileData(null, objectName);
         
-        var result = await filesHandler.Handle(fileData, cancellationToken);
+        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
@@ -64,9 +64,9 @@ public class FileController : ApplicationController
     {
         var objectName = id.ToString();
         
-        var fileData = new FileData(null, "photos", objectName);
+        var fileData = new FileData(null, objectName);
         
-        var result = await filesHandler.Handle(fileData, cancellationToken);
+        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
