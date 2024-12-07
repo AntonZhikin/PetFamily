@@ -2,6 +2,8 @@ namespace PetFamily.Domain.Speciess.SpeciesID;
 
 public record SpeciesId
 {
+    private SpeciesId() { }
+    
     private SpeciesId(Guid value)
     {
         Value = value;

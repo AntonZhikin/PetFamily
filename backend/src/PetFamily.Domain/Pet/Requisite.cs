@@ -7,12 +7,12 @@ public record Requisite
 {
     public string Name { get; private set; } = null!;
 
-    public string Title { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
 
-    private Requisite(string name, string title)
+    private Requisite(string name, string description)
     {
         Name = name;
-        Title = title;
+        Description = description;
     }
     
     public static Result<Requisite, Error> Create(string name, string description)

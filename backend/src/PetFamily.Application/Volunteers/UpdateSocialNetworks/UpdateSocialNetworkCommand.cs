@@ -3,10 +3,7 @@ using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.UpdateSocialNetworks;
 
-public record UpdateSocialNetworkRequest(
+public record UpdateSocialNetworkCommand(
     Guid VolunteerId,
-    UpdateSocialNetworksDto SocialNetworkDto
+    SocialNetworkListDto SocialNetworkList
     );
-public record UpdateSocialNetworksDto(
-    List<SocialNetworkDto> SocialNetworks);
-    

@@ -5,15 +5,15 @@ using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.UpdateAssistanceDetail;
 
-public class UpdateAssistanceDetailValidator : AbstractValidator<UpdateAssistanceDetailRequest>
+public class UpdateAssistanceDetailCommandValidator : AbstractValidator<UpdateAssistanceDetailCommand>
 {
-    public UpdateAssistanceDetailValidator()
+    public UpdateAssistanceDetailCommandValidator()
     {
         RuleFor(u => u.VolunteerId)
             .NotEmpty()
             .WithError(Errors.General.ValueIsRequired());
 
-        RuleForEach(u => u.AssistanceDetailDto.AssistanceDetails)
+        RuleForEach(u => u.AssistanceDetailList.AssistanceDetails)
             .MustBeValueObject(ua => AssistanceDetail.Create(
                 ua.Name,
                 ua.Description));

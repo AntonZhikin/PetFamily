@@ -2,13 +2,13 @@ using PetFamily.Application.Volunteers.DTOs;
 
 namespace PetFamily.Application.Volunteers.Create;
 
-public record CreateVolunteerRequest(
+public record CreateVolunteerCommand(
     string Descriptions, 
     string PhoneNumbers, 
     string ExperienceYears, 
     string Name, 
     string Surname, 
     string SecondName,
-    List<SocialNetworkDto> SocialNetworks,
-    List<AssistanceDetailDto> AssistanceDetails
+    SocialNetworkListDto SocialNetworkList,
+    AssistanceDetailListDto AssistanceDetailList
     );

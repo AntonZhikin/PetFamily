@@ -6,7 +6,7 @@ using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.UpdateSocialNetworks;
 
-public class UpdateSocialNetworkValidator : AbstractValidator<UpdateSocialNetworkRequest>
+public class UpdateSocialNetworkValidator : AbstractValidator<UpdateSocialNetworkCommand>
 {
     public UpdateSocialNetworkValidator()
     {
@@ -14,7 +14,7 @@ public class UpdateSocialNetworkValidator : AbstractValidator<UpdateSocialNetwor
             .NotEmpty()
             .WithError(Errors.General.ValueIsRequired());
         
-        RuleForEach(u => u.SocialNetworkDto.SocialNetworks)
+        RuleForEach(u => u.SocialNetworkList.SocialNetworks)
             .MustBeValueObject(us => SocialNetwork.Create(
                 us.Name,
                 us.Link));

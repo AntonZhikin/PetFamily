@@ -3,10 +3,10 @@ namespace PetFamily.Domain.Pet.PetLists;
 public record RequisiteList
 {
     private RequisiteList() { }
-    public IReadOnlyList<Requisite> Requisites { get; }
+    public List<Requisite> Requisites { get; }
 
-    public RequisiteList(IReadOnlyList<Requisite> requisites)
+    public RequisiteList(IEnumerable<Requisite> requisites)
     {
-        Requisites = requisites;
+        Requisites = requisites.ToList();
     }
 }

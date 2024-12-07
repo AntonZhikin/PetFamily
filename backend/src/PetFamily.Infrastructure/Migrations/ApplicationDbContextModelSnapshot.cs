@@ -153,13 +153,13 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasColumnName("phone_number");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("SerialNumber", "PetFamily.Domain.Pet.Pet.SerialNumber#SerialNumber", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Position", "PetFamily.Domain.Pet.Pet.Position#Position", b1 =>
                         {
                             b1.IsRequired();
 
                             b1.Property<int>("Value")
                                 .HasColumnType("integer")
-                                .HasColumnName("serial_number");
+                                .HasColumnName("Position");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Weight", "PetFamily.Domain.Pet.Pet.Weight#Weight", b1 =>
@@ -284,7 +284,7 @@ namespace PetFamily.Infrastructure.Migrations
 
                             b1.ToTable("pets");
 
-                            b1.ToJson("petphotos");
+                            b1.ToJson("petPhotos");
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId")
@@ -300,15 +300,14 @@ namespace PetFamily.Infrastructure.Migrations
                                         .HasColumnType("integer");
 
                                     b2.Property<bool>("IsMain")
-                                        .HasMaxLength(100)
                                         .HasColumnType("boolean")
-                                        .HasColumnName("IsMain");
+                                        .HasColumnName("is_main");
 
                                     b2.Property<string>("Path")
                                         .IsRequired()
                                         .HasMaxLength(100)
                                         .HasColumnType("character varying(100)")
-                                        .HasColumnName("path");
+                                        .HasColumnName("file_path");
 
                                     b2.HasKey("PetPhotoListPetId", "Id")
                                         .HasName("pk_pets");

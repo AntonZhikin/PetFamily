@@ -3,6 +3,8 @@ using PetFamily.Domain.Pet.PetID;
 using PetFamily.Domain.Pet.PetLists;
 using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Speciess;
+using PetFamily.Domain.Speciess.SpeciesID;
 
 namespace PetFamily.Domain.Pet;
 
@@ -12,16 +14,51 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
     private Pet(PetId id) : base(id)
     {
     }
-
+    
     public Pet(PetId petId, 
         Name name, 
-        Color color
-        ) : base(petId)
+        Description description, 
+        Color color, 
+        PetHealthInfo petHealthInfo, 
+        Address address,
+        Weight weight, 
+        Height height, 
+        PhoneNumber phoneNumber, 
+        IsNautered isNeutered, 
+        DateTime dateOfBirth, 
+        bool isVaccine,
+        HelpStatus helpStatus,
+        DateTime dateCreate,
+        //BreedId breedId,
+        //SpeciesId speciesId,
+        RequisiteList requisites,
+        IEnumerable<PetPhoto>? photos = null) : base(petId)
     {
         Name = name;
+        Description = description;
         Color = color;
+        PetHealthInfo = petHealthInfo;
+        Address = address;
+        Weight = weight;
+        Height = height;
+        PhoneNumber = phoneNumber;
+        IsNeutered = isNeutered;
+        DateOfBirth = dateOfBirth;
+        IsVaccine = isVaccine;
+        HelpStatus = helpStatus;
+        DateCreate = dateCreate;
+        //BreedId = breedId;
+        //SpeciesId = speciesId;
+        Requisites = requisites;
+        Photos = photos == null 
+            ? new PetPhotoList(Enumerable.Empty<PetPhoto>()) 
+            : new PetPhotoList(photos);
     }
-    
+
+    //public SpeciesId SpeciesId { get; private set; }
+
+    //public BreedId BreedId { get; private set; }
+
     public Position Position { get; private set; }
     
     public Name Name { get; private set; }
@@ -44,16 +81,20 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
 
     public IsNautered IsNeutered { get; private set;}
     
-    public DateOnly DateOfBirth { get; private set;}
+    public DateTime DateOfBirth { get; private set;}
     
     public bool IsVaccine { get; private set;}
 
     public HelpStatus HelpStatus { get; private set;}
     
     public RequisiteList Requisites { get; private set;}
-    public DateOnly DateCreate { get; private set;}
-    
+    public DateTime DateCreate { get; private set;}
     public PetPhotoList Photos { get; private set;}
+
+    public void UpdatePhotos(IEnumerable<PetPhoto> photos)
+        => Photos = new PetPhotoList(photos); 
+    
+    
     public void Delete()
     {
         if (_isDeleted) return;

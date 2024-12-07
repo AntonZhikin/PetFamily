@@ -12,6 +12,8 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
     {
         builder.ToTable("volunteers");
         
+        builder.HasKey(x => x.Id);
+        
         builder.HasMany(v => v.Pets)
             .WithOne()
             .HasForeignKey("vol_id");
@@ -59,7 +61,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             {
                 rf.Property(g => g.Name)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
                 rf.Property(g => g.Description)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
@@ -74,7 +76,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             {
                 sf.Property(g => g.Name)
                     .IsRequired()
-                    .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
+                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
                 sf.Property(g => g.Path)
                     .IsRequired()
                     .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);

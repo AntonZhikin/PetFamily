@@ -58,6 +58,15 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
 
     public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
 
+    public Result<Pet, Error> GetPetById(PetId petId)
+    { 
+        var pet = _pets.FirstOrDefault(p => p.Id.Value == petId.Value);
+        if (pet is null)
+            return Errors.General.NotFound(petId.Value);
+
+        return pet;
+    }
+    
     public PhoneNumber PhoneNumber;
 
     public List<Pet> Pets { get; } = [];
@@ -87,7 +96,7 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
         AssistanceDetails = assistanceDetail;
     }
 
-    public void Delete()
+    public void SoftDelete()
     {
         if (_isDeleted) return;
         {
@@ -118,6 +127,7 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
         pet.SetPosition(serialNumberResult.Value);
         
         _pets.Add(pet);
+        
         return Result.Success<Error>();
     }
     
@@ -189,13 +199,4 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
         
         return lastPosition.Value;
     } 
-    
-    public Result<Pet, Error> GetPetById(PetId id)
-    {
-        var pet = _pets.FirstOrDefault(p => p.Id == id);
-        if (pet is null)
-            return Errors.General.NotFound();
-
-        return pet;
-    }
 }

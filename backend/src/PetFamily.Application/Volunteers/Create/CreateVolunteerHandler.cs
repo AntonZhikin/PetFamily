@@ -1,5 +1,8 @@
 using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetFamily.Application.Database;
+using PetFamily.Application.Extensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -14,49 +17,61 @@ public class CreateVolunteerHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<CreateVolunteerCommand> _validator;
 
     public CreateVolunteerHandler(
         IVolunteerRepository volunteerRepository,
-        ILogger<CreateVolunteerHandler> logger)
+        ILogger<CreateVolunteerHandler> logger,
+        IValidator<CreateVolunteerCommand> validator,
+        IUnitOfWork unitOfWork)
     {
         _volunteerRepository = volunteerRepository;
         _logger = logger;
+        _validator = validator;
+        _unitOfWork = unitOfWork;
     }
     
-    public async Task<Result<Guid, Error>> Handle(
-        CreateVolunteerRequest request, 
+    public async Task<Result<Guid, ErrorList>> Handle(
+        CreateVolunteerCommand command, 
         CancellationToken cancellationToken = default)
     {
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToErrorList();
+        }
+        
         var volunteerId = VolunteerId.NewVolunteerId();
 
-        var description = Description.Create(request.Descriptions).Value;
+        var description = Description.Create(command.Descriptions).Value;
         
-        var phoneNumber = PhoneNumber.Create(request.PhoneNumbers).Value;
+        var phoneNumber = PhoneNumber.Create(command.PhoneNumbers).Value;
 
-        var experienceYears = ExperienceYear.Create(request.ExperienceYears).Value;
+        var experienceYears = ExperienceYear.Create(command.ExperienceYears).Value;
         
-        var fullName = FullName.Create(request.Name, request.Surname, request.SecondName).Value;
+        var fullName = FullName.Create(command.Name, command.Surname, command.SecondName).Value;
 
-        var socialNetwork = request.SocialNetworks
+        var socialNetwork = command.SocialNetworkList.SocialNetworks
             .Select(s => SocialNetwork.Create(s.Name, s.Link));
         if (socialNetwork.First().IsFailure)
-            return Errors.General.ValueIsInvalid("socialNetworks");
+            return Errors.General.ValueIsInvalid("socialNetworks").ToErrorList();
         
         var socialNetworks = new VolunteerSocialNetworks(socialNetwork
             .Select(x => x.Value).ToList());
         if (socialNetworks is null)
-            return Errors.General.ValueIsInvalid("socialNetworksList");
+            return Errors.General.ValueIsInvalid("socialNetworksList").ToErrorList();
         
         
-        var assistanceDetail = request.AssistanceDetails
+        var assistanceDetail = command.AssistanceDetailList.AssistanceDetails
             .Select(a => AssistanceDetail.Create(a.Name, a.Description));
         if (assistanceDetail.First().IsFailure)
-            return Errors.General.ValueIsInvalid("assistanceDetails");
+            return Errors.General.ValueIsInvalid("assistanceDetails").ToErrorList();
         
         var assistanceDetails = new VolunteerAssistanceDetails(assistanceDetail
             .Select(x => x.Value).ToList());
         if(assistanceDetails is null)
-            return Errors.General.ValueIsInvalid("assistanceDetailsList");
+            return Errors.General.ValueIsInvalid("assistanceDetailsList").ToErrorList();
         
         
         var volunteer = new Volunteer(
@@ -70,6 +85,8 @@ public class CreateVolunteerHandler
             );
 
         await _volunteerRepository.Add(volunteer, cancellationToken);
+
+        await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("Created volunteer {name}, with id {id}", fullName.Name, volunteer.Id);
 

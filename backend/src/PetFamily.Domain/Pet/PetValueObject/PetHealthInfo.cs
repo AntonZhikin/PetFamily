@@ -16,7 +16,7 @@ public record PetHealthInfo
 
     public static Result<PetHealthInfo, Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length < MAX_LENGHT_PetHealthInfo)
+        if (string.IsNullOrWhiteSpace(value) || value.Length > MAX_LENGHT_PetHealthInfo)
             return Errors.General.ValueIsInvalid("PetHealthInfo");
 
         return new PetHealthInfo(value);
