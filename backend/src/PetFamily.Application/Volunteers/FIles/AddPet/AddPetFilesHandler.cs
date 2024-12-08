@@ -1,10 +1,8 @@
 using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Http.HttpResults;
 using PetFamily.Application.FileProvider;
-using PetFamily.Application.Providers;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Application.Volunteers.AddPet;
+namespace PetFamily.Application.Volunteers.FIles.AddPet;
 
 public class AddPetFilesHandler
 {
@@ -15,11 +13,11 @@ public class AddPetFilesHandler
         _fileProvider = fileProvider;
     }
 
-    public async Task<Result<string, Error>> Handle(
+    public async Task<UnitResult<Error>> Handle(
         FileData fileData,
         string bucketName,
         CancellationToken cancellationToken = default)
     {
-        return await _fileProvider.UploadFile(fileData, bucketName, cancellationToken);
+        return null; //await _fileProvider.UploadFiles(fileData, cancellationToken);
     }
 }

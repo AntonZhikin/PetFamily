@@ -1,6 +1,5 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Application.FileProvider;
-using PetFamily.Application.Providers;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.Application.Volunteers.FIles.DeletePet;
@@ -15,10 +14,11 @@ public class DeletePetFilesHandler
     }
 
     public async Task<Result<bool, Error>> Handle(
-        FileData fileData,
+        FileContent fileContent,
         string bucketName,
         CancellationToken cancellationToken)
     {
-        return await _fileProvider.DeleteFile(fileData, bucketName, cancellationToken);
+        //return await _fileProvider.DeleteFile(fileContent, bucketName, cancellationToken);
+        return null;
     }
 }
