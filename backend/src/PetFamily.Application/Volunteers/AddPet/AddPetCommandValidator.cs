@@ -1,6 +1,7 @@
 using FluentValidation;
 using PetFamily.Application.Validation;
 using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.AddPet;
 
@@ -8,6 +9,10 @@ public class AddPetCommandValidator : AbstractValidator<AddPetCommand>
 {
     public AddPetCommandValidator()
     {
+        RuleFor(a => a.SpeciesId).NotNull().NotEmpty();
+        
+        RuleFor(a => a.BreedId).NotNull().NotEmpty();
+        
         RuleFor(a => a.Name)
             .MustBeValueObject(Name.Create);
         

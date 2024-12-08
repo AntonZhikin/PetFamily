@@ -6,6 +6,8 @@ namespace PetFamily.API.Controllers.Volunteers.Request;
 
 public record AddPetRequest(
     string Name,
+    Guid SpeciesId,
+    Guid BreedId,
     string Description,
     string Color,
     string PetHealthInfo,
@@ -24,6 +26,8 @@ public record AddPetRequest(
     public AddPetCommand ToCommand(Guid volunteerId) => new(
         volunteerId,
         Name,
+        SpeciesId,
+        BreedId,
         Description,
         Color,
         PetHealthInfo,

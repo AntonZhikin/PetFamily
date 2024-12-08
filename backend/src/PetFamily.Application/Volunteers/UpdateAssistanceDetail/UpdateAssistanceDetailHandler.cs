@@ -46,7 +46,7 @@ public class UpdateAssistanceDetailHandler
             .Select(dto => new AssistanceDetail(dto.Name, dto.Description))
             .ToList();
         
-        var volunteerAssistanceDetails = new VolunteerAssistanceDetails(assistanceDetail);
+        var volunteerAssistanceDetails = new AssistanceDetailList(assistanceDetail);
         
         volunteerResult.Value.UpdateAssistanceDetail(volunteerAssistanceDetails);
 

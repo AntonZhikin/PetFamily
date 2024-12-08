@@ -46,7 +46,7 @@ public class UpdateSocialNetworkHandler
             .Select(dto => new SocialNetwork(dto.Name, dto.Link))
             .ToList();
         
-        var volunteerSocialNetworks = new VolunteerSocialNetworks(socialNetworks);
+        var volunteerSocialNetworks = new SocialNetworkList(socialNetworks);
 
         volunteerResult.Value.UpdateSocialNetworks(volunteerSocialNetworks);
 

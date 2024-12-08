@@ -1,7 +1,10 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using PetFamily.Application.Species.AddBreedToSpecies;
+using PetFamily.Application.Species.Create;
 using PetFamily.Application.Volunteers.AddPet;
 using PetFamily.Application.Volunteers.Create;
+using PetFamily.Application.Volunteers.DeleteFilesToPet;
 using PetFamily.Application.Volunteers.DeleteHard;
 using PetFamily.Application.Volunteers.DeleteSoft;
 using PetFamily.Application.Volunteers.FIles.AddPet;
@@ -29,6 +32,9 @@ public static class Inject
         services.AddScoped<DeletePetFilesHandler>();
         services.AddScoped<AddPetHandler>();
         services.AddScoped<UploadFileToPetHandler>();
+        services.AddScoped<CreateSpeciesHandler>();
+        services.AddScoped<AddBreedToSpeciesHandler>();
+        services.AddScoped<DeleteFilesToPetHandler>();
         
         
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);

@@ -3,19 +3,23 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
+using PetFamily.Application.Species;
 using PetFamily.Domain.Pet;
-using PetFamily.Domain.Pet.PetID;
 using PetFamily.Domain.Pet.PetLists;
 using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.PetManagement.Entity;
+using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Speciess.SpeciesID;
 using PetFamily.Domain.Volunteer.VolunteerID;
+using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.AddPet;
 
 public class AddPetHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
+    private readonly ISpeciesRepository _speciesRepository;
     private readonly IValidator<AddPetCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddPetHandler> _logger;
@@ -24,10 +28,12 @@ public class AddPetHandler
     public AddPetHandler(
         IValidator<AddPetCommand> validator,
         IVolunteerRepository volunteerRepository,
+        ISpeciesRepository speciesRepository,
         IUnitOfWork unitOfWork,
         ILogger<AddPetHandler> logger)
     {
         _volunteerRepository = volunteerRepository;
+        _speciesRepository = speciesRepository;
         _validator = validator;
         _unitOfWork = unitOfWork;
         _logger = logger;
@@ -47,7 +53,19 @@ public class AddPetHandler
             .GetById(command.VolunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
-
+        
+        var speciesResult = await _speciesRepository.GetById(command.SpeciesId, cancellationToken);
+        if(speciesResult.IsFailure)
+            return speciesResult.Error.ToErrorList();
+        
+        var breedResult = speciesResult.Value
+            .Breeds
+            .FirstOrDefault(b => b.Id.Value == command.BreedId);
+        if (breedResult == null)
+        {
+            return Errors.General.NotFound(command.BreedId).ToErrorList();
+        }
+        
         var petId = PetId.NewPetId();
 
         var name = Name.Create(command.Name).Value;
@@ -63,8 +81,6 @@ public class AddPetHandler
         var isVaccine = command.IsVaccine;
         var helpStatus = command.HelpStatus;
         var dateCreate = command.DateCreate;
-        var speciesId = SpeciesId.Empty();
-        var breedId = BreedId.Empty();
 
         var requisites = new RequisiteList(
             command.RequisiteList.Requisites

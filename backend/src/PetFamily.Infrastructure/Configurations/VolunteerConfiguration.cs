@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PetFamily.Domain.PetManagement.AggregateRoot;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -13,10 +14,9 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         builder.ToTable("volunteers");
         
         builder.HasKey(x => x.Id);
-        
+
         builder.HasMany(v => v.Pets)
-            .WithOne()
-            .HasForeignKey("vol_id");
+            .WithOne();
         
         builder.Property(p => p.Id)
             .HasConversion(
@@ -53,7 +53,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.Property(c => c.Value).HasColumnName("experienceyears");
         });
 
-        builder.OwnsOne(r => r.AssistanceDetails, rb => 
+        builder.OwnsOne(r => r.AssistanceDetailList, rb => 
         {
             rb.ToJson();
 
@@ -68,7 +68,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             });
         });
         
-        builder.OwnsOne(s => s.SocialNetworks, sb => 
+        builder.OwnsOne(s => s.SocialNetworkList, sb => 
         {
             sb.ToJson();
 

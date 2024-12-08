@@ -3,6 +3,7 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
+using PetFamily.Domain.PetManagement.AggregateRoot;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -57,7 +58,7 @@ public class CreateVolunteerHandler
         if (socialNetwork.First().IsFailure)
             return Errors.General.ValueIsInvalid("socialNetworks").ToErrorList();
         
-        var socialNetworks = new VolunteerSocialNetworks(socialNetwork
+        var socialNetworks = new SocialNetworkList(socialNetwork
             .Select(x => x.Value).ToList());
         if (socialNetworks is null)
             return Errors.General.ValueIsInvalid("socialNetworksList").ToErrorList();
@@ -68,7 +69,7 @@ public class CreateVolunteerHandler
         if (assistanceDetail.First().IsFailure)
             return Errors.General.ValueIsInvalid("assistanceDetails").ToErrorList();
         
-        var assistanceDetails = new VolunteerAssistanceDetails(assistanceDetail
+        var assistanceDetails = new AssistanceDetailList(assistanceDetail
             .Select(x => x.Value).ToList());
         if(assistanceDetails is null)
             return Errors.General.ValueIsInvalid("assistanceDetailsList").ToErrorList();
