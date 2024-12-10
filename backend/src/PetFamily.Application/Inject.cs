@@ -1,14 +1,19 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using PetFamily.Application.Species.AddBreedToSpecies;
+using PetFamily.Application.Species.Create;
 using PetFamily.Application.Volunteers.AddPet;
 using PetFamily.Application.Volunteers.Create;
-using PetFamily.Application.Volunteers.DeleteVolunteer;
-using PetFamily.Application.Volunteers.DeleteVolunteerHard;
+using PetFamily.Application.Volunteers.DeleteFilesToPet;
+using PetFamily.Application.Volunteers.DeleteHard;
+using PetFamily.Application.Volunteers.DeleteSoft;
+using PetFamily.Application.Volunteers.FIles.AddPet;
 using PetFamily.Application.Volunteers.FIles.DeletePet;
-using PetFamily.Application.Volunteers.FIles.GetPetFiles;
+using PetFamily.Application.Volunteers.FIles.GetPet;
 using PetFamily.Application.Volunteers.UpdateAssistanceDetail;
 using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Application.Volunteers.UpdateSocialNetworks;
+using PetFamily.Application.Volunteers.UploadFilesToPet;
 
 namespace PetFamily.Application;
 
@@ -25,6 +30,12 @@ public static class Inject
         services.AddScoped<AddPetFilesHandler>();
         services.AddScoped<GetPetFilesHandler>();
         services.AddScoped<DeletePetFilesHandler>();
+        services.AddScoped<AddPetHandler>();
+        services.AddScoped<UploadFileToPetHandler>();
+        services.AddScoped<CreateSpeciesHandler>();
+        services.AddScoped<AddBreedToSpeciesHandler>();
+        services.AddScoped<DeleteFilesToPetHandler>();
+        
         
         services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 

@@ -2,7 +2,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Minio.AspNetCore;
-using PetFamily.Application.Providers;
+using PetFamily.Application;
+using PetFamily.Application.Database;
+using PetFamily.Application.FileProvider;
+using PetFamily.Application.Species;
 using PetFamily.Application.Volunteers;
 using PetFamily.Infrastructure.Interceptors;
 using PetFamily.Infrastructure.Providers;
@@ -17,9 +20,10 @@ public static class Inject
         this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ApplicationDbContext>();
-        services.AddSingleton<SoftDeleteInterceptors>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddMinio(configuration);
         services.AddScoped<IVolunteerRepository, VolunteersRepository>();
+        services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 
         return services;
     }

@@ -1,10 +1,9 @@
 using CSharpFunctionalExtensions;
-using Microsoft.Extensions.FileProviders;
 using PetFamily.Application.FileProvider;
 using PetFamily.Domain.Shared;
-using IFileProvider = PetFamily.Application.Providers.IFileProvider;
+using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
 
-namespace PetFamily.Application.Volunteers.FIles.GetPetFiles;
+namespace PetFamily.Application.Volunteers.FIles.GetPet;
 
 public class GetPetFilesHandler
 {
@@ -16,10 +15,10 @@ public class GetPetFilesHandler
     }
 
     public async Task<Result<string, Error>> Handle(
-        FileData fileData,
+        FileContent fileContent,
         string bucketName,
         CancellationToken cancellationToken = default)
     {
-        return await _fileProvider.GetFile(fileData, bucketName, cancellationToken);
+        return await _fileProvider.GetFile(fileContent, bucketName, cancellationToken);
     }
 }

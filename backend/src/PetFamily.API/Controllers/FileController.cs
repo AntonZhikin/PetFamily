@@ -6,8 +6,9 @@ using Minio.DataModel.Args;
 using PetFamily.API.Extensions;
 using PetFamily.Application.FileProvider;
 using PetFamily.Application.Volunteers.AddPet;
+using PetFamily.Application.Volunteers.FIles.AddPet;
 using PetFamily.Application.Volunteers.FIles.DeletePet;
-using PetFamily.Application.Volunteers.FIles.GetPetFiles;
+using PetFamily.Application.Volunteers.FIles.GetPet;
 using PetFamily.Infrastructure.Options;
 
 namespace PetFamily.API.Controllers;
@@ -31,13 +32,14 @@ public class FileController : ApplicationController
 
         var path = Guid.NewGuid().ToString();
 
-        var fileData = new FileData(stream, path);
+        var fileContent = new FileContent(stream, path);
         
-        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
+        //var result = await filesHandler.Handle(fileContent, "photos", cancellationToken);
+        //if (result.IsFailure)
+        //    return result.Error.ToResponse();
         
-        return Ok(result.Value);
+        //return Ok(result.Value);
+        return null;
     }
     
     [HttpGet("{id:guid}")]
@@ -48,9 +50,9 @@ public class FileController : ApplicationController
     {
         var objectName = id.ToString();
         
-        var fileData = new FileData(null, objectName);
+        var fileContent = new FileContent(null, objectName);
         
-        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
+        var result = await filesHandler.Handle(fileContent, "photos", cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
@@ -64,12 +66,14 @@ public class FileController : ApplicationController
     {
         var objectName = id.ToString();
         
-        var fileData = new FileData(null, objectName);
+        //var fileData = new FileData(null, objectName);
         
-        var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
-        
-        return Ok(result.Value);
+        //var result = await filesHandler.Handle(fileData, "photos", cancellationToken);
+        //if (result.IsFailure)
+        //    return result.Error.ToResponse();
+        //
+        //return Ok(result.Value);
+        return null;
+
     }
 }
