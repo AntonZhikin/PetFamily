@@ -8,6 +8,7 @@ using PetFamily.Application.Volunteers.Create;
 using PetFamily.Application.Volunteers.DeleteFilesToPet;
 using PetFamily.Application.Volunteers.DeleteHard;
 using PetFamily.Application.Volunteers.DeleteSoft;
+using PetFamily.Application.Volunteers.MovePositionPet;
 using PetFamily.Application.Volunteers.UpdateAssistanceDetail;
 using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Application.Volunteers.UpdateSocialNetworks;
@@ -154,6 +155,23 @@ public class VolunteersController : ApplicationController
         var command = new DeleteFilesToPetCommand(id, petId);
         
         var result = await handler.Handle(command, cancellationToken);
+        if(result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("{id:guid}pet/{petId:guid}/moveposition")]
+    public async Task<ActionResult> MovePositionToPet(
+        [FromRoute] Guid id, 
+        [FromRoute] Guid petId,
+        [FromBody] MovePositionPetRequest request,
+        [FromServices] MovePositionPetHandler handler,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await handler.Handle(request.ToCommand(id, petId), cancellationToken);
+        
         if(result.IsFailure)
             return result.Error.ToResponse();
         

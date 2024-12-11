@@ -123,8 +123,6 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
             _isDeleted = false;
     }
     
-    //проверить методы
-
     public UnitResult<Error> AddPet(Entity.Pet pet)
     {
         var serialNumberResult = Position.Create(_pets.Count + 1);
