@@ -4,13 +4,13 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.PetManagement.AggregateRoot;
+using PetFamily.Domain.PetManagement.Ids;
+using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Volunteer;
-using PetFamily.Domain.Volunteer.VolunteerID;
-using PetFamily.Domain.Volunteer.VolunteerList;
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-using Description = PetFamily.Domain.Volunteer.VolunteerValueObject.Description;
-using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
+using PetFamily.Domain.Shared.Error;
+using static PetFamily.Domain.PetManagement.AggregateRoot.Volunteer;
+using Description = PetFamily.Domain.PetManagement.ValueObjects.Description;
+using PhoneNumber = PetFamily.Domain.PetManagement.ValueObjects.PhoneNumber;
 
 namespace PetFamily.Application.Volunteers.Create;
 

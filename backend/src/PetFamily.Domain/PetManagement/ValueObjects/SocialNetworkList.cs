@@ -1,6 +1,4 @@
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-
-namespace PetFamily.Domain.Volunteer.VolunteerList;
+namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record SocialNetworkList
 {

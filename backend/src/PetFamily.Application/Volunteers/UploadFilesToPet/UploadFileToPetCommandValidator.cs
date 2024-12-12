@@ -2,6 +2,7 @@ using FluentValidation;
 using PetFamily.Application.Validation;
 using PetFamily.Application.Volunteers.DTOs.Validator;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.Application.Volunteers.UploadFilesToPet;
 

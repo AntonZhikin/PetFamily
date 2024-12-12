@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Minio;
 using Minio.DataModel.Args;
 using PetFamily.API.Extensions;
-using PetFamily.Application.FileProvider;
+using PetFamily.Application.Files;
 using PetFamily.Application.Volunteers.AddPet;
 using PetFamily.Application.Volunteers.FIles.AddPet;
 using PetFamily.Application.Volunteers.FIles.DeletePet;

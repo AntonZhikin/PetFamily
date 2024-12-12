@@ -1,5 +1,5 @@
 using PetFamily.Application.Volunteers.DTOs;
-using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.PetManagement.ValueObjects;
 
 namespace PetFamily.Application.Volunteers.AddPet;
 

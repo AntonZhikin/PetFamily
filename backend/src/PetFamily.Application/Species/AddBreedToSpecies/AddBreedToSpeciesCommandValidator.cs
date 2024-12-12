@@ -1,7 +1,7 @@
 using System.Data;
 using FluentValidation;
 using PetFamily.Application.Validation;
-using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Application.Species.AddBreedToSpecies;
 

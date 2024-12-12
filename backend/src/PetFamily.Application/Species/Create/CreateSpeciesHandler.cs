@@ -3,10 +3,10 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
-using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Speciess.SpeciesID;
+using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.AggregateRoot;
+using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Application.Species.Create;
 

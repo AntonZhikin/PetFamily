@@ -1,7 +1,8 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Application.FileProvider;
+using PetFamily.Application.Files;
 using PetFamily.Domain.Shared;
-using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
+using PetFamily.Domain.Shared.Error;
+using IFileProvider = PetFamily.Application.Files.IFileProvider;
 
 namespace PetFamily.Application.Volunteers.FIles.GetPet;
 

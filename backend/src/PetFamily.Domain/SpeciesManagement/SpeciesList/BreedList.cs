@@ -1,6 +1,6 @@
 using PetFamily.Domain.SpeciesManagement.Entity;
 
-namespace PetFamily.Domain.Speciess.SpeciesList;
+namespace PetFamily.Domain.SpeciesManagement.SpeciesList;
 
 public record BreedList
 {

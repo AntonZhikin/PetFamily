@@ -7,21 +7,20 @@ using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PetFamily.Application.Database;
-using PetFamily.Application.FileProvider;
+using PetFamily.Application.Files;
+using PetFamily.Application.Messaging;
 using PetFamily.Application.Volunteers;
 using PetFamily.Application.Volunteers.DTOs;
 using PetFamily.Application.Volunteers.UploadFilesToPet;
-using PetFamily.Domain.Pet;
-using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.PetManagement.AggregateRoot;
 using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
+using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.Ids;
-using PetFamily.Domain.Speciess.SpeciesID;
-using PetFamily.Domain.Volunteer.VolunteerID;
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-using IFileProvider = PetFamily.Application.FileProvider.IFileProvider;
+using FileInfo = PetFamily.Application.Files.FileInfo;
+using IFileProvider = PetFamily.Application.Files.IFileProvider;
 
 namespace Application.UnitTests;
 
@@ -78,12 +77,15 @@ public class UploadFilesToPetTests
             .ReturnsAsync(new ValidationResult());
         
         var loggerMock = new Mock<ILogger<UploadFileToPetHandler>>();
+
+        var messageQueue = new Mock<IMessageQueue<IEnumerable<FileInfo>>>();
         
         var handler = new UploadFileToPetHandler(
             fileProviderMock.Object,
             validatorMock.Object,
             volunteerRepositoryMock.Object,
             loggerMock.Object,
+            messageQueue.Object,
             unitOfWorkMock.Object
             );
         
