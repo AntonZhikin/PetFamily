@@ -162,7 +162,7 @@ public class VolunteersController : ApplicationController
     }
     
     [HttpPost("{id:guid}pet/{petId:guid}/moveposition")]
-    public async Task<ActionResult> MovePositionToPet(
+    public async Task<ActionResult> MovePetPosition(
         [FromRoute] Guid id, 
         [FromRoute] Guid petId,
         [FromBody] MovePositionPetRequest request,

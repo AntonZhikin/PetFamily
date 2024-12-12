@@ -11,8 +11,4 @@ public record MovePositionPetRequest(int NewPosition)
         petId,
         NewPosition
     );
-
-
-
-
 }
