@@ -1,6 +1,10 @@
 using FluentAssertions;
 using PetFamily.Domain.Pet;
 using PetFamily.Domain.Pet.PetValueObject;
+using PetFamily.Domain.PetManagement.AggregateRoot;
+using PetFamily.Domain.PetManagement.Entity;
+using PetFamily.Domain.PetManagement.Ids;
+using PetFamily.Domain.SpeciesManagement.Ids;
 using PetFamily.Domain.Speciess.SpeciesID;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteer.VolunteerID;
@@ -131,10 +135,9 @@ public class VolunteerTests
         addedPetResult.IsSuccess.Should().BeTrue();
         addedPetResult.Value.Id.Should().Be(petToAdd.Id);
         addedPetResult.Value.Position.Should().Be(serialNumber);
-    }
+    }*/
 
     [Fact]
-
     public void Move_Pet_Should_Not_Move_When_Pet_Already_At_New_Position()
     {
         const int petCount = 6;
@@ -144,11 +147,11 @@ public class VolunteerTests
         
         var secondPosition = Position.Create(2).Value;
 
-        var firstPet = volunteer.Pet[0];
-        var secondPet = volunteer.Pet[1];
-        var thirdPet = volunteer.Pet[2];
-        var fourthPet = volunteer.Pet[3];
-        var fifthPet = volunteer.Pet[4];
+        var firstPet = volunteer.Pets[0];
+        var secondPet = volunteer.Pets[1];
+        var thirdPet = volunteer.Pets[2];
+        var fourthPet = volunteer.Pets[3];
+        var fifthPet = volunteer.Pets[4];
         
         
         // act
@@ -171,20 +174,18 @@ public class VolunteerTests
         var phonenumber = PhoneNumber.Create("+79872724728").Value;
         var experienceYears = ExperienceYear.Create("Test Experience Year").Value;
         var fullname = FullName.Create("Test Name", "Test Last Name", "Test Second Name").Value;
-        var description = Description.Create("fd");
         var name = Name.Create("command.Name").Value;
-        var descriptionPet = Description.Create("command.Description").Value;
+        var description = Description.Create("command.Description").Value;
         var color = Color.Create("command.Color").Value;
         var petHealthInfo = PetHealthInfo.Create("command.PetHealthInfo").Value;
         var address = Address.Create("command.City", "command.Street").Value;
         var weight = Weight.Create(1).Value;
         var height = Height.Create(1).Value;
-        var phoneNumber = PhoneNumber.Create("command.PhoneNumber").Value;
         var isNeutered = IsNautered.Create(true).Value;
-        var dateOfBirth = "command.DateOfBirth";
+        DateTime dateOfBirth = DateTime.Now;
         var isVaccine = true;
-        var helpStatus = "command.HelpStatus";
-        var dateCreate = "command.DateCreate";
+        var helpStatus = HelpStatus.FoundHome;
+        DateTime dateCreate = DateTime.Now;
         var speciesId = SpeciesId.Empty();
         var breedId = BreedId.Empty();
         //var photos = command.Files
@@ -199,21 +200,19 @@ public class VolunteerTests
         {
             var pet = new Pet(petId, 
                 name, 
-                descriptionPet, 
+                description, 
                 color, 
                 petHealthInfo, 
                 address, 
                 weight, 
                 height, 
-                phoneNumber, 
+                phonenumber, 
                 isNeutered, 
                 dateOfBirth, 
                 isVaccine,
                 helpStatus, 
                 dateCreate,
-                breedId,
-                speciesId,
-                requisites);;
+                null);
             volunteer.AddPet(pet);
         }
         
@@ -230,11 +229,11 @@ public class VolunteerTests
         
         var secondPosition = Position.Create(2).Value;
 
-        var firstPet = volunteer.Pet[0];
-        var secondPet = volunteer.Pet[1];
-        var thirdPet = volunteer.Pet[2];
-        var fourthPet = volunteer.Pet[3];
-        var fifthPet = volunteer.Pet[4];
+        var firstPet = volunteer.Pets[0];
+        var secondPet = volunteer.Pets[1];
+        var thirdPet = volunteer.Pets[2];
+        var fourthPet = volunteer.Pets[3];
+        var fifthPet = volunteer.Pets[4];
         
         
         // act
@@ -260,11 +259,11 @@ public class VolunteerTests
         
         var fourthPosition = Position.Create(4).Value;
 
-        var firstPet = volunteer.Pet[0];
-        var secondPet = volunteer.Pet[1];
-        var thirdPet = volunteer.Pet[2];
-        var fourthPet = volunteer.Pet[3];
-        var fifthPet = volunteer.Pet[4];
+        var firstPet = volunteer.Pets[0];
+        var secondPet = volunteer.Pets[1];
+        var thirdPet = volunteer.Pets[2];
+        var fourthPet = volunteer.Pets[3];
+        var fifthPet = volunteer.Pets[4];
         
         
         // act
@@ -290,11 +289,11 @@ public class VolunteerTests
         
         var firstPosition = Position.Create(1).Value;
 
-        var firstPet = volunteer.Pet[0];
-        var secondPet = volunteer.Pet[1];
-        var thirdPet = volunteer.Pet[2];
-        var fourthPet = volunteer.Pet[3];
-        var fifthPet = volunteer.Pet[4];
+        var firstPet = volunteer.Pets[0];
+        var secondPet = volunteer.Pets[1];
+        var thirdPet = volunteer.Pets[2];
+        var fourthPet = volunteer.Pets[3];
+        var fifthPet = volunteer.Pets[4];
         
         
         // act
@@ -320,11 +319,11 @@ public class VolunteerTests
         
         var fifthPosition = Position.Create(5).Value;
 
-        var firstPet = volunteer.Pet[0];
-        var secondPet = volunteer.Pet[1];
-        var thirdPet = volunteer.Pet[2];
-        var fourthPet = volunteer.Pet[3];
-        var fifthPet = volunteer.Pet[4];
+        var firstPet = volunteer.Pets[0];
+        var secondPet = volunteer.Pets[1];
+        var thirdPet = volunteer.Pets[2];
+        var fourthPet = volunteer.Pets[3];
+        var fifthPet = volunteer.Pets[4];
         
         
         // act
@@ -338,5 +337,5 @@ public class VolunteerTests
         thirdPet .Position.Should().Be(Position.Create(2).Value);
         fourthPet .Position.Should().Be(Position.Create(3).Value);
         fifthPet .Position.Should().Be(Position.Create(4).Value ); 
-    }*/
+    }
 }

@@ -10,8 +10,6 @@ using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.Speciess.SpeciesID;
-using PetFamily.Domain.Volunteer.VolunteerID;
 using PetFamily.Domain.Volunteer.VolunteerValueObject;
 
 namespace PetFamily.Application.Volunteers.AddPet;
