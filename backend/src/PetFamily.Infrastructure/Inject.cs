@@ -4,12 +4,16 @@ using Minio;
 using Minio.AspNetCore;
 using PetFamily.Application;
 using PetFamily.Application.Database;
-using PetFamily.Application.FileProvider;
+using PetFamily.Application.Files;
+using PetFamily.Application.Messaging;
 using PetFamily.Application.Species;
 using PetFamily.Application.Volunteers;
+using PetFamily.Infrastructure.BackgroundServices;
 using PetFamily.Infrastructure.Interceptors;
+using PetFamily.Infrastructure.MessageQueues;
 using PetFamily.Infrastructure.Providers;
 using PetFamily.Infrastructure.Repositories;
+using FileInfo = System.IO.FileInfo;
 using MinioOptions = PetFamily.Infrastructure.Options.MinioOptions;
 
 namespace PetFamily.Infrastructure;
@@ -21,10 +25,15 @@ public static class Inject
     {
         services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddMinio(configuration);
         services.AddScoped<IVolunteerRepository, VolunteersRepository>();
         services.AddScoped<ISpeciesRepository, SpeciesRepository>();
-
+        
+        services.AddHostedService<FilesCleanerBackgroundServices>();
+        
+        services.AddSingleton<IMessageQueue<IEnumerable<FileInfo>>, InMemoryMessageQueue<IEnumerable<FileInfo>>>();
+        
+        services.AddMinio(configuration);
+        
         return services;
     }
 

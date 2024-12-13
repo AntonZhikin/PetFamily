@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
-namespace PetFamily.Domain.Pet.PetValueObject;
+namespace PetFamily.Domain.Shared;
 
 public record Name
 {
@@ -14,7 +14,7 @@ public record Name
         Value = value;
     }
 
-    public static Result<Name, Error> Create(string value)
+    public static Result<Name, Error.Error> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Length > MAX_LENGHT_NAME)
             return Errors.General.ValueIsInvalid("Name");

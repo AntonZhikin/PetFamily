@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Responce;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace PetFamily.API.Extensions;

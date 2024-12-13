@@ -1,8 +1,8 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Domain.Pet;
-using PetFamily.Domain.Shared;
+using PetFamily.Domain.PetManagement.ValueObjects;
+using PetFamily.Domain.Shared.Error;
 
-namespace PetFamily.Application.FileProvider;
+namespace PetFamily.Application.Files;
 
 public interface IFileProvider
 {
@@ -20,4 +20,8 @@ public interface IFileProvider
     
     Task<Result<bool, Error>> DeleteFile(
         FileData fileData, CancellationToken cancellationToken = default);
+
+    Task<UnitResult<Error>> RemoveFile(
+        FileInfo fileInfo,
+        CancellationToken cancellationToken = default);
 }

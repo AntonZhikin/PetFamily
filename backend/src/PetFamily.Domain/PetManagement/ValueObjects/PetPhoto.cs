@@ -1,8 +1,4 @@
-using System.Reflection.Metadata;
-using CSharpFunctionalExtensions;
-using PetFamily.Domain.Shared;
-
-namespace PetFamily.Domain.Pet;
+namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record PetPhoto //: Entity<PetPhotoId>
 {

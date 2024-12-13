@@ -2,10 +2,10 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetFamily.Application;
 using PetFamily.Application.Species;
-using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.AggregateRoot;
-using PetFamily.Domain.Speciess.SpeciesID;
+using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Infrastructure.Repositories;
 

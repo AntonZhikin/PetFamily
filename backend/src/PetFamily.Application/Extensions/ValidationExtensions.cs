@@ -1,5 +1,6 @@
 using FluentValidation.Results;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.Application.Extensions;
 

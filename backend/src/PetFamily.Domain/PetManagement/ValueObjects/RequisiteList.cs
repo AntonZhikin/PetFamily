@@ -1,4 +1,4 @@
-namespace PetFamily.Domain.Pet.PetLists;
+namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record RequisiteList
 {

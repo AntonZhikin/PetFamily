@@ -1,8 +1,8 @@
 using FluentValidation;
 using PetFamily.Application.Validation;
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-using Description = PetFamily.Domain.Volunteer.VolunteerValueObject.Description;
-using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
+using PetFamily.Domain.PetManagement.ValueObjects;
+using Description = PetFamily.Domain.PetManagement.ValueObjects.Description;
+using PhoneNumber = PetFamily.Domain.PetManagement.ValueObjects.PhoneNumber;
 
 namespace PetFamily.Application.Volunteers.Create;
 

@@ -4,11 +4,10 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Application.Species.Create;
-using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.Entity;
 using PetFamily.Domain.SpeciesManagement.Ids;
-using PetFamily.Domain.Speciess.SpeciesID;
 
 namespace PetFamily.Application.Species.AddBreedToSpecies;
 

@@ -5,6 +5,7 @@ using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.Application.Volunteers.DeleteFilesToPet;
 

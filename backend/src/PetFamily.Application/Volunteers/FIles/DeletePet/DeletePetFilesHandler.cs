@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Application.FileProvider;
+using PetFamily.Application.Files;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.Application.Volunteers.FIles.DeletePet;
 

@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.Application.Validation;
 

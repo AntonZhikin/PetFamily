@@ -1,16 +1,12 @@
 using FluentAssertions;
-using PetFamily.Domain.Pet;
-using PetFamily.Domain.Pet.PetValueObject;
 using PetFamily.Domain.PetManagement.AggregateRoot;
 using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
+using PetFamily.Domain.PetManagement.ValueObjects;
+using PetFamily.Domain.Shared;
 using PetFamily.Domain.SpeciesManagement.Ids;
-using PetFamily.Domain.Speciess.SpeciesID;
-using PetFamily.Domain.Volunteer;
-using PetFamily.Domain.Volunteer.VolunteerID;
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-using Description = PetFamily.Domain.Volunteer.VolunteerValueObject.Description;
-using PhoneNumber = PetFamily.Domain.Volunteer.VolunteerValueObject.PhoneNumber;
+using Description = PetFamily.Domain.PetManagement.ValueObjects.Description;
+using PhoneNumber = PetFamily.Domain.PetManagement.ValueObjects.PhoneNumber;
 
 namespace PetFamily.UnitTests;
 

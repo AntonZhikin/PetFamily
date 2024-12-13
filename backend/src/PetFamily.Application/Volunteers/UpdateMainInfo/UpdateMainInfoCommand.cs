@@ -1,6 +1,3 @@
-using PetFamily.Domain.Volunteer.VolunteerID;
-using PetFamily.Domain.Volunteer.VolunteerValueObject;
-
 namespace PetFamily.Application.Volunteers.UpdateMainInfo;
 
 public record UpdateMainInfoCommand (

@@ -1,6 +1,7 @@
 using System.Net;
 using PetFamily.API.Responce;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Error;
 
 namespace PetFamily.API.Middlewares;
 
