@@ -10,11 +10,4 @@ public record PetPhoto //: Entity<PetPhotoId>
     public PhotoPath Path { get; }
     
     public bool IsMain { get; }
-
-    public static PetPhoto Create(PhotoPath path, bool isMain = false)
-    {
-        var petPhoto = new PetPhoto(path, isMain);
-        return petPhoto;
-    }
-    
 }

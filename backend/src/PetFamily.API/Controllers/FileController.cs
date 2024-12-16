@@ -5,10 +5,9 @@ using Minio;
 using Minio.DataModel.Args;
 using PetFamily.API.Extensions;
 using PetFamily.Application.Files;
-using PetFamily.Application.Volunteers.AddPet;
-using PetFamily.Application.Volunteers.FIles.AddPet;
-using PetFamily.Application.Volunteers.FIles.DeletePet;
-using PetFamily.Application.Volunteers.FIles.GetPet;
+using PetFamily.Application.PetManagement.Commands.FIles.AddPet;
+using PetFamily.Application.PetManagement.Commands.FIles.DeletePet;
+using PetFamily.Application.PetManagement.Commands.FIles.GetPet;
 using PetFamily.Infrastructure.Options;
 
 namespace PetFamily.API.Controllers;

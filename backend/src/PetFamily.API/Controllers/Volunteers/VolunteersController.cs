@@ -1,23 +1,39 @@
+using System.Reflection.Metadata;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers.Volunteers.Request;
 using PetFamily.API.Extensions;
+using PetFamily.API.Responce;
+using PetFamily.Application.PetManagement.Commands.AddPet;
+using PetFamily.Application.PetManagement.Commands.Create;
+using PetFamily.Application.PetManagement.Commands.DeleteFilesToPet;
+using PetFamily.Application.PetManagement.Commands.DeleteHard;
+using PetFamily.Application.PetManagement.Commands.DeleteSoft;
+using PetFamily.Application.PetManagement.Commands.MovePositionPet;
+using PetFamily.Application.PetManagement.Commands.UpdateAssistanceDetail;
+using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
+using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
+using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
+using PetFamily.Application.PetManagement.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Processors;
-using PetFamily.Application.Volunteers.AddPet;
-using PetFamily.Application.Volunteers.Create;
-using PetFamily.Application.Volunteers.DeleteFilesToPet;
-using PetFamily.Application.Volunteers.DeleteHard;
-using PetFamily.Application.Volunteers.DeleteSoft;
-using PetFamily.Application.Volunteers.MovePositionPet;
-using PetFamily.Application.Volunteers.UpdateAssistanceDetail;
-using PetFamily.Application.Volunteers.UpdateMainInfo;
-using PetFamily.Application.Volunteers.UpdateSocialNetworks;
-using PetFamily.Application.Volunteers.UploadFilesToPet;
 
 namespace PetFamily.API.Controllers.Volunteers;
 
 public class VolunteersController : ApplicationController
 {
+    [HttpGet]
+    public async Task<ActionResult> Get(
+        [FromQuery] GetVolunteersWithPaginationRequest request,
+        [FromServices] GetVolunteersWithPaginationHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = request.ToQuery();
+        
+        var responce = await handler.Handle(query, cancellationToken);
+        
+        return Ok(responce);
+    }
+    
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromServices] CreateVolunteerHandler handler,

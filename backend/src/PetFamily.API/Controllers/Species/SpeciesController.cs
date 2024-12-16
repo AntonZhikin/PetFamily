@@ -5,7 +5,6 @@ using PetFamily.API.Controllers.Volunteers.Request;
 using PetFamily.API.Extensions;
 using PetFamily.Application.Species.AddBreedToSpecies;
 using PetFamily.Application.Species.Create;
-using PetFamily.Application.Volunteers.AddPet;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Controllers.Species;

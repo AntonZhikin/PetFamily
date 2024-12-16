@@ -160,18 +160,6 @@ public class MinioProvider : IFileProvider
         }
     }
     
-    // private async Task CreateBucketsIfNotExist(
-    //     IEnumerable<string> buckets,
-    //     CancellationToken cancellationToken = default)
-    // {
-    //     HashSet<String> bucketNames = [..buckets];
-    //
-    //     foreach (var bucketName in bucketNames)
-    //     {
-    //         await CreateBucket(bucketName, cancellationToken);
-    //     }
-    // }
-    
     private async Task CreateBucketIfNotExists(
         string bucketName,
         CancellationToken cancellationToken = default)

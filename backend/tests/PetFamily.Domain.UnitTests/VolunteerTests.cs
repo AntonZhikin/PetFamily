@@ -208,6 +208,8 @@ public class VolunteerTests
                 isVaccine,
                 helpStatus, 
                 dateCreate,
+                breedId,
+                speciesId,
                 null);
             volunteer.AddPet(pet);
         }

@@ -7,11 +7,11 @@ using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PetFamily.Application.Database;
+using PetFamily.Application.DTOs;
 using PetFamily.Application.Files;
 using PetFamily.Application.Messaging;
-using PetFamily.Application.Volunteers;
-using PetFamily.Application.Volunteers.DTOs;
-using PetFamily.Application.Volunteers.UploadFilesToPet;
+using PetFamily.Application.PetManagement;
+using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
 using PetFamily.Domain.PetManagement.AggregateRoot;
 using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
@@ -146,6 +146,8 @@ public class UploadFilesToPetTests
             isVaccine,
             helpStatus,
             dateCreated,
+            breedId,
+            speciesId,
             null,
             null);
 
