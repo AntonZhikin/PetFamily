@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Database;
 using PetFamily.Application.DTOs;
 using PetFamily.Application.DTOs.ValueObject;
-using PetFamily.Domain.PetManagement.Entity;
-using BreedDto = PetFamily.Application.Species.Dtos.BreedDto;
 
 namespace PetFamily.Infrastructure.DbContext;
 

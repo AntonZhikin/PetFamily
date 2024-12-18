@@ -29,9 +29,9 @@ public class VolunteersController : ApplicationController
     {
         var query = request.ToQuery();
         
-        var responce = await handler.Handle(query, cancellationToken);
+        var response = await handler.Handle(query, cancellationToken);
         
-        return Ok(responce);
+        return Ok(response);
     }
     
     [HttpPost]

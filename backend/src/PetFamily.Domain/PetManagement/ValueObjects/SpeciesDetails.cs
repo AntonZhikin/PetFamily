@@ -18,8 +18,8 @@ public record SpeciesDetails
         BreedId = breedId;
     }
 
-    public static Result<SpeciesDetails, ErrorList> Create(SpeciesId specieId, BreedId breedId)
+    public static Result<SpeciesDetails, ErrorList> Create(SpeciesId speciesId, BreedId breedId)
     {
-        return new SpeciesDetails(specieId, breedId);
+        return new SpeciesDetails(speciesId, breedId);
     }
 }

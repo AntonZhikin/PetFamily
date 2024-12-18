@@ -29,20 +29,6 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
 
         builder.HasMany(x => x.Breeds)
             .WithOne()
-            .HasForeignKey(x => x.Id)
             .IsRequired();
-
-        // builder.OwnsOne(p => p.Breeds, pb =>
-        // {
-        //     pb.ToJson();
-        //
-        //     pb.OwnsMany(d =>d.Breeds, pf=>
-        //     {
-        //         pf.Property(f => f.Breeds)
-        //             .IsRequired()
-        //             .HasMaxLength(Constants.MAX_LOW_TEXT_LENGHT);
-        //     });
-        // });
-
     }
 }

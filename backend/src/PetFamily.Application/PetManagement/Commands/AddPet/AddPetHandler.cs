@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstractions;
 using PetFamily.Application.Database;
@@ -29,7 +30,7 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
         IVolunteerRepository volunteerRepository,
         ISpeciesRepository speciesRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddPetHandler> logger, 
+        ILogger<AddPetHandler> logger,
         IReadDbContext readDbContext)
     {
         _volunteerRepository = volunteerRepository;
@@ -55,21 +56,25 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
 
-        /*var speciesResult = await _speciesRepository.GetById(command.SpeciesId, cancellationToken);
-        if(speciesResult.IsFailure)
-            return speciesResult.Error.ToErrorList();
-        
-        var speciesId = speciesResult.Value.Id;
-        
-        var breedResult = speciesResult.Value
-            .Breeds
-            .FirstOrDefault(b => b.Id == command.BreedId);
-        if (breedResult is null)
+
+        var speciesQuery = _readDbContext.Species;
+        var speciesDto = await speciesQuery
+            .SingleOrDefaultAsync(s => s.Id == command.SpeciesId, cancellationToken);
+        if (speciesDto == null)
             return Errors.General.NotFound().ToErrorList();
+
+        var speciesId = speciesDto.Id;
+
+        var breedQuery = _readDbContext.Breed;
+        var breedDto = await breedQuery
+            .SingleOrDefaultAsync(b => b.Id == command.BreedId, cancellationToken);
+        if (breedDto == null)
+            return Errors.General.NotFound().ToErrorList();
+
+        var breedId = breedDto.Id;
         
-        BreedId breedId = BreedId.Create(command.BreedId).Value;
+        var speciesDetails = SpeciesDetails.Create(speciesId, breedId);
         
-        var speciesDetails = SpeciesDetails.Create(command.SpeciesId, command.BreedId).Value;*/
         var petId = PetId.NewPetId();
 
         var name = Name.Create(command.Name).Value;
@@ -106,16 +111,16 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             isVaccine,
             helpStatus,
             dateCreate,
-            null,
+            speciesDetails.Value,
             requisites
-            );
+        );
 
         volunteerResult.Value.AddPet(pet);
-        
-        _volunteerRepository.Save(volunteerResult.Value);
+
+        //_volunteerRepository.Save(volunteerResult.Value);
 
         await _unitOfWork.SaveChanges(cancellationToken);
-        
+
         _logger.LogInformation("Pet added with id: {PetId}.", pet.Id.Value);
 
         return pet.Id.Value;

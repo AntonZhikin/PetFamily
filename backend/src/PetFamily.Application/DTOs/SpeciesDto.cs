@@ -1,3 +1,7 @@
-namespace PetFamily.Application.DTOs.ValueObject;
+namespace PetFamily.Application.DTOs;
 
-public record SpeciesDto(Guid SpecieId, string Name);
+public class SpeciesDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+}

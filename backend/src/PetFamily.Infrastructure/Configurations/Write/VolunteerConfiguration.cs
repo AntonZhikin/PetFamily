@@ -26,8 +26,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .UsePropertyAccessMode(PropertyAccessMode.Field)
             .HasColumnName("is_deleted");
         
-        //builder.HasQueryFilter()
-
         builder.ComplexProperty(v => v.FullName, g =>
         {
             g.IsRequired();

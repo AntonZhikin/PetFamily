@@ -9,10 +9,9 @@ public class BreedDtoConfiguration : IEntityTypeConfiguration<BreedDto>
     public void Configure(EntityTypeBuilder<BreedDto> builder)
     {
         builder.ToTable("breed");
-        builder.HasKey(v => v.BreedId);
+        builder.HasKey(v => v.Id);
 
-        builder.Property(v => v.BreedId)
+        builder.Property(v => v.Id)
             .HasColumnName("breed_id");
-
     }
 }

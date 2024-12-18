@@ -4,7 +4,7 @@ using PetFamily.Application.DTOs;
 
 namespace PetFamily.Infrastructure.Configurations.Read;
 
-public class VolunteerDtoCongfiguration : IEntityTypeConfiguration<VolunteerDto>
+public class VolunteerDtoConfiguration : IEntityTypeConfiguration<VolunteerDto>
 {
     public void Configure(EntityTypeBuilder<VolunteerDto> builder)
     {

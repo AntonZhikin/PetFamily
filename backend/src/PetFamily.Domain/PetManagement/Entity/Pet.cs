@@ -30,8 +30,6 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         HelpStatus helpStatus,
         DateTime dateCreate,
         SpeciesDetails speciesDetails,
-        // BreedId breedId,
-        // SpeciesId speciesId,
         RequisiteList requisites,
         ValueObjectList<PetPhoto>? photos = null) : base(petId)
     {
@@ -49,17 +47,11 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         HelpStatus = helpStatus;
         DateCreate = dateCreate;
         SpeciesDetails = speciesDetails;
-        // BreedId = breedId;
-        // SpeciesId = speciesId;
         Requisites = requisites;
         _photos = photos ?? new ValueObjectList<PetPhoto>([]);
     }
     
     public SpeciesDetails SpeciesDetails { get; private set; }
-
-    public SpeciesId SpeciesId { get; private set; }
-
-    public BreedId BreedId { get; private set; }
 
     public Position Position { get; private set; }
     
@@ -91,7 +83,6 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
     
     public RequisiteList Requisites { get; private set;}
     public DateTime DateCreate { get; private set;}
-    //public PetPhotoList Photos { get; private set;}
     public IReadOnlyList<PetPhoto> Photos => _photos;
 
     private List<PetPhoto> _photos = [];

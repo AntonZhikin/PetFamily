@@ -46,7 +46,7 @@ public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
         
         var species = new Domain.SpeciesManagement.AggregateRoot.Species(speciesId, name);
         
-        await _speciesRepository.Add(species);
+        await _speciesRepository.Add(species, cancellationToken);
         
         await _unitOfWork.SaveChanges(cancellationToken);
         
