@@ -1,4 +1,5 @@
 using PetFamily.Application.DTOs;
+using PetFamily.Application.DTOs.ValueObject;
 using PetFamily.Application.PetManagement.Commands.AddPet;
 using PetFamily.Domain.PetManagement.ValueObjects;
 

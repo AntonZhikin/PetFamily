@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using PetFamily.Application.DTOs;
+using PetFamily.Application.DTOs.ValueObject;
 
 namespace PetFamily.Application.Processors;
 

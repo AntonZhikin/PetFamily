@@ -10,6 +10,7 @@ using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
+using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Application.PetManagement.Commands.AddPet;
 
@@ -20,6 +21,7 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
     private readonly IValidator<AddPetCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddPetHandler> _logger;
+    private readonly IReadDbContext _readDbContext;
 
 
     public AddPetHandler(
@@ -27,13 +29,15 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
         IVolunteerRepository volunteerRepository,
         ISpeciesRepository speciesRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddPetHandler> logger)
+        ILogger<AddPetHandler> logger, 
+        IReadDbContext readDbContext)
     {
         _volunteerRepository = volunteerRepository;
         _speciesRepository = speciesRepository;
         _validator = validator;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _readDbContext = readDbContext;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -50,8 +54,8 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             .GetById(command.VolunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
-        
-        var speciesResult = await _speciesRepository.GetById(command.SpeciesId, cancellationToken);
+
+        /*var speciesResult = await _speciesRepository.GetById(command.SpeciesId, cancellationToken);
         if(speciesResult.IsFailure)
             return speciesResult.Error.ToErrorList();
         
@@ -59,13 +63,13 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
         
         var breedResult = speciesResult.Value
             .Breeds
-            .FirstOrDefault(b => b.Id.Value == command.BreedId);
-        if (breedResult == null)
-        {
-            return Errors.General.NotFound(command.BreedId).ToErrorList();
-        }
-        var breedId = breedResult.Id.Value;
+            .FirstOrDefault(b => b.Id == command.BreedId);
+        if (breedResult is null)
+            return Errors.General.NotFound().ToErrorList();
         
+        BreedId breedId = BreedId.Create(command.BreedId).Value;
+        
+        var speciesDetails = SpeciesDetails.Create(command.SpeciesId, command.BreedId).Value;*/
         var petId = PetId.NewPetId();
 
         var name = Name.Create(command.Name).Value;
@@ -102,8 +106,7 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             isVaccine,
             helpStatus,
             dateCreate,
-            breedId,
-            speciesId,
+            null,
             requisites
             );
 

@@ -16,7 +16,8 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
         builder.Property(p => p.Id)
             .HasConversion(
                 id => id.Value,
-                value => SpeciesId.Create(value));
+                value => SpeciesId.Create(value))
+            .HasColumnName("species_id");
         
         builder.ComplexProperty(x => x.Name, tb =>
         {
@@ -27,8 +28,10 @@ public class SpeciesConfigurations : IEntityTypeConfiguration<Species>
         });
 
         builder.HasMany(x => x.Breeds)
-            .WithOne();
-        
+            .WithOne()
+            .HasForeignKey(x => x.Id)
+            .IsRequired();
+
         // builder.OwnsOne(p => p.Breeds, pb =>
         // {
         //     pb.ToJson();

@@ -1,3 +1,5 @@
+using PetFamily.Application.DTOs.ValueObject;
+
 namespace PetFamily.Application.DTOs;
 
 public class PetDto
@@ -38,12 +40,6 @@ public class PetDto
      
     public Guid BreedId { get; init; }
      
-    public PetPhotoDto[] Photos { get; private set;} = null!;
+    public PetPhotoDto[] Photos { get; init; } = [];
 
-}
-
-public class PetPhotoDto
-{
-    public string Path { get; set; } = string.Empty;
-    public bool isMain { get; set; } 
 }

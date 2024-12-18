@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using PetFamily.Application.Database;
 using PetFamily.Application.DTOs;
+using PetFamily.Application.DTOs.ValueObject;
 using PetFamily.Application.Files;
 using PetFamily.Application.Messaging;
 using PetFamily.Application.PetManagement;
@@ -146,8 +147,8 @@ public class UploadFilesToPetTests
             isVaccine,
             helpStatus,
             dateCreated,
-            breedId,
-            speciesId,
+            // breedId,
+            // speciesId,
             null,
             null);
 

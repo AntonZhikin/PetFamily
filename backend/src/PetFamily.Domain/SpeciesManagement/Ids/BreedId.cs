@@ -22,6 +22,7 @@ public class BreedId : ComparableValueObject
     public static implicit operator Guid(BreedId breedId)
     {
         ArgumentNullException.ThrowIfNull(breedId);
+        
         return breedId.Value;
     }
 

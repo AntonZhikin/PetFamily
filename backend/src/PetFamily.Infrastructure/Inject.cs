@@ -11,7 +11,7 @@ using PetFamily.Infrastructure.DbContext;
 using PetFamily.Infrastructure.MessageQueues;
 using PetFamily.Infrastructure.Providers;
 using PetFamily.Infrastructure.Repositories;
-using FileInfo = System.IO.FileInfo;
+using FileInfo = PetFamily.Application.Files.FileInfo;
 using MinioOptions = PetFamily.Infrastructure.Options.MinioOptions;
 
 namespace PetFamily.Infrastructure;

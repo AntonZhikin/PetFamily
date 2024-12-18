@@ -4,6 +4,7 @@ using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.SpeciesManagement.AggregateRoot;
 using PetFamily.Domain.SpeciesManagement.Ids;
 using Description = PetFamily.Domain.PetManagement.ValueObjects.Description;
 using PhoneNumber = PetFamily.Domain.PetManagement.ValueObjects.PhoneNumber;
@@ -188,6 +189,7 @@ public class VolunteerTests
         //    .Select(f => PetPhoto.Create(f.Path, f.IsMain).Value);
         var requisites = Requisite.Create("Name", "Description").Value;
         var petId = PetId.NewPetId();
+        var speciesDetails = SpeciesDetails.Create(speciesId, breedId).Value;
         
         var volunteer = new Volunteer(VolunteerId.NewVolunteerId(), description, phonenumber, experienceYears, fullname,
             null, null);
@@ -208,8 +210,9 @@ public class VolunteerTests
                 isVaccine,
                 helpStatus, 
                 dateCreate,
-                breedId,
-                speciesId,
+                speciesDetails,
+                // breedId,
+                // speciesId,
                 null);
             volunteer.AddPet(pet);
         }

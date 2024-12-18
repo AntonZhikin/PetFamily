@@ -10,6 +10,7 @@ public class WriteDbContext(IConfiguration configuration) : Microsoft.EntityFram
 {
     public DbSet<Volunteer> Volunteers => Set<Volunteer>();
     public DbSet<Species> Species => Set<Species>();
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constans.DATABASE));

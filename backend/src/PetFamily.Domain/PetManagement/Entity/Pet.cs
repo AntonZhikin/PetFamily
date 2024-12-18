@@ -3,6 +3,7 @@ using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
+using PetFamily.Domain.SpeciesManagement.AggregateRoot;
 using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Domain.PetManagement.Entity;
@@ -28,8 +29,9 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         bool isVaccine,
         HelpStatus helpStatus,
         DateTime dateCreate,
-        BreedId breedId,
-        SpeciesId speciesId,
+        SpeciesDetails speciesDetails,
+        // BreedId breedId,
+        // SpeciesId speciesId,
         RequisiteList requisites,
         ValueObjectList<PetPhoto>? photos = null) : base(petId)
     {
@@ -46,11 +48,14 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         IsVaccine = isVaccine;
         HelpStatus = helpStatus;
         DateCreate = dateCreate;
-        BreedId = breedId;
-        SpeciesId = speciesId;
+        SpeciesDetails = speciesDetails;
+        // BreedId = breedId;
+        // SpeciesId = speciesId;
         Requisites = requisites;
         _photos = photos ?? new ValueObjectList<PetPhoto>([]);
     }
+    
+    public SpeciesDetails SpeciesDetails { get; private set; }
 
     public SpeciesId SpeciesId { get; private set; }
 

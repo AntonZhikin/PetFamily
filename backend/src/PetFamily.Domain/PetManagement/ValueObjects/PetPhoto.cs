@@ -1,13 +1,16 @@
+using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared.Error;
+
 namespace PetFamily.Domain.PetManagement.ValueObjects;
 
-public record PetPhoto //: Entity<PetPhotoId>
+public record PetPhoto 
 {
-    public PetPhoto(PhotoPath path, bool isMain = false)
+    public PetPhoto(PhotoPath pathToStorage)
     {
-        Path = path;
-        IsMain = isMain;
+        PathToStorage = pathToStorage;
     }
-    public PhotoPath Path { get; }
     
-    public bool IsMain { get; }
+    public PhotoPath PathToStorage { get; }
+
 }

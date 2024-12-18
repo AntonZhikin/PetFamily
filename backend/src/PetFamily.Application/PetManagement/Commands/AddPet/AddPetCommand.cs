@@ -1,5 +1,6 @@
 using PetFamily.Application.Abstractions;
 using PetFamily.Application.DTOs;
+using PetFamily.Application.DTOs.ValueObject;
 using PetFamily.Domain.PetManagement.ValueObjects;
 
 namespace PetFamily.Application.PetManagement.Commands.AddPet;
