@@ -22,7 +22,7 @@ public class GetVolunteersWithPaginationHandler
         GetVolunteersWithPaginationQuery query, 
         CancellationToken cancellationToken)
     {
-        var volunteerQuery = _readDbContext.Volunteers;
+        var volunteerQuery = _readDbContext.Volunteers.AsQueryable();
 
         var result = await volunteerQuery.ToPagedList(query.Page, query.PageSize, cancellationToken);
         

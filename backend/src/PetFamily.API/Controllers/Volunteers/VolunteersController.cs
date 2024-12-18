@@ -14,6 +14,7 @@ using PetFamily.Application.PetManagement.Commands.UpdateAssistanceDetail;
 using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
 using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
+using PetFamily.Application.PetManagement.Queries.GetVolunteerByIdQuery;
 using PetFamily.Application.PetManagement.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Processors;
 
@@ -21,6 +22,20 @@ namespace PetFamily.API.Controllers.Volunteers;
 
 public class VolunteersController : ApplicationController
 {
+    [HttpGet("volunteer-by-id")]
+    public async Task<ActionResult> GetById(
+        [FromQuery] GetVolunteerByIdRequest request,
+        [FromServices] GetVolunteerByIdHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = request.ToQuery();
+        
+        var response = await handler.Handle(query, cancellationToken);
+        
+        return Ok(response);
+    }
+
+    
     [HttpGet]
     public async Task<ActionResult> Get(
         [FromQuery] GetVolunteersWithPaginationRequest request,
