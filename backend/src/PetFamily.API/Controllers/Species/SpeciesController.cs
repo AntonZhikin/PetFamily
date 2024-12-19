@@ -5,6 +5,8 @@ using PetFamily.API.Controllers.Volunteers.Request;
 using PetFamily.API.Extensions;
 using PetFamily.Application.Species.AddBreedToSpecies;
 using PetFamily.Application.Species.Create;
+using PetFamily.Application.Species.Delete;
+using PetFamily.Application.Species.DeleteBreed;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Controllers.Species;
@@ -33,6 +35,37 @@ public class SpeciesController : ApplicationController
     {
         var result = await handler.Handle(request.ToCommand(id), cancellationToken);
         if(result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> Delete(
+        [FromRoute] Guid id,
+        [FromServices] DeleteHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteCommand(id);
+        
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+    
+    [HttpDelete("{speciesId:guid}/breed/{breedId:guid}")]
+    public async Task<ActionResult> DeleteBreed(
+        [FromRoute] Guid speciesId,
+        [FromRoute] Guid breedId,
+        [FromServices] DeleteBreedHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteBreedCommand(speciesId, breedId);
+        
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
             return result.Error.ToResponse();
         
         return Ok(result.Value);
