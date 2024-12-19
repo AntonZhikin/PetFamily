@@ -8,6 +8,7 @@ using PetFamily.Application.Species.Create;
 using PetFamily.Application.Species.Delete;
 using PetFamily.Application.Species.DeleteBreed;
 using PetFamily.Application.Species.Queries;
+using PetFamily.Application.Species.Queries.GetBreedByIdSpecies;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Controllers.Species;
@@ -79,6 +80,20 @@ public class SpeciesController : ApplicationController
         CancellationToken cancellationToken = default)
     {
         var queryResult = request.ToQuery();
+        
+        var response = await handler.Handle(queryResult, cancellationToken);
+        
+        return Ok(response);
+    }
+    
+    [HttpGet("{speciesId:guid}/breeds")]
+    public async Task<ActionResult> GetBreed(
+        [FromRoute] Guid speciesId,
+        [FromQuery] GetBreedByIdSpeciesRequest request,
+        [FromServices] GetBreedByIdSpeciesHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var queryResult = request.ToQuery(speciesId);
         
         var response = await handler.Handle(queryResult, cancellationToken);
         
