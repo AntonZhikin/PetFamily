@@ -19,5 +19,10 @@ public static class Errors
             var label = name == null ? "" : " " + name + " ";
             return Error.Validation("lenght.is.invalid", $"invalid{label}lenght");
         }
+        public static Error Found(Guid? id = null)
+        {
+            var forId = id == null ? "" : $"for Id '{id}'";
+            return Error.Validation("record found", $"record found{forId} :");
+        }
     }
 }

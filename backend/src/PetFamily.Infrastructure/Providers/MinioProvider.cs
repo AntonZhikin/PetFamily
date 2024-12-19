@@ -4,7 +4,6 @@ using Minio;
 using Minio.DataModel.Args;
 using PetFamily.Application.Files;
 using PetFamily.Domain.PetManagement.ValueObjects;
-using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
 using FileInfo = PetFamily.Application.Files.FileInfo;
 

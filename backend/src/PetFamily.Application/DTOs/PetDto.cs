@@ -8,7 +8,7 @@ public class PetDto
      
     public Guid VolunteerId { get; init; }
     
-    public int Position { get; private set; }
+    /*public int Position { get; private set; }
     
     public string Name { get; init; } = string.Empty;
     
@@ -34,7 +34,7 @@ public class PetDto
 
     public string HelpStatus { get; init; }
     
-    public DateTime DateCreate { get; init; }
+    public DateTime DateCreate { get; init; }*/
      
     public Guid SpeciesId { get; init; }
      

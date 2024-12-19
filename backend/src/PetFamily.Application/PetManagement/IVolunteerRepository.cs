@@ -15,5 +15,5 @@ public interface IVolunteerRepository
     
     Guid Delete(Volunteer volunteer);
     
-    Task<Guid> DeleteHard(Volunteer volunteer, CancellationToken cancellationToken = default);
+    Task<Guid> DeleteHard(Volunteer volunteer);
 }

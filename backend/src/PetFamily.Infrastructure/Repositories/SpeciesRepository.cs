@@ -1,8 +1,6 @@
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using PetFamily.Application;
 using PetFamily.Application.Species;
-using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.AggregateRoot;
 using PetFamily.Domain.SpeciesManagement.Ids;
@@ -35,9 +33,10 @@ public class SpeciesRepository : ISpeciesRepository
         return species.Id.Value;
     }
 
-    public async Task<Guid> Delete(Species species, CancellationToken cancellationToken = default)
+    public async Task<Guid> Delete(Species species)
     {
-        _dbContext.Species.Remove(species);
+        _dbContext.Species
+            .Remove(species);
         
         return species.Id.Value;
     }
