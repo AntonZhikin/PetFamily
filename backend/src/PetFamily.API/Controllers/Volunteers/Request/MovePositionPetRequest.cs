@@ -1,4 +1,4 @@
-using PetFamily.Application.Volunteers.MovePositionPet;
+using PetFamily.Application.PetManagement.Commands.MovePositionPet;
 using PetFamily.Domain.PetManagement.Ids;
 
 namespace PetFamily.API.Controllers.Volunteers.Request;

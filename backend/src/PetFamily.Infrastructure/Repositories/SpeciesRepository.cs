@@ -6,14 +6,15 @@ using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.AggregateRoot;
 using PetFamily.Domain.SpeciesManagement.Ids;
+using PetFamily.Infrastructure.DbContext;
 
 namespace PetFamily.Infrastructure.Repositories;
 
 public class SpeciesRepository : ISpeciesRepository
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
 
-    public SpeciesRepository(ApplicationDbContext dbContext)
+    public SpeciesRepository(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

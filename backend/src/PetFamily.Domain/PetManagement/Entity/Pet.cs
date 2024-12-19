@@ -3,6 +3,8 @@ using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
+using PetFamily.Domain.SpeciesManagement.AggregateRoot;
+using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Domain.PetManagement.Entity;
 
@@ -27,10 +29,9 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         bool isVaccine,
         HelpStatus helpStatus,
         DateTime dateCreate,
-        //BreedId breedId,
-        //SpeciesId speciesId,
+        SpeciesDetails speciesDetails,
         RequisiteList requisites,
-        IEnumerable<PetPhoto>? photos = null) : base(petId)
+        ValueObjectList<PetPhoto>? photos = null) : base(petId)
     {
         Name = name;
         Description = description;
@@ -45,17 +46,12 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         IsVaccine = isVaccine;
         HelpStatus = helpStatus;
         DateCreate = dateCreate;
-        //BreedId = breedId;
-        //SpeciesId = speciesId;
+        SpeciesDetails = speciesDetails;
         Requisites = requisites;
-        Photos = photos == null 
-            ? new PetPhotoList(Enumerable.Empty<PetPhoto>()) 
-            : new PetPhotoList(photos);
+        _photos = photos ?? new ValueObjectList<PetPhoto>([]);
     }
-
-    //public SpeciesId SpeciesId { get; private set; }
-
-    //public BreedId BreedId { get; private set; }
+    
+    public SpeciesDetails SpeciesDetails { get; private set; }
 
     public Position Position { get; private set; }
     
@@ -87,12 +83,16 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
     
     public RequisiteList Requisites { get; private set;}
     public DateTime DateCreate { get; private set;}
-    public PetPhotoList Photos { get; private set;}
+    public IReadOnlyList<PetPhoto> Photos => _photos;
 
-    public void UpdatePhotos(IEnumerable<PetPhoto> photos)
-        => Photos = new PetPhotoList(photos);
+    private List<PetPhoto> _photos = [];
 
-    public void DeleteAllPhotos() => Photos.DeleteAllPhotos();
+    public void UpdatePhotos(List<PetPhoto> photos)
+    {
+        _photos = photos;
+    }
+
+    public void DeleteAllPhotos() => _photos.RemoveAll(photo => photo == null);
     
     public void Delete()
     {

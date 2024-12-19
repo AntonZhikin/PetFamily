@@ -8,7 +8,6 @@ public class Breed : Shared.Entity<BreedId>
 {
     private Breed(BreedId id) : base(id)
     {
-        
     }   
     public Name Name { get; private set; }
     

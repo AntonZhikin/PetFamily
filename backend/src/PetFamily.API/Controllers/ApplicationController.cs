@@ -12,6 +12,6 @@ public abstract class ApplicationController : ControllerBase
     {
         var envelope = Envelope.Ok(value);
         
-        return new OkObjectResult(envelope);
+        return base.Ok(envelope);
     }
 }
