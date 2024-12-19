@@ -7,6 +7,7 @@ using PetFamily.Application.Species.AddBreedToSpecies;
 using PetFamily.Application.Species.Create;
 using PetFamily.Application.Species.Delete;
 using PetFamily.Application.Species.DeleteBreed;
+using PetFamily.Application.Species.Queries;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Controllers.Species;
@@ -69,5 +70,18 @@ public class SpeciesController : ApplicationController
             return result.Error.ToResponse();
         
         return Ok(result.Value);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> Get(
+        [FromQuery] GetSpeciesWithPaginationRequest request,
+        [FromServices] GetSpeciesWithPaginationHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var queryResult = request.ToQuery();
+        
+        var response = await handler.Handle(queryResult, cancellationToken);
+        
+        return Ok(response);
     }
 }
