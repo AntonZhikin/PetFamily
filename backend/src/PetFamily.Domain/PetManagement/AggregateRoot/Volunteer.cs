@@ -1,4 +1,5 @@
 using CSharpFunctionalExtensions;
+using PetFamily.Domain.PetManagement.Entity;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared.Error;
@@ -120,7 +121,7 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
             _isDeleted = false;
     }
     
-    public UnitResult<Error> AddPet(Entity.Pet pet)
+    public UnitResult<Error> AddPet(Pet pet)
     {
         var serialNumberResult = Position.Create(_pets.Count + 1);
         if (serialNumberResult.IsFailure)
@@ -134,7 +135,7 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
         return Result.Success<Error>();
     }
     
-    public UnitResult<Error> MovePet(Entity.Pet pet, Position newPosition)
+    public UnitResult<Error> MovePet(Pet pet, Position newPosition)
     {
         var currentPosition = pet.Position;
         

@@ -12,6 +12,7 @@ using PetFamily.Application.PetManagement.Commands.DeleteSoft;
 using PetFamily.Application.PetManagement.Commands.MovePositionPet;
 using PetFamily.Application.PetManagement.Commands.UpdateAssistanceDetail;
 using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
+using PetFamily.Application.PetManagement.Commands.UpdatePet;
 using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
 using PetFamily.Application.PetManagement.Queries.GetVolunteerByIdQuery;
@@ -203,7 +204,22 @@ public class VolunteersController : ApplicationController
     {
         var result = await handler.Handle(request.ToCommand(id, petId), cancellationToken);
         
-        if(result.IsFailure)
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+
+    [HttpPut("{id:guid}pet")]
+    public async Task<ActionResult> UpdatePet(
+        [FromRoute] Guid id,
+        [FromServices] UpdatePetHandler handler,
+        [FromBody] UpdatePetRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await handler.Handle(request.ToCommand(id), cancellationToken);
+        
+        if (result.IsFailure)
             return result.Error.ToResponse();
         
         return Ok(result.Value);

@@ -134,5 +134,39 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
 
     public void Move(Position newPosition) =>
         Position = newPosition;
+
+    public void UpdateMainInfo(
+        Name name,
+        Description description,
+        Color color,
+        PetHealthInfo petHealthInfo,
+        Address address,
+        Weight weight,
+        Height height,
+        PhoneNumber phoneNumber,
+        IsNautered isNeutered,
+        DateTime dateOfBirth,
+        bool isVaccine,
+        HelpStatus helpStatus,
+        DateTime dateCreate,
+        SpeciesDetails speciesDetails,
+        RequisiteList requisites)
+    {
+        Name = name;
+        Description = description;
+        Color = color;
+        PetHealthInfo = petHealthInfo;
+        Address = address;
+        Weight = weight;
+        Height = height;
+        PhoneNumber = phoneNumber;
+        IsNeutered = isNeutered;
+        DateOfBirth = dateOfBirth;
+        IsVaccine = isVaccine;
+        HelpStatus = helpStatus;
+        DateCreate = dateCreate;
+        SpeciesDetails = speciesDetails;
+        Requisites = requisites;
+    }
     
 }

@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Controllers.Species.Request;
 using PetFamily.API.Controllers.Volunteers.Request;
 using PetFamily.API.Extensions;
-using PetFamily.Application.Species.AddBreedToSpecies;
-using PetFamily.Application.Species.Create;
-using PetFamily.Application.Species.Delete;
-using PetFamily.Application.Species.DeleteBreed;
+using PetFamily.Application.Species.Commands.AddBreedToSpecies;
+using PetFamily.Application.Species.Commands.Create;
+using PetFamily.Application.Species.Commands.Delete;
+using PetFamily.Application.Species.Commands.DeleteBreed;
 using PetFamily.Application.Species.Queries;
 using PetFamily.Application.Species.Queries.GetBreedByIdSpecies;
+using PetFamily.Application.Species.Queries.GetSpeciesWithPagination;
 using PetFamily.Domain.Shared;
 
 namespace PetFamily.API.Controllers.Species;

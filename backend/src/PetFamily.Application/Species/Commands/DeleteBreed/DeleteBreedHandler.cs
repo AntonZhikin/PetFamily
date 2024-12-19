@@ -5,10 +5,9 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstractions;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
-using PetFamily.Application.Species.Delete;
 using PetFamily.Domain.Shared.Error;
 
-namespace PetFamily.Application.Species.DeleteBreed;
+namespace PetFamily.Application.Species.Commands.DeleteBreed;
 
 public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
 {

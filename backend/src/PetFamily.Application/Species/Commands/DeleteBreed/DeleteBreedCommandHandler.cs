@@ -1,7 +1,6 @@
-using CSharpFunctionalExtensions;
 using FluentValidation;
 
-namespace PetFamily.Application.Species.DeleteBreed;
+namespace PetFamily.Application.Species.Commands.DeleteBreed;
 
 public class DeleteBreedCommandHandler : AbstractValidator<DeleteBreedCommand>
 {

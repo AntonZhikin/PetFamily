@@ -2,7 +2,7 @@ using FluentValidation;
 using PetFamily.Application.Validation;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Application.Species.Create;
+namespace PetFamily.Application.Species.Commands.Create;
 
 public class CreateSpeciesCommandValidator : AbstractValidator<CreateSpeciesCommand>
 {

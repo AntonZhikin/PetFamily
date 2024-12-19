@@ -15,8 +15,6 @@ using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
 using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
 using PetFamily.Application.PetManagement.Queries.GetVolunteersWithPagination;
-using PetFamily.Application.Species.AddBreedToSpecies;
-using PetFamily.Application.Species.Create;
 
 namespace PetFamily.Application;
 
