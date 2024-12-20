@@ -86,7 +86,7 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
     public IReadOnlyList<PetPhoto> Photos => _photos;
 
     private List<PetPhoto> _photos = [];
-
+    
     public void UpdatePhotos(List<PetPhoto> photos)
     {
         _photos = photos;

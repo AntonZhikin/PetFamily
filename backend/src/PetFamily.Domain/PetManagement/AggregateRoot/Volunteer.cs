@@ -112,7 +112,6 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
                 pet.Delete();
             }
         }
-            
     }
 
     public void Restore()

@@ -9,6 +9,7 @@ using PetFamily.Application.PetManagement.Commands.Create;
 using PetFamily.Application.PetManagement.Commands.DeleteFilesToPet;
 using PetFamily.Application.PetManagement.Commands.DeleteHard;
 using PetFamily.Application.PetManagement.Commands.DeleteSoft;
+using PetFamily.Application.PetManagement.Commands.DeleteSoftPet;
 using PetFamily.Application.PetManagement.Commands.MovePositionPet;
 using PetFamily.Application.PetManagement.Commands.UpdateAssistanceDetail;
 using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
@@ -235,6 +236,22 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken)
     {
         var command = new UpdatePetStatusCommand(volunteerId, petId, request.NewStatus);
+        
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
+    
+    [HttpDelete("{volunteerId:guid}pet{petId:guid}")]
+    public async Task<ActionResult> DeleteSoftPet(
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromServices] DeleteSoftPetHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteSoftPetCommand(volunteerId, petId);
         
         var result = await handler.Handle(command, cancellationToken);
         if (result.IsFailure)
