@@ -34,4 +34,12 @@ public class Species : Shared.Entity<SpeciesId>
 
         return Result.Success<Error>();
     }
+    
+    public Result<Guid, ErrorList> DeleteBreed(Guid breedId)
+    {
+        var result = _breeds.FirstOrDefault(b => b.Id == breedId);
+        _breeds.Remove(result);
+
+        return result.Id.Value;
+    }
 }

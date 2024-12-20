@@ -2,6 +2,7 @@ using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstractions;
+using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.Shared.Error;
 
@@ -12,16 +13,19 @@ public class DeleteVolunteerHardHandler : ICommandHandler<Guid, DeleteVolunteerH
     private readonly IVolunteerRepository _volunteerRepository;
     private readonly ILogger<DeleteVolunteerHardHandler> _logger;
     private readonly IValidator<DeleteVolunteerHardCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
 
 
     public DeleteVolunteerHardHandler(
         IVolunteerRepository volunteerRepository, 
         IValidator<DeleteVolunteerHardCommand> validator,
-        ILogger<DeleteVolunteerHardHandler> logger)
+        ILogger<DeleteVolunteerHardHandler> logger,
+        IUnitOfWork unitOfWork)
     {
         _volunteerRepository = volunteerRepository;
         _logger = logger;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(DeleteVolunteerHardCommand command, CancellationToken cancellationToken)
@@ -36,7 +40,9 @@ public class DeleteVolunteerHardHandler : ICommandHandler<Guid, DeleteVolunteerH
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
         
-        var result = await _volunteerRepository.DeleteHard(volunteerResult.Value, cancellationToken);
+        var result = await _volunteerRepository.DeleteHard(volunteerResult.Value);
+
+        await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("For volunteer with ID: {id} was hard deleted", volunteerResult.Value.Id);
         
