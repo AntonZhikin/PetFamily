@@ -24,9 +24,7 @@ public class GetVolunteerByIdHandler : IQueryHandler<VolunteerDto, GetVolunteerB
         GetVolunteerByIdQuery query, 
         CancellationToken cancellationToken)
     {
-        var volunteerQuery = _readDbContext.Volunteers;
-        
-        var volunteerDto = await volunteerQuery
+        var volunteerDto = await _readDbContext.Volunteers
             .SingleOrDefaultAsync(v => v.Id == query.VolunteerId, cancellationToken);
         
         return volunteerDto;

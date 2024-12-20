@@ -169,4 +169,8 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         Requisites = requisites;
     }
     
+    public void UpdateStatus(HelpStatus newStatus)
+    {
+        HelpStatus = newStatus;
+    }
 }
