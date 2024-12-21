@@ -8,6 +8,7 @@ using PetFamily.Application.PetManagement.Commands.AddPet;
 using PetFamily.Application.PetManagement.Commands.Create;
 using PetFamily.Application.PetManagement.Commands.DeleteFilesToPet;
 using PetFamily.Application.PetManagement.Commands.DeleteHard;
+using PetFamily.Application.PetManagement.Commands.DeleteHardPet;
 using PetFamily.Application.PetManagement.Commands.DeleteSoft;
 using PetFamily.Application.PetManagement.Commands.DeleteSoftPet;
 using PetFamily.Application.PetManagement.Commands.MovePositionPet;
@@ -259,5 +260,20 @@ public class VolunteersController : ApplicationController
         
         return Ok(result.Value);
     }
-
+    
+    [HttpDelete("{volunteerId:guid}pet{petId:guid}/hard")]
+    public async Task<ActionResult> DeleteHardPet(
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromServices] DeleteHardPetHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteHardPetCommand(volunteerId, petId);
+        
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
+    }
 }

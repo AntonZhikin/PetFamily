@@ -49,9 +49,7 @@ public class UpdateAssistanceDetailHandler : ICommandHandler<Guid, UpdateAssista
         var volunteerAssistanceDetails = new AssistanceDetailList(assistanceDetail);
         
         volunteerResult.Value.UpdateAssistanceDetail(volunteerAssistanceDetails);
-
-        _volunteerRepository.Save(volunteerResult.Value);
-
+        
         await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("AssistanceDetail of volunteer updated with id: {VolunteerId}.", command.VolunteerId);

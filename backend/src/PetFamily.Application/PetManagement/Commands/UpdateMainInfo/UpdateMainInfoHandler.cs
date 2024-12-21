@@ -52,8 +52,6 @@ public class UpdateMainInfoHandler : ICommandHandler<Guid, UpdateMainInfoCommand
         
         volunteerResult.Value.UpdateMainInfo(description, phoneNumber, experienceYears, fullName);
         
-        _volunteerRepository.Save(volunteerResult.Value);
-
         await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("Main info of volunteer updated with id: {VolunteerId}.", command.VolunteerId);

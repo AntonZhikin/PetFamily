@@ -11,9 +11,7 @@ public interface IVolunteerRepository
 
     Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default);
     
-    Guid Save(Volunteer volunteer);
-    
-    Guid Delete(Volunteer volunteer);
-    
     Task<Guid> DeleteHard(Volunteer volunteer);
+    
+    
 }

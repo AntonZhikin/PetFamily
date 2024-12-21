@@ -53,16 +53,16 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
     
     public UnitResult<Error> DeletePetPhotos(PetId petId)
     {
-        var pet = Pets.FirstOrDefault(p => p.Id == petId);
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
         if (pet is null)
-            return Errors.General.NotFound();
-
+            return Errors.General.NotFound(petId.Value);
+    
         pet.DeleteAllPhotos();
-
+    
         return Result.Success<Error>();
     }
 
-    public Result<Entity.Pet, Error> GetPetById(PetId petId)
+    public Result<Pet, Error> GetPetById(PetId petId)
     { 
         var pet = _pets.FirstOrDefault(p => p.Id.Value == petId.Value);
         if (pet is null)
@@ -73,9 +73,9 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
     
     public PhoneNumber PhoneNumber;
     
-    private List<Entity.Pet> _pets = [];
+    private List<Pet> _pets = [];
 
-    public IReadOnlyList<Entity.Pet> Pets => _pets;
+    public IReadOnlyList<Pet> Pets => _pets;
 
     public SocialNetworkList SocialNetworkList { get; private set; }
 
@@ -114,10 +114,35 @@ public class Volunteer : Shared.Entity<VolunteerId>//, ISoftDeletable
         }
     }
 
+    public Result<Guid, ErrorList> DeletePet(Pet pet)
+    {
+        if (pet == null)
+            return Errors.General.NotFound().ToErrorList();
+        _pets.Remove(pet);
+
+        return pet.Id.Value;
+    }
+
     public void Restore()
     {
         if(_isDeleted)
             _isDeleted = false;
+    }
+
+    public UnitResult<Error> UpdatePetPosition(List<Pet> orderedList)
+    {
+        for (var i = 0; i < _pets.Count; i++)
+        {
+            var pet = orderedList[i];
+
+            var positionNumber = Position.Create(i + 1);
+            if (positionNumber.IsFailure)
+                return Errors.General.ValueIsInvalid("positionNumber");
+            
+            pet.SetPosition(positionNumber.Value);
+        }
+        
+        return Result.Success<Error>();
     }
     
     public UnitResult<Error> AddPet(Pet pet)
