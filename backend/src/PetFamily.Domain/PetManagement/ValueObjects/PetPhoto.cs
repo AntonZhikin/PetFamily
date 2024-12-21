@@ -12,5 +12,4 @@ public record PetPhoto
     }
     
     public PhotoPath PathToStorage { get; }
-
 }

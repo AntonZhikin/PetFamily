@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstractions;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
+using PetFamily.Application.Files;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.Shared.Error;
 
@@ -15,18 +16,20 @@ public class DeleteFilesToPetHandler : ICommandHandler<Guid, DeleteFilesToPetCom
     private readonly IUnitOfWork _unitOfWork;
     private readonly IVolunteerRepository _volunteerRepository;
     private readonly ILogger<DeleteFilesToPetHandler> _logger;
-
+    private readonly IFileProvider _fileProvider;
 
     public DeleteFilesToPetHandler(
         IValidator<DeleteFilesToPetCommand> validator,
         IUnitOfWork unitOfWork,
         IVolunteerRepository volunteerRepository,
-        ILogger<DeleteFilesToPetHandler> logger)
+        ILogger<DeleteFilesToPetHandler> logger,
+        IFileProvider fileProvider)
     {
         _validator = validator;
         _unitOfWork = unitOfWork;
         _volunteerRepository = volunteerRepository;
         _logger = logger;
+        _fileProvider = fileProvider;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(

@@ -58,20 +58,31 @@ public class MinioProvider : IFileProvider
     
     
     public async Task<Result<bool, Error>> DeleteFile
-        (FileData filesData, CancellationToken cancellationToken = default)
+        (FileInfo filesInfo, CancellationToken cancellationToken = default)
     {
         try
         {
-            await CreateBucketIfNotExists(filesData.Info.BucketName, cancellationToken);
+            await CreateBucketIfNotExists(filesInfo.BucketName, cancellationToken);
 
+            var statArgs = new StatObjectArgs()
+                .WithBucket(filesInfo.BucketName)
+                .WithObject(filesInfo.PhotoPath.Path);
+
+            var objectStat = await _minioClient.StatObjectAsync(statArgs, cancellationToken);
+
+            if (objectStat == null)
+                return Errors.General.ValueIsInvalid("object stat is null");
+                
             var removeObjectArgs = new RemoveObjectArgs()
-                .WithBucket(filesData.Info.BucketName)
-                .WithObject(filesData.Info.PhotoPath.Path);
+                .WithBucket(filesInfo.BucketName)
+                .WithObject(filesInfo.PhotoPath.Path);
 
             await _minioClient.RemoveObjectAsync(removeObjectArgs, cancellationToken);
+
+            _logger.LogInformation("Deleted file {objectName} from minio", filesInfo.PhotoPath.Path);
             
             return true;
-        }
+        }   
         catch(Exception ex)
         {
             _logger.LogError(ex, ex.Message);

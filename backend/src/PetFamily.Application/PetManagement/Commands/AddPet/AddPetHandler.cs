@@ -18,7 +18,6 @@ namespace PetFamily.Application.PetManagement.Commands.AddPet;
 public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
 {
     private readonly IVolunteerRepository _volunteerRepository;
-    private readonly ISpeciesRepository _speciesRepository;
     private readonly IValidator<AddPetCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddPetHandler> _logger;
@@ -28,13 +27,11 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
     public AddPetHandler(
         IValidator<AddPetCommand> validator,
         IVolunteerRepository volunteerRepository,
-        ISpeciesRepository speciesRepository,
         IUnitOfWork unitOfWork,
         ILogger<AddPetHandler> logger,
         IReadDbContext readDbContext)
     {
         _volunteerRepository = volunteerRepository;
-        _speciesRepository = speciesRepository;
         _validator = validator;
         _unitOfWork = unitOfWork;
         _logger = logger;

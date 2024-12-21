@@ -92,7 +92,7 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         _photos = photos;
     }
 
-    public void DeleteAllPhotos() => _photos.RemoveAll(photo => photo == null);
+    public void DeleteAllPhotos() => _photos = [];
     
     public void Delete()
     {
