@@ -32,6 +32,13 @@ public class VolunteersRepository : IVolunteerRepository
         return volunteer.Id;
     }
     
+    public async Task<Guid> DeleteHardPet(Volunteer volunteer)
+    {
+        _dbContext.Volunteers.Remove(volunteer);
+        
+        return volunteer.Id;
+    }
+    
     public async Task<Result<Volunteer, Error>> GetById(
         VolunteerId volunteerId,
         CancellationToken cancellationToken = default)

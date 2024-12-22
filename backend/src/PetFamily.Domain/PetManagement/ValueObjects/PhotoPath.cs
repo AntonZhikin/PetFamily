@@ -15,7 +15,7 @@ public record PhotoPath
     
     public static Result<PhotoPath, Error> Create(Guid path, string extension)
     {
-        var fullPath = path + "." + extension;
+        var fullPath = path + extension;
         
         return new PhotoPath(fullPath);  
     }

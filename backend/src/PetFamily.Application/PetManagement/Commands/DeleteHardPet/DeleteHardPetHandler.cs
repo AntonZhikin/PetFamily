@@ -5,7 +5,6 @@ using PetFamily.Application.Abstractions;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Application.Files;
-using PetFamily.Application.PetManagement.Commands.DeleteSoft;
 using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared.Error;
@@ -54,18 +53,14 @@ public class DeleteHardPetHandler : ICommandHandler<Guid, DeleteHardPetCommand>
         if (petResult.IsFailure)
             return Errors.General.NotFound(command.PetId).ToErrorList();
         
-        
         var photosFileInfo = petResult.Value.Photos
-            .Select(p => new FileInfo(PhotoPath.Create(p.PathToStorage.ToString()).Value, BUCKET_NAME));
+            .Select(p => new FileInfo(PhotoPath
+                .Create(p.PathToStorage.ToString()).Value, BUCKET_NAME));
         
         foreach (var photo in photosFileInfo)
         {
             await _fileProvider.RemoveFile(photo, cancellationToken);
         }
-        
-        var petPhotos = volunteerResult.Value.DeletePetPhotos(petId);
-        if (petPhotos.IsFailure)
-            return petPhotos.Error.ToErrorList();
         
         volunteerResult.Value.DeletePet(petResult.Value);
         if (volunteerResult.IsFailure)
