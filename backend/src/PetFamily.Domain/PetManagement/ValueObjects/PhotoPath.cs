@@ -6,6 +6,7 @@ namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record PhotoPath
 {
+    [JsonConstructor]
     private PhotoPath(string path)
     {
         Path = path;
