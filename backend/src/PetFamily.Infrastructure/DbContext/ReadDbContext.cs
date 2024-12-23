@@ -7,8 +7,15 @@ using PetFamily.Application.DTOs.ValueObject;
 
 namespace PetFamily.Infrastructure.DbContext;
 
-public class ReadDbContext(IConfiguration configuration) : Microsoft.EntityFrameworkCore.DbContext, IReadDbContext
+public class ReadDbContext : Microsoft.EntityFrameworkCore.DbContext, IReadDbContext
 {
+    private readonly string _connectionString;
+
+    public ReadDbContext(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+    
     public IQueryable<VolunteerDto> Volunteers => Set<VolunteerDto>();
     public IQueryable<PetDto> Pets => Set<PetDto>();
     public IQueryable<SpeciesDto> Species => Set<SpeciesDto>();
@@ -16,7 +23,7 @@ public class ReadDbContext(IConfiguration configuration) : Microsoft.EntityFrame
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(Constans.DATABASE));
+        optionsBuilder.UseNpgsql(_connectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
