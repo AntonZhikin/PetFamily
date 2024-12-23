@@ -6,10 +6,9 @@ using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
-using PetFamily.Domain.SpeciesManagement.AggregateRoot;
 using PetFamily.Domain.SpeciesManagement.Ids;
 
-namespace PetFamily.Application.Species.Create;
+namespace PetFamily.Application.Species.Commands.Create;
 
 public class CreateSpeciesHandler : ICommandHandler<Guid, CreateSpeciesCommand>
 {

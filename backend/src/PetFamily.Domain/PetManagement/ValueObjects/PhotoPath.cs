@@ -6,6 +6,7 @@ namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record PhotoPath
 {
+    [JsonConstructor]
     private PhotoPath(string path)
     {
         Path = path;
@@ -15,7 +16,7 @@ public record PhotoPath
     
     public static Result<PhotoPath, Error> Create(Guid path, string extension)
     {
-        var fullPath = path + "." + extension;
+        var fullPath = path + extension;
         
         return new PhotoPath(fullPath);  
     }

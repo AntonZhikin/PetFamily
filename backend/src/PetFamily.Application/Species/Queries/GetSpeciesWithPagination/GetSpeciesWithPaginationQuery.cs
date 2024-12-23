@@ -1,6 +1,5 @@
 using PetFamily.Application.Abstractions;
-using PetFamily.Application.DTOs;
 
-namespace PetFamily.Application.Species.Queries;
+namespace PetFamily.Application.Species.Queries.GetSpeciesWithPagination;
 
 public record GetSpeciesWithPaginationQuery(int Page, int PageSize) : IQuery;

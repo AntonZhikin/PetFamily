@@ -49,8 +49,6 @@ public class UpdateSocialNetworkHandler : ICommandHandler<Guid ,UpdateSocialNetw
         var volunteerSocialNetworks = new SocialNetworkList(socialNetworks);
 
         volunteerResult.Value.UpdateSocialNetworks(volunteerSocialNetworks);
-
-        _volunteerRepository.Save(volunteerResult.Value);
         
         await _unitOfWork.SaveChanges(cancellationToken);
         

@@ -7,13 +7,9 @@ namespace PetFamily.Application.PetManagement;
 
 public interface IVolunteerRepository
 {
-    Task<Guid> Add(Volunteer volunteer, CancellationToken cancellationToken = default);
+    Task<Guid> Add(Volunteer volunteer);
 
     Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken = default);
-    
-    Guid Save(Volunteer volunteer);
-    
-    Guid Delete(Volunteer volunteer);
     
     Task<Guid> DeleteHard(Volunteer volunteer);
 }

@@ -4,13 +4,12 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Application.Abstractions;
 using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
-using PetFamily.Application.Species.Create;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
 using PetFamily.Domain.SpeciesManagement.Entity;
 using PetFamily.Domain.SpeciesManagement.Ids;
 
-namespace PetFamily.Application.Species.AddBreedToSpecies;
+namespace PetFamily.Application.Species.Commands.AddBreedToSpecies;
 
 public class AddBreedToSpeciesHandler : ICommandHandler<Guid, AddBreedToSpeciesCommand>
 {

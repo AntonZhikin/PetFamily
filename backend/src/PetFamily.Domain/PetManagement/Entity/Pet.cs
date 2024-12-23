@@ -86,13 +86,13 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
     public IReadOnlyList<PetPhoto> Photos => _photos;
 
     private List<PetPhoto> _photos = [];
-
+    
     public void UpdatePhotos(List<PetPhoto> photos)
     {
         _photos = photos;
     }
 
-    public void DeleteAllPhotos() => _photos.RemoveAll(photo => photo == null);
+    public void DeleteAllPhotos() => _photos = [];
     
     public void Delete()
     {
@@ -134,5 +134,50 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
 
     public void Move(Position newPosition) =>
         Position = newPosition;
+
+    public void UpdateMainInfo(
+        Name name,
+        Description description,
+        Color color,
+        PetHealthInfo petHealthInfo,
+        Address address,
+        Weight weight,
+        Height height,
+        PhoneNumber phoneNumber,
+        IsNautered isNeutered,
+        DateTime dateOfBirth,
+        bool isVaccine,
+        HelpStatus helpStatus,
+        DateTime dateCreate,
+        SpeciesDetails speciesDetails,
+        RequisiteList requisites)
+    {
+        Name = name;
+        Description = description;
+        Color = color;
+        PetHealthInfo = petHealthInfo;
+        Address = address;
+        Weight = weight;
+        Height = height;
+        PhoneNumber = phoneNumber;
+        IsNeutered = isNeutered;
+        DateOfBirth = dateOfBirth;
+        IsVaccine = isVaccine;
+        HelpStatus = helpStatus;
+        DateCreate = dateCreate;
+        SpeciesDetails = speciesDetails;
+        Requisites = requisites;
+    }
+
+    public void UpdateMainPhoto(PhotoPath photoPath)
+    {
+        var newMainPhoto = Photos.FirstOrDefault(p => p.PathToStorage == photoPath.Path);
+        if (newMainPhoto != null) 
+            newMainPhoto.IsMain = true;
+    }
     
+    public void UpdateStatus(HelpStatus newStatus)
+    {
+        HelpStatus = newStatus;
+    }
 }

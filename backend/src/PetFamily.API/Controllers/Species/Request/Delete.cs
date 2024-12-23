@@ -1,4 +1,4 @@
-using PetFamily.Application.Species.Delete;
+using PetFamily.Application.Species.Commands.Delete;
 
 namespace PetFamily.API.Controllers.Species.Request;
 

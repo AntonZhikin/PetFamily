@@ -58,20 +58,29 @@ public class MinioProvider : IFileProvider
     
     
     public async Task<Result<bool, Error>> DeleteFile
-        (FileData filesData, CancellationToken cancellationToken = default)
+        (FileInfo filesInfo, CancellationToken cancellationToken = default)
     {
         try
         {
-            await CreateBucketIfNotExists(filesData.Info.BucketName, cancellationToken);
+            var statArgs = new StatObjectArgs()
+                .WithBucket(filesInfo.BucketName)
+                .WithObject(filesInfo.PhotoPath.Path);
 
+            var objectStat = await _minioClient.StatObjectAsync(statArgs, cancellationToken);
+
+            if (objectStat == null)
+                return Errors.General.ValueIsInvalid("object stat is null");
+                
             var removeObjectArgs = new RemoveObjectArgs()
-                .WithBucket(filesData.Info.BucketName)
-                .WithObject(filesData.Info.PhotoPath.Path);
+                .WithBucket(filesInfo.BucketName)
+                .WithObject(filesInfo.PhotoPath.Path);
 
             await _minioClient.RemoveObjectAsync(removeObjectArgs, cancellationToken);
+
+            _logger.LogInformation("Deleted file {objectName} from minio", filesInfo.PhotoPath.Path);
             
             return true;
-        }
+        }   
         catch(Exception ex)
         {
             _logger.LogError(ex, ex.Message);
@@ -159,18 +168,48 @@ public class MinioProvider : IFileProvider
         }
     }
     
-    private async Task CreateBucketIfNotExists(
-        string bucketName,
+    public async Task<UnitResult<Error>> RemoveFile(
+        FileInfo fileInfo,
         CancellationToken cancellationToken = default)
     {
-        var bucketExist = await IsBucketExist(bucketName, cancellationToken);
-        
-        if (bucketExist == false)
+        try
         {
-            await CreateBucket(bucketName, cancellationToken);
+            var removeArgs = new RemoveObjectArgs()
+                .WithBucket(fileInfo.BucketName)
+                .WithObject(fileInfo.PhotoPath.Path);
+        
+            await _minioClient.RemoveObjectAsync(removeArgs, cancellationToken);
+            
+            _logger.LogInformation("Deleted file {objectName} from minio", fileInfo.PhotoPath.Path);
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "Fail to remove file in minio with path {path} in bucket {bucket}",
+                fileInfo.PhotoPath.Path,
+                fileInfo.BucketName);
+
+            return Error.Failure("file.upload", "Fail to upload file in minio");
+        }
+
+        return Result.Success<Error>();
     }
     
+    
+    
+    // private async Task CreateBucketIfNotExists(
+    //     string bucketName,
+    //     CancellationToken cancellationToken = default)
+    // {
+    //     var bucketExist = await IsBucketExist(bucketName, cancellationToken);
+    //     
+    //     if (bucketExist == false)
+    //     {
+    //         await CreateBucket(bucketName, cancellationToken);
+    //     }
+    // }
+    
+    /*
     private async Task<bool> IsBucketExist(
         string bucketName,
         CancellationToken cancellationToken = default)
@@ -188,39 +227,5 @@ public class MinioProvider : IFileProvider
         var makeBucketArgs = new MakeBucketArgs().WithBucket(bucketName);
         await _minioClient.MakeBucketAsync(makeBucketArgs, cancellationToken);
     }
-
-    public async Task<UnitResult<Error>> RemoveFile(
-        FileInfo fileInfo,
-        CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            await IfBucketsNotExistCreateBucket([fileInfo.BucketName], cancellationToken);
-            
-            var statArgs = new StatObjectArgs()
-                .WithBucket(fileInfo.BucketName)
-                .WithObject(fileInfo.PhotoPath.Path);
-            
-            var objectStat = await _minioClient.StatObjectAsync(statArgs, cancellationToken);
-            if (objectStat == null)
-                return Result.Success<Error>();
-            
-            var removeArgs = new RemoveObjectArgs()
-                .WithBucket(fileInfo.BucketName)
-                .WithObject(fileInfo.PhotoPath.Path);
-        
-            await _minioClient.RemoveObjectAsync(removeArgs, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex,
-                "Fail to remove file in minio with path {path} in bucket {bucket}",
-                fileInfo.PhotoPath.Path,
-                fileInfo.BucketName);
-
-            return Error.Failure("file.upload", "Fail to upload file in minio");
-        }
-
-        return Result.Success<Error>();
-    }
+    */
 }

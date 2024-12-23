@@ -16,7 +16,7 @@ namespace PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
 
 public class UploadFileToPetHandler : ICommandHandler<Guid, UploadFileToPetCommand>
 {
-    private const string BUCKET_NAME = "photo";
+    private const string BUCKET_NAME = "photos";
 
     private readonly IFileProvider _fileProvider;
     private readonly IVolunteerRepository _volunteerRepository;
@@ -86,7 +86,7 @@ public class UploadFileToPetHandler : ICommandHandler<Guid, UploadFileToPetComma
         }
         
         var petFiles = filePathsResult.Value
-            .Select(f => new PetPhoto(f))
+            .Select(f => new PetPhoto(f.Path, false))
             .ToList();
         
         petResult.Value.UpdatePhotos(petFiles);

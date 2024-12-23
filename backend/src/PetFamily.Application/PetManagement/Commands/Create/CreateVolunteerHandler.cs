@@ -84,7 +84,7 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, CreateVolunteerComma
             assistanceDetails
             );
 
-        await _volunteerRepository.Add(volunteer, cancellationToken);
+        await _volunteerRepository.Add(volunteer);
 
         await _unitOfWork.SaveChanges(cancellationToken);
         

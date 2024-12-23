@@ -42,8 +42,6 @@ public class DeleteVolunteerHandler : ICommandHandler<Guid, DeleteVolunteerComma
         
         volunteerResult.Value.SoftDelete();
         
-        _volunteerRepository.Save(volunteerResult.Value);
-        
         await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("For volunteer with ID: {id} was deleted", volunteerResult.Value.Id);

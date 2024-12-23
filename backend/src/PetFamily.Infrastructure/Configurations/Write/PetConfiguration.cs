@@ -142,8 +142,8 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.Property(i => i.Photos)
             .ValueObjectsCollectionJsonConversion(
-                photo => new PetPhotoDto(){ PathToStorage = photo.PathToStorage.Path },
-                dto => new PetPhoto(PhotoPath.Create(dto.PathToStorage).Value))
+                photo => new PetPhotoDto{ PathToStorage = photo.PathToStorage},
+                dto => new PetPhoto(dto.PathToStorage, false))
             .HasColumnName("photos");
         
         builder.OwnsOne(p => p.Requisites, rb => 

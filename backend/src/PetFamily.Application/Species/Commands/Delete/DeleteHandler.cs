@@ -7,7 +7,7 @@ using PetFamily.Application.Database;
 using PetFamily.Application.Extensions;
 using PetFamily.Domain.Shared.Error;
 
-namespace PetFamily.Application.Species.Delete;
+namespace PetFamily.Application.Species.Commands.Delete;
 
 public class DeleteHandler : ICommandHandler<Guid, DeleteCommand>
 {
