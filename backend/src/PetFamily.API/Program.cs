@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Diagnostics;
 using PetFamily.API;
 using PetFamily.API.Middlewares;
 using PetFamily.Application;
@@ -68,3 +67,5 @@ app.Use(async (context, next) =>
 });
 
 app.Run();
+
+public partial class Program { }

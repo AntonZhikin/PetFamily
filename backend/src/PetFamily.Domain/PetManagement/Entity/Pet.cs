@@ -3,8 +3,6 @@ using PetFamily.Domain.PetManagement.Ids;
 using PetFamily.Domain.PetManagement.ValueObjects;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Error;
-using PetFamily.Domain.SpeciesManagement.AggregateRoot;
-using PetFamily.Domain.SpeciesManagement.Ids;
 
 namespace PetFamily.Domain.PetManagement.Entity;
 
