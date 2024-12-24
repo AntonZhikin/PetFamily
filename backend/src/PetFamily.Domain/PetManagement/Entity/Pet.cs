@@ -166,6 +166,13 @@ public class Pet : Shared.Entity<PetId>//, ISoftDeletable
         SpeciesDetails = speciesDetails;
         Requisites = requisites;
     }
+
+    public void UpdateMainPhoto(PhotoPath photoPath)
+    {
+        var newMainPhoto = Photos.FirstOrDefault(p => p.PathToStorage == photoPath.Path);
+        if (newMainPhoto != null) 
+            newMainPhoto.IsMain = true;
+    }
     
     public void UpdateStatus(HelpStatus newStatus)
     {

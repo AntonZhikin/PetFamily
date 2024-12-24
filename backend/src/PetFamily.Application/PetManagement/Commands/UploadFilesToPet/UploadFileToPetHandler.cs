@@ -86,7 +86,7 @@ public class UploadFileToPetHandler : ICommandHandler<Guid, UploadFileToPetComma
         }
         
         var petFiles = filePathsResult.Value
-            .Select(f => new PetPhoto(f))
+            .Select(f => new PetPhoto(f.Path, false))
             .ToList();
         
         petResult.Value.UpdatePhotos(petFiles);

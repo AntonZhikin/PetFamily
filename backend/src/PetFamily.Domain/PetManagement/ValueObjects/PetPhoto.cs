@@ -6,10 +6,29 @@ namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record PetPhoto 
 {
-    public PetPhoto(PhotoPath pathToStorage)
+    private PetPhoto()
     {
-        PathToStorage = pathToStorage;
+        
     }
     
-    public PhotoPath PathToStorage { get; }
+    public PetPhoto(string pathToStorage, bool isMain)
+    {
+        PathToStorage = pathToStorage;
+        IsMain = isMain;
+    }
+    
+    public string PathToStorage { get; }
+    
+   public bool IsMain { get; set; }
+   
+   public static Result<PetPhoto, ErrorList> Create(string path,
+       bool isMain)
+   {
+       if (string.IsNullOrWhiteSpace(path))
+           return Errors.General.ValueIsInvalid(nameof(Path)).ToErrorList();
+
+       var newPhoto = new PetPhoto(path, isMain);
+
+       return newPhoto;
+   }
 }

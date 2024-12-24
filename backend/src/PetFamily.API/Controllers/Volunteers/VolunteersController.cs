@@ -15,12 +15,14 @@ using PetFamily.Application.PetManagement.Commands.MovePositionPet;
 using PetFamily.Application.PetManagement.Commands.UpdateAssistanceDetail;
 using PetFamily.Application.PetManagement.Commands.UpdateMainInfo;
 using PetFamily.Application.PetManagement.Commands.UpdatePet;
+using PetFamily.Application.PetManagement.Commands.UpdatePetMainPhoto;
 using PetFamily.Application.PetManagement.Commands.UpdatePetStatus;
 using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
 using PetFamily.Application.PetManagement.Queries.GetVolunteerByIdQuery;
 using PetFamily.Application.PetManagement.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Processors;
+using PetFamily.Domain.PetManagement.ValueObjects;
 
 namespace PetFamily.API.Controllers.Volunteers;
 
@@ -275,5 +277,22 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
         
         return Ok(result.Value);
+    }
+    
+    [HttpPut("volunteer{volunteerId:guid}pet{petId:guid}/mainPhoto")]
+    public async Task<ActionResult> UpdatePetMainPhoto(
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] UpdatePetMainPhotoRequest request,
+        [FromServices] UpdatePetMainPhotoHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdatePetMainPhotoCommand(PhotoPath.Create(request.PathToStorage).Value, volunteerId, petId);
+        
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value); 
     }
 }
