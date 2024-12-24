@@ -22,7 +22,7 @@ public static class Inject
         this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddDbContext()
+            .AddDbContext(configuration)
             .AddMinio(configuration)
             .AddRepositories()
             .AddDatabase()
@@ -41,8 +41,8 @@ public static class Inject
         
         services.AddMinio(options =>
         {
-            MinioOptions minioOptions = configuration.GetSection(MinioOptions.MINIO).Get<MinioOptions>() 
-                                        ?? throw new NullReferenceException("Minio options not found"); ;
+            var minioOptions = configuration.GetSection(MinioOptions.MINIO).Get<MinioOptions>() 
+                               ?? throw new NullReferenceException("Minio options not found"); ;
             
             options.WithEndpoint(minioOptions.Endpoint);
             
@@ -55,10 +55,12 @@ public static class Inject
         return services;
     }
     
-    private static IServiceCollection AddDbContext(this IServiceCollection services)
+    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<WriteDbContext>();
-        services.AddScoped<IReadDbContext, ReadDbContext>();
+        services.AddScoped<WriteDbContext>(_ => 
+            new WriteDbContext(configuration.GetConnectionString("Database")!));
+        services.AddScoped<IReadDbContext, ReadDbContext>(_ => 
+            new ReadDbContext(configuration.GetConnectionString("Database")!));
         
         return services;
     }

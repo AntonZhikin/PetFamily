@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Diagnostics;
 using PetFamily.API;
 using PetFamily.API.Middlewares;
 using PetFamily.Application;

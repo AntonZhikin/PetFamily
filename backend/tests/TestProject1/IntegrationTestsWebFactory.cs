@@ -35,12 +35,12 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
     {
         var writeContext = services.SingleOrDefault(s => s
             .ServiceType == typeof(WriteDbContext));
-        if (writeContext is not null)
+        if (writeContext != null)
             services.Remove(writeContext);
         
         var readContext = services.SingleOrDefault(s => s
             .ServiceType == typeof(IReadDbContext));
-        if (readContext is not null)
+        if (readContext != null)
             services.Remove(readContext);
         
         services.AddScoped<WriteDbContext>(_ => 
@@ -68,7 +68,7 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
         _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
             {
                 DbAdapter = DbAdapter.Postgres,
-                SchemasToInclude = ["pets"]
+                SchemasToInclude = ["public"]
             }
         );
     }
