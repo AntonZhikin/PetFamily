@@ -42,4 +42,11 @@ public class Species : Shared.Entity<SpeciesId>
 
         return result.Id.Value;
     }
+
+    public static Result<Species, ErrorList> Create(SpeciesId id, Name name)
+    {
+        var specie = new Species(id, name);
+        
+        return specie;
+    }
 }
