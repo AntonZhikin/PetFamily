@@ -19,6 +19,7 @@ using PetFamily.Application.PetManagement.Commands.UpdatePetMainPhoto;
 using PetFamily.Application.PetManagement.Commands.UpdatePetStatus;
 using PetFamily.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
+using PetFamily.Application.PetManagement.Queries.GetPetById;
 using PetFamily.Application.PetManagement.Queries.GetVolunteerByIdQuery;
 using PetFamily.Application.PetManagement.Queries.GetVolunteersWithPagination;
 using PetFamily.Application.Processors;
@@ -294,5 +295,18 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
         
         return Ok(result.Value); 
+    }
+    
+    [HttpGet("getPetById")]
+    public async Task<ActionResult> GetPetById(
+        [FromQuery] GetPetByIdRequest request,
+        [FromServices] GetPetByIdHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = request.ToQuery();
+        
+        var response = await handler.Handle(query, cancellationToken);
+        
+        return Ok(response);
     }
 }
