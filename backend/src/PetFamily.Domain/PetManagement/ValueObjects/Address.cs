@@ -5,6 +5,10 @@ namespace PetFamily.Domain.PetManagement.ValueObjects;
 
 public record Address
 {
+    private Address()
+    {
+    }
+    
     public string City { get; }
     public string Street { get; }
 

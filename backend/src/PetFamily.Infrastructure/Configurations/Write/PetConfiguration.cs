@@ -29,7 +29,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         {
             b.Property(p => p.Value)
                 .IsRequired()
-                .HasColumnName("Position");
+                .HasColumnName("position");
         });
         
         builder.Property<bool>("_isDeleted")
@@ -122,7 +122,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         {
             b.IsRequired();
             b.Property(p => p.Value)
-                .HasColumnName("isNeutered")
+                .HasColumnName("is_neutered")
                 .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
         });
         

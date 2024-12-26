@@ -42,8 +42,8 @@ public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
         var petQuery = _readDbContext.Pets.AsQueryable();
         
         var petDto = await petQuery
-            .SingleOrDefaultAsync(p => p.SpeciesId == command.SpeciesId 
-                                       && p.BreedId == command.BreedId, cancellationToken);
+            .SingleOrDefaultAsync(p => p.SpeciesBreedDto.SpeciesId == command.SpeciesId 
+                                       && p.SpeciesBreedDto.BreedId == command.BreedId, cancellationToken);
         if (petDto != null)
             return Errors.General.Found(command.SpeciesId).ToErrorList();
         
