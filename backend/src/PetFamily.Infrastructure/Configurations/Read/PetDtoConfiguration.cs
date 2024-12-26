@@ -42,8 +42,9 @@ public class PetDtoConfiguration : IEntityTypeConfiguration<PetDto>
                 .HasColumnName("breed_id");
         });
         
-        builder.Property(c => c.Position)
-            .IsRequired()
-            .HasColumnName("position");
+        
+        // builder.Property(c => c.Position)
+        //     .IsRequired()
+        //     .HasColumnName("position");
     }
 }
