@@ -35,7 +35,7 @@ public static class Inject
         return services.Scan(scan => scan.FromAssemblies(typeof(Inject).Assembly)
             .AddClasses(classes => classes
                 .AssignableToAny(typeof(ICommandHandler<,>), typeof(ICommandHandler<>)))
-            .AsSelf()
+            .AsSelfWithInterfaces()
             .WithScopedLifetime());
     }
     
