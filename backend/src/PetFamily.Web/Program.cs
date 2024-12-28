@@ -76,5 +76,8 @@ app.Use(async (context, next) =>
 });
 
 app.Run();
-public partial class Program { }
+namespace PetFamily.Web
+{
+    public partial class Program { }
+}
 

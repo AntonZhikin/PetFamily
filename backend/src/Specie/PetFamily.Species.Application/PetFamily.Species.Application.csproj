@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\PetFamily.Core\PetFamily.Core.csproj" />
       <ProjectReference Include="..\PetFamily.Species.Domain\PetFamily.Species.Domain.csproj" />
     </ItemGroup>
 

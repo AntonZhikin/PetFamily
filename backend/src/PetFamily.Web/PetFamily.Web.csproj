@@ -31,8 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\PetFamily.SharedKernel\PetFamily.SharedKernel.csproj" />
-      <ProjectReference Include="..\PetFamily.Core\PetFamily.Core.csproj" />
       <ProjectReference Include="..\Pet\PetFamily.Pets.Application\PetFamily.Pets.Application.csproj" />
       <ProjectReference Include="..\Pet\PetFamily.Pets.Infrastructure\PetFamily.Pets.Infrastructure.csproj" />
       <ProjectReference Include="..\Pet\PetFamily.Pets.Presentation\PetFamily.Pets.Presentation.csproj" />
