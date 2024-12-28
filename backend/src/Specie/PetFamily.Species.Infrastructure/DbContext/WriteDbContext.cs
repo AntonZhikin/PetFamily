@@ -7,11 +7,9 @@ public class WriteDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     private readonly string _connectionString;
 
-    public WriteDbContext(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-    
+    public WriteDbContext(string connectionString) 
+        => _connectionString = connectionString;
+
     public DbSet<Domain.SpeciesManagement.AggregateRoot.Species> Species => 
         Set<Domain.SpeciesManagement.AggregateRoot.Species>();
     
@@ -26,7 +24,8 @@ public class WriteDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(WriteDbContext).Assembly, 
-            type => type.FullName?.Contains("Configurations.Write") ?? false);
+            type => type.FullName!.Contains("Configurations.Write"));
+        modelBuilder.HasDefaultSchema("PetFamily_Species");
     }
     
     private static ILoggerFactory CreateLoggerFactory() =>

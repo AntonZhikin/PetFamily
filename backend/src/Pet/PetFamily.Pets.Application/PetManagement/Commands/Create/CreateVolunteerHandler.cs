@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
@@ -22,7 +23,7 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, CreateVolunteerComma
         IVolunteerRepository volunteerRepository,
         ILogger<CreateVolunteerHandler> logger,
         IValidator<CreateVolunteerCommand> validator,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(Modules.Pets)]IUnitOfWork unitOfWork)
     {
         _volunteerRepository = volunteerRepository;
         _logger = logger;

@@ -1,11 +1,14 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.Extensions;
 using PetFamily.Kernel;
+using PetFamily.Pets.Contracts;
+using PetFamily.Pets.Contracts.Request;
 
 namespace PetFamily.Species.Application.Species.Commands.DeleteBreed;
 
@@ -16,19 +19,22 @@ public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
     private readonly IReadDbContext _readDbContext;
     private readonly ISpeciesRepository _speciesRepository;
     private readonly IValidator<DeleteBreedCommand> _validator;
+    private readonly IPetsContracts _petsContracts;
 
     public DeleteBreedHandler(
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(Modules.Specie)]IUnitOfWork unitOfWork,
         ILogger<DeleteBreedHandler> logger,
         IReadDbContext readDbContext,
         ISpeciesRepository speciesRepository,
-        IValidator<DeleteBreedCommand> validator)
+        IValidator<DeleteBreedCommand> validator,
+        IPetsContracts petsContracts)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
         _readDbContext = readDbContext;
         _speciesRepository = speciesRepository;
         _validator = validator;
+        _petsContracts = petsContracts;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -41,20 +47,19 @@ public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
         
         var petQuery = _readDbContext.Pets.AsQueryable();
         
-        var petDto = await petQuery
-            .SingleOrDefaultAsync(p => p.SpeciesBreedDto.SpeciesId == command.SpeciesId 
-                                       && p.SpeciesBreedDto.BreedId == command.BreedId, cancellationToken);
+        var petDto = await _petsContracts
+            .AnyPetWithSpeciesId(new AnyPetWithSpeciesIdRequest(command.SpeciesId), cancellationToken);
         if (petDto != null)
+            return Errors.General.Found(command.SpeciesId).ToErrorList();
+        
+        var petDtoBreed = await _petsContracts
+            .AnyPetWithBreedId(new AnyPetWithBreedIdRequest(command.BreedId), cancellationToken);
+        if (petDtoBreed != null)
             return Errors.General.Found(command.SpeciesId).ToErrorList();
         
         var speciesResult = await _speciesRepository.GetById(command.SpeciesId, cancellationToken);
         if (speciesResult.IsFailure)
             return speciesResult.Error.ToErrorList();
-        
-        // var breedResult = speciesResult.Value.Breeds
-        //     .FirstOrDefault(b => b.Id == command.BreedId);
-        // if (breedResult == null)
-        //     return Errors.General.NotFound(command.BreedId).ToErrorList();
         
         var result = speciesResult.Value.DeleteBreed(command.BreedId);
         

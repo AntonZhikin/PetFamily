@@ -1,11 +1,14 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.Extensions;
 using PetFamily.Kernel;
+using PetFamily.Pets.Contracts;
+using PetFamily.Pets.Contracts.Request;
 
 namespace PetFamily.Species.Application.Species.Commands.Delete;
 
@@ -16,19 +19,22 @@ public class DeleteHandler : ICommandHandler<Guid, DeleteCommand>
     private readonly IReadDbContext _readDbContext;
     private readonly ISpeciesRepository _speciesRepository;
     private readonly IValidator<DeleteCommand> _validator;
+    private readonly IPetsContracts _petsContracts;
 
     public DeleteHandler(
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(Modules.Specie)]IUnitOfWork unitOfWork,
         ILogger<DeleteHandler> logger,
         IReadDbContext readDbContext,
         ISpeciesRepository speciesRepository,
-        IValidator<DeleteCommand> validator)
+        IValidator<DeleteCommand> validator,
+        IPetsContracts petsContracts)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
         _readDbContext = readDbContext;
         _speciesRepository = speciesRepository;
         _validator = validator;
+        _petsContracts = petsContracts;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -40,8 +46,8 @@ public class DeleteHandler : ICommandHandler<Guid, DeleteCommand>
         
         var petQuery = _readDbContext.Pets.AsQueryable();
         
-        var petDto = await petQuery
-            .SingleOrDefaultAsync(p => p.SpeciesBreedDto.SpeciesId == command.SpeciesId, cancellationToken);
+        var petDto = await _petsContracts
+            .AnyPetWithSpeciesId(new AnyPetWithSpeciesIdRequest(command.SpeciesId), cancellationToken);
         if (petDto != null)
             return Errors.General.Found(command.SpeciesId).ToErrorList();
         

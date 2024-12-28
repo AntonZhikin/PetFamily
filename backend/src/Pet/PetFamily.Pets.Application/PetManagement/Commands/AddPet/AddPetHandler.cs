@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
@@ -10,6 +11,8 @@ using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Pets.Domain.Entity;
 using PetFamily.Pets.Domain.ValueObjects;
+using PetFamily.Species.Contracts;
+using PetFamily.Species.Contracts.Request;
 
 namespace PetFamily.Pets.Application.PetManagement.Commands.AddPet;
 
@@ -20,20 +23,22 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddPetHandler> _logger;
     private readonly IReadDbContext _readDbContext;
+    private readonly ISpecieContract _specieContract;
 
 
     public AddPetHandler(
         IValidator<AddPetCommand> validator,
         IVolunteerRepository volunteerRepository,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(Modules.Pets)]IUnitOfWork unitOfWork,
         ILogger<AddPetHandler> logger,
-        IReadDbContext readDbContext)
+        IReadDbContext readDbContext, ISpecieContract specieContract)
     {
         _volunteerRepository = volunteerRepository;
         _validator = validator;
         _unitOfWork = unitOfWork;
         _logger = logger;
         _readDbContext = readDbContext;
+        _specieContract = specieContract;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -50,25 +55,23 @@ public class AddPetHandler : ICommandHandler<Guid, AddPetCommand>
             .GetById(command.VolunteerId, cancellationToken);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
-
-
-        var speciesQuery = _readDbContext.Species;
-        var speciesDto = await speciesQuery
-            .SingleOrDefaultAsync(s => s.Id == command.SpeciesId, cancellationToken);
+        
+        var speciesDto = await _specieContract
+            .GetSpeciesById(new GetSpecieByIdRequest(command.SpeciesId), cancellationToken);
         if (speciesDto == null)
             return Errors.General.NotFound().ToErrorList();
-
+        
         var speciesId = speciesDto.Id;
 
-        var breedQuery = _readDbContext.Breed;
-        var breedDto = await breedQuery
-            .SingleOrDefaultAsync(b => b.Id == command.BreedId, cancellationToken);
+        var breedDto = await _specieContract
+            .GetBreedById(new GetBreedByIdRequest(command.SpeciesId, command.BreedId), cancellationToken);
         if (breedDto == null)
             return Errors.General.NotFound().ToErrorList();
 
         var breedId = breedDto.Id;
         
-        var speciesDetails = SpeciesDetails.Create(speciesId, breedId);
+        var speciesDetails = SpeciesDetails
+            .Create(SpeciesId.Create(speciesId), BreedId.Create(breedId));
         
         var petId = PetId.NewPetId();
 

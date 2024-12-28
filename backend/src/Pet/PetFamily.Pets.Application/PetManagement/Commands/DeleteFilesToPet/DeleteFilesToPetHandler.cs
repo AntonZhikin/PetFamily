@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
@@ -20,7 +21,7 @@ public class DeleteFilesToPetHandler : ICommandHandler<Guid, DeleteFilesToPetCom
 
     public DeleteFilesToPetHandler(
         IValidator<DeleteFilesToPetCommand> validator,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(Modules.Pets)]IUnitOfWork unitOfWork,
         IVolunteerRepository volunteerRepository,
         ILogger<DeleteFilesToPetHandler> logger,
         IFileProvider fileProvider)

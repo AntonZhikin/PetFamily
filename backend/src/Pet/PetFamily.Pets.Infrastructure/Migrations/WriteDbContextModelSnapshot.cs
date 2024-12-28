@@ -18,6 +18,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("PetFamily_Pets")
                 .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -86,7 +87,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_volunteers");
 
-                    b.ToTable("volunteers", (string)null);
+                    b.ToTable("volunteers", "PetFamily_Pets");
                 });
 
             modelBuilder.Entity("PetFamily.Pets.Domain.Entity.Pet", b =>
@@ -259,7 +260,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
                     b.HasIndex("VolunteerId")
                         .HasDatabaseName("ix_pets_volunteer_id");
 
-                    b.ToTable("pets", (string)null);
+                    b.ToTable("pets", "PetFamily_Pets");
                 });
 
             modelBuilder.Entity("PetFamily.Pets.Domain.AggregateRoot.Volunteer", b =>
@@ -271,7 +272,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                             b1.HasKey("VolunteerId");
 
-                            b1.ToTable("volunteers");
+                            b1.ToTable("volunteers", "PetFamily_Pets");
 
                             b1.ToJson("assistance_detail_list");
 
@@ -300,7 +301,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                                     b2.HasKey("AssistanceDetailListVolunteerId", "Id");
 
-                                    b2.ToTable("volunteers");
+                                    b2.ToTable("volunteers", "PetFamily_Pets");
 
                                     b2.ToJson("assistance_detail_list");
 
@@ -319,7 +320,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                             b1.HasKey("VolunteerId");
 
-                            b1.ToTable("volunteers");
+                            b1.ToTable("volunteers", "PetFamily_Pets");
 
                             b1.ToJson("social_network_list");
 
@@ -348,7 +349,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                                     b2.HasKey("SocialNetworkListVolunteerId", "Id");
 
-                                    b2.ToTable("volunteers");
+                                    b2.ToTable("volunteers", "PetFamily_Pets");
 
                                     b2.ToJson("social_network_list");
 
@@ -381,7 +382,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                             b1.HasKey("PetId");
 
-                            b1.ToTable("pets");
+                            b1.ToTable("pets", "PetFamily_Pets");
 
                             b1.ToJson("requisite");
 
@@ -413,7 +414,7 @@ namespace PetFamily.Pets.Infrastructure.Migrations
 
                                     b2.HasKey("RequisiteListPetId", "Id");
 
-                                    b2.ToTable("pets");
+                                    b2.ToTable("pets", "PetFamily_Pets");
 
                                     b2.ToJson("requisite");
 

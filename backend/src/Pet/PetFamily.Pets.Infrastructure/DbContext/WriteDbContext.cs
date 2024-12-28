@@ -27,7 +27,10 @@ public class WriteDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(WriteDbContext).Assembly, 
-            type => type.FullName?.Contains("Configurations.Write") ?? false);
+            type => type.FullName!.Contains("Configurations.Write"));
+        
+        modelBuilder.HasDefaultSchema("PetFamily_Pets");
+
     }
     
     private static ILoggerFactory CreateLoggerFactory() =>

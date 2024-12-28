@@ -1,5 +1,6 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
@@ -18,7 +19,7 @@ public class MovePositionPetHandler : ICommandHandler<Guid, MovePositionPetComma
     private readonly IValidator<MovePositionPetCommand> _validator;
 
     public MovePositionPetHandler(
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(Modules.Pets)]IUnitOfWork unitOfWork,
         IValidator<MovePositionPetCommand> validator,
         ILogger<MovePositionPetHandler> logger,
         IVolunteerRepository volunteerRepository
