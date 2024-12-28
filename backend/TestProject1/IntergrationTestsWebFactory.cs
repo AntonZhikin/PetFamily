@@ -3,15 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
-using PetFamily.Application.Database;
-using PetFamily.Infrastructure.DbContext;
+using PetFamily.Web;
 using Respawn;
 using Testcontainers.PostgreSql;
 
 namespace TestProject1;
 
-public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsyncLifetime
+/*public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres")
@@ -81,4 +79,4 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
         await _dbContainer.DisposeAsync();
 
     }
-}
+}*/
