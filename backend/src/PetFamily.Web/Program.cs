@@ -28,9 +28,6 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft.AspNetCore.Mvc", LogEventLevel.Information)
     .MinimumLevel.Override("Microsoft.AspNetCore.Routing", LogEventLevel.Information)
     .CreateLogger();
-    
-
-    
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,6 +39,9 @@ builder.Services
 
     .AddSpeciesApplication()
     .AddSpeciesInfrastructure(builder.Configuration);
+
+// builder.Services.AddAuthentication();
+// builder.Services.AddAuthorization();
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)
@@ -61,11 +61,12 @@ if (app.Environment.IsDevelopment())
 
     //await app.ApplyMigration();
 }
- 
+
 app.UseHttpLogging();
 
 app.UseHttpsRedirection();
 
+//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -80,4 +81,3 @@ namespace PetFamily.Web
 {
     public partial class Program { }
 }
-

@@ -15,7 +15,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PetFamily.Species.Application\PetFamily.Species.Application.csproj" />
+      <ProjectReference Include="..\PetFamily.Species.Contracts\PetFamily.Species.Contracts.csproj" />
       <ProjectReference Include="..\PetFamily.Species.Domain\PetFamily.Species.Domain.csproj" />
+      <ProjectReference Include="..\PetFamily.Species.Presentation\PetFamily.Species.Presentation.csproj" />
     </ItemGroup>
 
 </Project>

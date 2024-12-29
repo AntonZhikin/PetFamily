@@ -7,6 +7,8 @@ using PetFamily.Core.Messaging;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Application.Files;
 using PetFamily.Pets.Application.PetManagement;
+using PetFamily.Pets.Contracts;
+using PetFamily.Pets.Controllers;
 using PetFamily.Pets.Infrastructure.BackgroundServices;
 using PetFamily.Pets.Infrastructure.DbContext;
 using PetFamily.Pets.Infrastructure.MessageQueues;
@@ -30,6 +32,8 @@ public static class DependencyInjection
             .AddHostedServices()
             .AddMessageQueues()
             .AddServices();
+        
+        services.AddScoped<IPetsContracts, PetsContracts>();
         
         return services;
     }

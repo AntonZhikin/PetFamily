@@ -10,13 +10,10 @@ namespace PetFamily.Species.Presentation;
 public class SpecieContracts : ISpecieContract
 {
     private readonly IReadDbContext _readDbContext;
-    private readonly ILogger _logger;
 
-
-    public SpecieContracts(IReadDbContext dbContext, ILogger logger)
+    public SpecieContracts(IReadDbContext dbContext)
     {
         _readDbContext = dbContext;
-        _logger = logger;
     }
 
     public async Task<SpeciesDto?> GetSpeciesById(

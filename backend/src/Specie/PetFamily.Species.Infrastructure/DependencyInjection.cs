@@ -3,8 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using PetFamily.Core;
 using PetFamily.Species.Application;
 using PetFamily.Species.Application.Species;
+using PetFamily.Species.Contracts;
 using PetFamily.Species.Infrastructure.DbContext;
 using PetFamily.Species.Infrastructure.Repository;
+using PetFamily.Species.Presentation;
 
 namespace PetFamily.Species.Infrastructure;
 
@@ -18,6 +20,8 @@ public static class DependencyInjection
             .AddDatabase()
             .AddDbContext(configuration);
         
+        services.AddScoped<ISpecieContract, SpecieContracts>();
+            
         return services;
     }
     
