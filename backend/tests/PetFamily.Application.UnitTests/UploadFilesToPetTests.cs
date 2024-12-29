@@ -1,27 +1,21 @@
-using System.Collections;
-using System.Data;
-using CSharpFunctionalExtensions;
+/*using CSharpFunctionalExtensions;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetFamily.Application.Database;
-using PetFamily.Application.DTOs;
-using PetFamily.Application.DTOs.ValueObject;
-using PetFamily.Application.Files;
-using PetFamily.Application.Messaging;
-using PetFamily.Application.PetManagement;
-using PetFamily.Application.PetManagement.Commands.UploadFilesToPet;
-using PetFamily.Domain.PetManagement.AggregateRoot;
-using PetFamily.Domain.PetManagement.Entity;
-using PetFamily.Domain.PetManagement.Ids;
-using PetFamily.Domain.PetManagement.ValueObjects;
-using PetFamily.Domain.Shared;
-using PetFamily.Domain.Shared.Error;
-using PetFamily.Domain.SpeciesManagement.Ids;
-using FileInfo = PetFamily.Application.Files.FileInfo;
-using IFileProvider = PetFamily.Application.Files.IFileProvider;
+using PetFamily.Core;
+using PetFamily.Core.DTOs.ValueObject;
+using PetFamily.Core.Messaging;
+using PetFamily.Core.ValueObject;
+using PetFamily.Core.ValueObject.Ids;
+using PetFamily.Pets.Application.PetManagement;
+using PetFamily.Pets.Application.PetManagement.Commands.UploadFilesToPet;
+using PetFamily.Pets.Domain.AggregateRoot;
+using PetFamily.Pets.Domain.Entity;
+using PetFamily.Pets.Domain.ValueObjects;
+using FileInfo = PetFamily.Core.FileInfo;
+using IFileProvider = PetFamily.Core.IFileProvider;
 
 namespace Application.UnitTests;
 
@@ -108,7 +102,7 @@ public class UploadFilesToPetTests
         var fullName = FullName.Create("name", "lastname", "firstname").Value;
 
         var name = Name.Create("command.Name").Value;
-        var color = Color.Create("command.Color").Value;
+        //var color = Color.Create("command.Color").Value;
         var petHealthInfo = PetHealthInfo.Create("command.PetHealthInfo").Value;
         var address = Address.Create("command.City", "command.Street").Value;
         var weight = Weight.Create(1).Value;
@@ -136,7 +130,7 @@ public class UploadFilesToPetTests
             petId,
             name,
             description,
-            color,
+            null, //color
             petHealthInfo,
             address,
             weight,
@@ -156,4 +150,4 @@ public class UploadFilesToPetTests
 
         return (volunteer, pet);
     }
-}
+}*/

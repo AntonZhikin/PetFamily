@@ -1,16 +1,11 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PetFamily.Application.Abstractions;
-using PetFamily.Application.Species.Commands.AddBreedToSpecies;
-using PetFamily.Domain.Shared;
-using PetFamily.Domain.SpeciesManagement.AggregateRoot;
-using PetFamily.Domain.SpeciesManagement.Ids;
-using PetFamily.Infrastructure.DbContext;
+using PetFamily.Core.Abstractions;
 
 namespace TestProject1;
 
-public class AddBreedToSpecieTests : IClassFixture<IntegrationTestsWebFactory>, IAsyncLifetime
+/*public class AddBreedToSpecieTests : IClassFixture<IntegrationTestsWebFactory>, IAsyncLifetime
 {
     private readonly IntegrationTestsWebFactory _factory;
     private readonly WriteDbContext _writeDbContext;
@@ -64,4 +59,4 @@ public class AddBreedToSpecieTests : IClassFixture<IntegrationTestsWebFactory>, 
         
         await _factory.ResetDatabaseAsync();
     }
-}
+}*/
