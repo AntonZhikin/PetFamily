@@ -47,7 +47,7 @@ public static class DependencyInjection
         services.AddMinio(options =>
         {
             var minioOptions = configuration.GetSection(MinioOptions.MINIO).Get<MinioOptions>() 
-                               ?? throw new NullReferenceException("Minio options not found"); ;
+                               ?? throw new NullReferenceException("Minio options not found"); 
             
             options.WithEndpoint(minioOptions.Endpoint);
             

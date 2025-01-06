@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Core;
 using PetFamily.Core.Extensions;
@@ -14,6 +15,7 @@ namespace PetFamily.Species.Presentation.Species;
 
 public class SpeciesController : ApplicationController
 {
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult> Create(
         [FromBody] CreateSpeciesRequest request,
@@ -26,7 +28,8 @@ public class SpeciesController : ApplicationController
         
         return Ok(result.Value);
     }
-
+    
+    [Authorize]
     [HttpPost("{id:guid}breed")]
     public async Task<ActionResult> AddBreed(
         [FromRoute] Guid id,
@@ -40,7 +43,8 @@ public class SpeciesController : ApplicationController
         
         return Ok(result.Value);
     }
-
+    
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
@@ -56,6 +60,7 @@ public class SpeciesController : ApplicationController
         return Ok(result.Value);
     }
     
+    [Authorize]
     [HttpDelete("{speciesId:guid}/breed/{breedId:guid}")]
     public async Task<ActionResult> DeleteBreed(
         [FromRoute] Guid speciesId,
@@ -71,7 +76,7 @@ public class SpeciesController : ApplicationController
         
         return Ok(result.Value);
     }
-
+    
     [HttpGet]
     public async Task<ActionResult> Get(
         [FromQuery] GetSpeciesWithPaginationRequest request,
