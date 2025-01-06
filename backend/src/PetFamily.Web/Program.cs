@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.OpenApi.Models;
+using PetFamily.Accounts.Application;
+using PetFamily.Accounts.Infrastructure;
+using PetFamily.Accounts.Presentation;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Controllers.Volunteers;
 using PetFamily.Pets.Infrastructure;
@@ -28,12 +33,32 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft.AspNetCore.Mvc", LogEventLevel.Information)
     .MinimumLevel.Override("Microsoft.AspNetCore.Routing", LogEventLevel.Information)
     .CreateLogger();
-    
-
-    
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 builder.Services.AddSerilog();
 
 builder.Services
@@ -41,11 +66,17 @@ builder.Services
     .AddPetsInfrastructure(builder.Configuration)
 
     .AddSpeciesApplication()
-    .AddSpeciesInfrastructure(builder.Configuration);
+    .AddSpeciesInfrastructure(builder.Configuration)
+    
+    .AddAccountsApplication()
+    .AddAccountsInfrastructure(builder.Configuration);
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)
-    .AddApplicationPart(typeof(SpeciesController).Assembly);
+    .AddApplicationPart(typeof(SpeciesController).Assembly)
+    .AddApplicationPart(typeof(AccountsController).Assembly);
 
 var app = builder.Build();
 
@@ -61,11 +92,12 @@ if (app.Environment.IsDevelopment())
 
     //await app.ApplyMigration();
 }
- 
+
 app.UseHttpLogging();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -76,8 +108,13 @@ app.Use(async (context, next) =>
 });
 
 app.Run();
+
 namespace PetFamily.Web
 {
     public partial class Program { }
-}
 
+    public class AuthOptions : AuthenticationSchemeOptions
+    {
+    
+    }
+}

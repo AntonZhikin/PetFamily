@@ -25,4 +25,12 @@ public static class Errors
             return Error.Validation("record found", $"record found{forId} :");
         }
     }
+
+    public static class User
+    {
+        public static Error InvalidCredentials(string? name = null)
+        {
+            return Error.Validation("credentials.is.invalid", $"credentials is invalid");
+        }
+    }
 }

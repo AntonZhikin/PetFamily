@@ -7,6 +7,8 @@ using PetFamily.Core.Messaging;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Application.Files;
 using PetFamily.Pets.Application.PetManagement;
+using PetFamily.Pets.Contracts;
+using PetFamily.Pets.Controllers;
 using PetFamily.Pets.Infrastructure.BackgroundServices;
 using PetFamily.Pets.Infrastructure.DbContext;
 using PetFamily.Pets.Infrastructure.MessageQueues;
@@ -31,6 +33,8 @@ public static class DependencyInjection
             .AddMessageQueues()
             .AddServices();
         
+        services.AddScoped<IPetsContracts, PetsContracts>();
+        
         return services;
     }
 
@@ -43,7 +47,7 @@ public static class DependencyInjection
         services.AddMinio(options =>
         {
             var minioOptions = configuration.GetSection(MinioOptions.MINIO).Get<MinioOptions>() 
-                               ?? throw new NullReferenceException("Minio options not found"); ;
+                               ?? throw new NullReferenceException("Minio options not found"); 
             
             options.WithEndpoint(minioOptions.Endpoint);
             
