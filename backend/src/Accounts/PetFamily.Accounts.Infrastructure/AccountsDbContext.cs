@@ -1,8 +1,9 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PetFamily.Accounts.Application.AccountManagement.DataModels;
+using PetFamily.Accounts.Domain.DataModels;
 
 namespace PetFamily.Accounts.Infrastructure;
 
@@ -28,6 +29,12 @@ public class AccountsDbContext
         modelBuilder.Entity<User>()
             .ToTable("users");
         
+        modelBuilder.Entity<User>()
+            .Property(u => u.SocialNetworks)
+            .HasConversion(
+                u => JsonSerializer.Serialize(u, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<SocialNetwork>>(json, JsonSerializerOptions.Default)!);
+        
         modelBuilder.Entity<Role>()
             .ToTable("roles");
         
@@ -45,6 +52,32 @@ public class AccountsDbContext
         
         modelBuilder.Entity<IdentityUserRole<Guid>>()
             .ToTable("user_roles");
+        
+        modelBuilder.Entity<Domain.DataModels.Permission>()
+            .ToTable("permissions");
+
+        modelBuilder.Entity<Domain.DataModels.Permission>()
+            .HasIndex(u => u.Code)
+            .IsUnique();
+        
+        modelBuilder.Entity<Domain.DataModels.Permission>()
+            .Property(u => u.Description).HasMaxLength(200);
+        
+        modelBuilder.Entity<RolePermission>()
+            .ToTable("role_permissions");
+        
+        modelBuilder.Entity<RolePermission>()
+            .HasKey(r => new { r.RoleId, r.PermissionId });
+        
+        modelBuilder.Entity<RolePermission>()
+            .HasOne(rp => rp.Role)
+            .WithMany(r => r.RolePermissions)
+            .HasForeignKey(rp => rp.RoleId);
+        
+        modelBuilder.Entity<RolePermission>()
+            .HasOne(rp => rp.Permission)
+            .WithMany()
+            .HasForeignKey(rp => rp.PermissionId);
         
         modelBuilder.HasDefaultSchema("PetFamily_Accounts");
     }

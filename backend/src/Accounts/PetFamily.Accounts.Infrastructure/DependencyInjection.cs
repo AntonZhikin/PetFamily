@@ -1,10 +1,12 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.AccountManagement;
-using PetFamily.Accounts.Application.AccountManagement.DataModels;
+using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Infrastructure.Permission;
 
 namespace PetFamily.Accounts.Infrastructure;
 
@@ -47,8 +49,15 @@ public static class DependencyInjection
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
+        
+        services.AddAuthorization();
+
+        services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
+        
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         
         return services;
     }

@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.AccountManagement;
-using PetFamily.Accounts.Application.AccountManagement.DataModels;
+using PetFamily.Accounts.Domain.DataModels;
 
 namespace PetFamily.Accounts.Infrastructure;
 
@@ -21,17 +21,19 @@ public class JwtTokenProvider : ITokenProvider
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        
-        Claim[] claims = [
-            new Claim(CustomClaims.Sub, user.Id.ToString()),
-            new Claim(CustomClaims.Email, user.Email ?? "")];
+
+        Claim[] claims =
+        [
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? "")
+        ];
         
         var jwtToken = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,
             audience: _jwtOptions.Audience,
             expires: DateTime.UtcNow.AddMinutes(int.Parse(_jwtOptions.ExpiredMinutesTime)),
             signingCredentials: signingCredentials,
-            claims: claims);
+            claims: claims);    
 
         var stringToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
 

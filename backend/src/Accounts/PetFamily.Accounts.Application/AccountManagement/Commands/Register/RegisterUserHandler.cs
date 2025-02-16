@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using PetFamily.Accounts.Application.AccountManagement.DataModels;
+using PetFamily.Accounts.Domain.DataModels;
 using PetFamily.Core.Abstractions;
 using PetFamily.Kernel;
 
@@ -34,7 +34,8 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
             _logger.LogInformation("User created: {username} a new account with password.", command.UserName);
             return Result.Success<ErrorList>();
         }
-        
+
+        _userManager.AddToRoleAsync(user, "Partisipant");
         
         var errors = result.Errors
             .Select(e => Error.Failure(e.Code, e.Description)).ToList();

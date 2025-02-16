@@ -1,0 +1,18 @@
+{
+  "Permissions": {
+    "Volunteer": [
+      "volunteer.create",
+      "volunteer.get",
+      "volunteer.update",
+      "volunteer.delete"
+    ]
+  },
+  "Roles": {
+    "Admin": [
+      "volunteer.create",
+      "volunteer.get",
+      "volunteer.update",
+      "volunteer.delete"
+    ]
+  }
+}
