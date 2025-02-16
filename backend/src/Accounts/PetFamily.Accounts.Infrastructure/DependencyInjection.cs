@@ -59,6 +59,8 @@ public static class DependencyInjection
         
         services.AddScoped<PermissionManager>();
         
+        services.AddScoped<RolePermissionManager>();
+        
         services.AddAuthorization();
 
         services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();

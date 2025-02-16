@@ -59,6 +59,10 @@ public class AccountsDbContext
         
         modelBuilder.Entity<Permission>()
             .ToTable("permissions");
+        
+        modelBuilder.Entity<Permission>()
+            .HasIndex(u => u.Code)
+            .IsUnique();
 
         modelBuilder.Entity<Permission>()
             .HasIndex(u => u.Code)
