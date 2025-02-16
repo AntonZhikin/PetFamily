@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 
-namespace PetFamily.Accounts.Infrastructure.Permission;
+namespace PetFamily.Framework.Authorization;
 
 public class PermissionPolicyProvider : IAuthorizationPolicyProvider
 {
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
+        if (string.IsNullOrWhiteSpace(policyName))
+        {
+            return Task.FromResult<AuthorizationPolicy?>(null);
+        }
         var policy = new AuthorizationPolicyBuilder()
             .RequireAuthenticatedUser()
             .AddRequirements(new PermissionAttribute(policyName))

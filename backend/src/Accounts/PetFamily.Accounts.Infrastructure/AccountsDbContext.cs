@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Infrastructure;
 
 public class AccountsDbContext
     : IdentityDbContext<User, Role, Guid>
 {
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+
     private readonly string _connectionString;
     
     public AccountsDbContext(string connectionString) 
@@ -53,15 +57,12 @@ public class AccountsDbContext
         modelBuilder.Entity<IdentityUserRole<Guid>>()
             .ToTable("user_roles");
         
-        modelBuilder.Entity<Domain.DataModels.Permission>()
+        modelBuilder.Entity<Permission>()
             .ToTable("permissions");
 
-        modelBuilder.Entity<Domain.DataModels.Permission>()
+        modelBuilder.Entity<Permission>()
             .HasIndex(u => u.Code)
             .IsUnique();
-        
-        modelBuilder.Entity<Domain.DataModels.Permission>()
-            .Property(u => u.Description).HasMaxLength(200);
         
         modelBuilder.Entity<RolePermission>()
             .ToTable("role_permissions");

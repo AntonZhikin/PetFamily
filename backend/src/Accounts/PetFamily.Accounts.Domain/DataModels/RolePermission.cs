@@ -1,3 +1,5 @@
+using PetFamily.Framework.Authorization;
+
 namespace PetFamily.Accounts.Domain.DataModels;
 
 public class RolePermission

@@ -1,12 +1,13 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.AccountManagement;
 using PetFamily.Accounts.Domain.DataModels;
-using PetFamily.Accounts.Infrastructure.Permission;
+using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Infrastructure;
 
@@ -18,13 +19,14 @@ public static class DependencyInjection
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
-        
+
         services
             .AddIdentity<User, Role>(options =>
             {
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<AccountsDbContext>();
+            .AddEntityFrameworkStores<AccountsDbContext>()
+            .AddDefaultTokenProviders(); 
 
         services.AddDbContext(configuration);
         
@@ -52,6 +54,10 @@ public static class DependencyInjection
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+        services.AddSingleton<AccountsSeeder>();
+        
+        services.AddScoped<PermissionManager>();
         
         services.AddAuthorization();
 
