@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Domain;
 using PetFamily.Core.Abstractions;
 using PetFamily.Kernel;
 
@@ -23,11 +23,8 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
     public async Task<UnitResult<ErrorList>> Handle(
         RegisterUserCommand command, CancellationToken cancellationToken = default)
     {
-        var user = new User
-        {
-            Email = command.Email,
-            UserName = command.UserName,
-        };
+        var user = User.CreatePartisipant(command.UserName, command.Email);
+        
         var result = await _userManager.CreateAsync(user, command.Password);
         if (result.Succeeded)
         {
@@ -35,7 +32,7 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
             return Result.Success<ErrorList>();
         }
 
-        _userManager.AddToRoleAsync(user, "Partisipant");
+        await _userManager.AddToRoleAsync(user, "Participant");
         
         var errors = result.Errors
             .Select(e => Error.Failure(e.Code, e.Description)).ToList();

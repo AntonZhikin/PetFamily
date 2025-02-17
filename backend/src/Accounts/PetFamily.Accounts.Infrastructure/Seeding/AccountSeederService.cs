@@ -2,7 +2,10 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Domain.Accounts;
+using PetFamily.Accounts.Infrastructure.IdentityManager;
+using PetFamily.Kernel.ValueObject;
 
 namespace PetFamily.Accounts.Infrastructure.Seeding;
 
@@ -10,6 +13,7 @@ public class AccountSeederService(
     UserManager<User> userManager, 
     RoleManager<Role> roleManager,
     PermissionManager permissionManager,
+    AdminAccountManager adminAccountManager,
     RolePermissionManager rolePermissionManager,
     IOptions<AdminOptions> adminOptions,
     ILogger<AccountSeederService> logger)
@@ -27,17 +31,18 @@ public class AccountSeederService(
 
         await SeedRoles(seedData);
 
-        await SeedRolePermision(seedData); 
+        await SeedRolePermision(seedData);
+
+        var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN) 
+                        ?? throw new ApplicationException("Invalid ADMIN");
         
-        var adminUser = new User
-        {
-            UserName = _adminOptions.UserName, 
-            Email = _adminOptions.Email,
-        };
-        
+        var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
         await userManager.CreateAsync(adminUser, _adminOptions.Password);
+
+        var name = Name.Create(_adminOptions.UserName).Value;
+        var adminAccount = new AdminAccount(name, adminUser);
         
-        await userManager.AddToRoleAsync(adminUser, "Admin");
+        await adminAccountManager.CreateAdminAccount(adminAccount);
     }
     
     private async Task SeedRolePermision(RolePermissionConfig seedData)

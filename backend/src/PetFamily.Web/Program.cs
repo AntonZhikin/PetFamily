@@ -64,17 +64,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddSerilog();
 
+builder.Services.AddAuthorization();
+
 builder.Services
     .AddPetsApplication()
     .AddPetsInfrastructure(builder.Configuration)
 
     .AddSpeciesApplication()
     .AddSpeciesInfrastructure(builder.Configuration)
-    
-    .AddAccountsApplication()
-    .AddAccountsInfrastructure(builder.Configuration);
 
-builder.Services.AddAuthorization();
+    .AddAccountsApplication()
+    .AddAccountsPresentation()
+    .AddAccountsInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)

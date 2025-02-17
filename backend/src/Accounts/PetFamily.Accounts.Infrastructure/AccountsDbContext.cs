@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Infrastructure;
@@ -13,6 +14,7 @@ public class AccountsDbContext
 {
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<AdminAccount> AdminAccounts => Set<AdminAccount>();
 
     private readonly string _connectionString;
     
@@ -32,6 +34,11 @@ public class AccountsDbContext
         
         modelBuilder.Entity<User>()
             .ToTable("users");
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Roles)
+            .WithMany()
+            .UsingEntity<IdentityUserRole<Guid>>();
         
         modelBuilder.Entity<User>()
             .Property(u => u.SocialNetworks)
@@ -41,6 +48,17 @@ public class AccountsDbContext
         
         modelBuilder.Entity<Role>()
             .ToTable("roles");
+        
+        modelBuilder.Entity<AdminAccount>()
+            .HasOne(a => a.User)
+            .WithOne()
+            .HasForeignKey<AdminAccount>(a => a.UserId);
+
+        modelBuilder.Entity<AdminAccount>()
+            .ComplexProperty(a => a.Name, dg =>
+            {
+                dg.Property(a => a.Value).IsRequired();
+            });
         
         modelBuilder.Entity<IdentityUserClaim<Guid>>()
             .ToTable("user_claims");

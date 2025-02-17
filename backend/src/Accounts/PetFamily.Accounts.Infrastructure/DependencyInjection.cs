@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.AccountManagement;
-using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Infrastructure.IdentityManager;
 using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Framework.Authorization;
 
@@ -61,8 +62,8 @@ public static class DependencyInjection
         services.AddScoped<AccountSeederService>();
         
         services.AddScoped<PermissionManager>();
-        
         services.AddScoped<RolePermissionManager>();
+        services.AddScoped<AdminAccountManager>();
         
         services.AddAuthorization();
 

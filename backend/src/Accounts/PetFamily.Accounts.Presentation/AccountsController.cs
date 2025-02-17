@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.Accounts.Application.AccountManagement.Commands;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Login;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Register;
-using PetFamily.Accounts.Domain.DataModels;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Request;
 using PetFamily.Framework;

@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using PetFamily.Accounts.Contracts;
+using PetFamily.Core;
 
 namespace PetFamily.Framework.Authorization;
 
@@ -17,7 +19,26 @@ public class PermissionRequirementHandler : AuthorizationHandler<PermissionAttri
         AuthorizationHandlerContext context, 
         PermissionAttribute permission)
     {
-        var userId = context.User.Claims
-            .FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)!.Value;
+        using var scope = _serviceScopeFactory.CreateScope();
+
+        var accountContract = scope.ServiceProvider.GetRequiredService<IAccountsContract>();
+        
+        var userIdString = context.User.Claims
+            .FirstOrDefault(c => c.Type == CustomClaims.Id)?.Value;
+
+        if (!Guid.TryParse(userIdString, out var userId))
+        {
+            context.Fail();
+            return;
+        }
+        
+        var permissions = await accountContract.GetUserPermissionsCodes(userId);
+        if (permissions.Contains(permission.Code))
+        {
+            context.Succeed(permission);
+            return;
+        }
+        
+        context.Fail();
     }
 } 
