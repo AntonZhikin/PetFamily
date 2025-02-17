@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
 using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Infrastructure;
+using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Accounts.Presentation;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Controllers.Volunteers;
@@ -12,6 +13,8 @@ using PetFamily.Species.Presentation.Species;
 using PetFamily.Web.Middlewares;
 using Serilog;
 using Serilog.Events;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 

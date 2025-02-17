@@ -17,6 +17,7 @@ public class PermissionRequirementHandler : AuthorizationHandler<PermissionAttri
         AuthorizationHandlerContext context, 
         PermissionAttribute permission)
     {
-        var userId = context.User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)!.Value;
+        var userId = context.User.Claims
+            .FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)!.Value;
     }
 } 

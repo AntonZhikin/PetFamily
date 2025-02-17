@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application.AccountManagement;
 using PetFamily.Accounts.Domain.DataModels;
+using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Infrastructure;
@@ -19,6 +20,7 @@ public static class DependencyInjection
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+        services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
 
         services
             .AddIdentity<User, Role>(options =>
@@ -56,6 +58,7 @@ public static class DependencyInjection
             });
 
         services.AddSingleton<AccountsSeeder>();
+        services.AddScoped<AccountSeederService>();
         
         services.AddScoped<PermissionManager>();
         
