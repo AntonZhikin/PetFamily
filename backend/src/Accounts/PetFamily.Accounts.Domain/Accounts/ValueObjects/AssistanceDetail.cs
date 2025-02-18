@@ -1,14 +1,13 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Core;
 using PetFamily.Kernel;
 
-namespace PetFamily.Pets.Domain.ValueObjects;
+namespace PetFamily.Accounts.Domain.Accounts.ValueObjects;
 
 public record AssistanceDetail
 {
-    public string Name { get; } = null!;
+    public string Name { get; private set; } = null!;
 
-    public string Description { get; } = null!;
+    public string Description { get; private set; } = null!;
     
     public AssistanceDetail(string name, string description)
     {

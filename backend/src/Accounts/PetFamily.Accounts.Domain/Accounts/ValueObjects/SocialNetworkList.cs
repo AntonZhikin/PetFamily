@@ -1,4 +1,4 @@
-namespace PetFamily.Pets.Domain.ValueObjects;
+namespace PetFamily.Accounts.Domain.Accounts.ValueObjects;
 
 public record SocialNetworkList
 {

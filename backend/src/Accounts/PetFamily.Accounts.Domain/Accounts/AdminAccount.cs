@@ -11,18 +11,18 @@ public class AdminAccount
     {
         
     }
-    public AdminAccount(Name name, User user)
+    public AdminAccount(User user)
     {
         Id = Guid.NewGuid();
-        Name = name;
         User = user;
+        UserId = user.Id;
     }
     
+    //public static string Role {get; private set;}
+
     public Guid Id { get; set; }
     
     public Guid UserId { get; set; }
     
     public User User { get; set; }
-    
-    public Name Name { get; set; }
 }

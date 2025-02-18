@@ -1,11 +1,15 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Core;
 using PetFamily.Kernel;
 
-namespace PetFamily.Pets.Domain.ValueObjects;
+namespace PetFamily.Accounts.Domain.Accounts.ValueObjects;
 
 public record SocialNetwork 
 {
+    private SocialNetwork()
+    {
+        
+    }
+    
     public string Name { get; } = null!;
     
     public string Path { get; } = null!;

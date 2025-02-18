@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Core.DTOs.ValueObject;
 using PetFamily.Kernel;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Pets.Domain.Entity;
 using PetFamily.Pets.Domain.ValueObjects;
@@ -24,27 +25,19 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
         VolunteerId volunteerId,
         Description description,
         PhoneNumber phoneNumber,
-        ExperienceYear experienceYears,
-        FullName fullName,
-        SocialNetworkList socialNetworkList,
-        AssistanceDetailList assistanceDetailList
+        FullName fullName
     )
         : base(volunteerId)
     {
         Description = description;
         PhoneNumber = phoneNumber;
-        ExperienceYear = experienceYears;
         FullName = fullName;
-        SocialNetworkList = socialNetworkList;
-        AssistanceDetailList = assistanceDetailList;
     }
 
     public FullName FullName { get; private set; }
 
     public Description Description { get; private set; }
-
-    public ExperienceYear ExperienceYear { get; private set; }
-
+    
     private List<Pet> _pets = [];
 
     public IReadOnlyList<Pet> Pets => _pets;
@@ -57,29 +50,13 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
 
     public PhoneNumber PhoneNumber;
 
-    public SocialNetworkList SocialNetworkList { get; private set; }
-
-    public AssistanceDetailList AssistanceDetailList { get; private set; }
-
     public void UpdateMainInfo(Description description,
         PhoneNumber phoneNumber,
-        ExperienceYear experienceYears,
         FullName fullName)
     {
         Description = description;
         PhoneNumber = phoneNumber;
-        ExperienceYear = experienceYears;
         FullName = fullName;
-    }
-
-    public void UpdateSocialNetworks(SocialNetworkList socialNetworkList)
-    {
-        SocialNetworkList = socialNetworkList;
-    }
-
-    public void UpdateAssistanceDetail(AssistanceDetailList assistanceDetailList)
-    {
-        AssistanceDetailList = assistanceDetailList;
     }
 
     public void SoftDelete()

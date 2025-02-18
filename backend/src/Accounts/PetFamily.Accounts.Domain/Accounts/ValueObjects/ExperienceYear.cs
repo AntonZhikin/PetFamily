@@ -1,11 +1,12 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Core;
 using PetFamily.Kernel;
 
-namespace PetFamily.Pets.Domain.ValueObjects;
+namespace PetFamily.Accounts.Domain.Accounts.ValueObjects;
 
 public record ExperienceYear
 {
+    private ExperienceYear() { }
+    
     public string Value { get; }
 
     private ExperienceYear(string value)

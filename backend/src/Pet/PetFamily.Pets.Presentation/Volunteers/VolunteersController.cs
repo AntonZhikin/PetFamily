@@ -12,12 +12,10 @@ using PetFamily.Pets.Application.PetManagement.Commands.DeleteHardPet;
 using PetFamily.Pets.Application.PetManagement.Commands.DeleteSoft;
 using PetFamily.Pets.Application.PetManagement.Commands.DeleteSoftPet;
 using PetFamily.Pets.Application.PetManagement.Commands.MovePositionPet;
-using PetFamily.Pets.Application.PetManagement.Commands.UpdateAssistanceDetail;
 using PetFamily.Pets.Application.PetManagement.Commands.UpdateMainInfo;
 using PetFamily.Pets.Application.PetManagement.Commands.UpdatePet;
 using PetFamily.Pets.Application.PetManagement.Commands.UpdatePetMainPhoto;
 using PetFamily.Pets.Application.PetManagement.Commands.UpdatePetStatus;
-using PetFamily.Pets.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetFamily.Pets.Application.PetManagement.Commands.UploadFilesToPet;
 using PetFamily.Pets.Application.PetManagement.Queries.GetPetById;
 using PetFamily.Pets.Application.PetManagement.Queries.GetPetsWithPagination;
@@ -86,7 +84,7 @@ public class VolunteersController : ApplicationController
         return Ok(result.Value);
     }
     
-    [Authorize]
+    /*[Authorize]
     [HttpPut("{id:guid}/social-networks")]
     public async Task<ActionResult> UpdateSocialNetwork(
         [FromRoute] Guid id,
@@ -100,9 +98,9 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
 
         return Ok(result.Value);
-    }
+    }*/
     
-    [Authorize]
+    /*[Authorize]
     [HttpPut("{id:guid}/assistance-detail")]
     public async Task<ActionResult> UpdateAssistanceDetail(
         [FromRoute] Guid id,
@@ -116,7 +114,7 @@ public class VolunteersController : ApplicationController
             return result.Error.ToResponse();
 
         return Ok(result.Value);
-    }
+    }*/
     
     [Authorize]
     [HttpDelete("{id:guid}/soft-delete")]

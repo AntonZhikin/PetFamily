@@ -1,33 +1,28 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Domain.Accounts;
-using PetFamily.Framework.Authorization;
 
-namespace PetFamily.Accounts.Infrastructure;
+namespace PetFamily.Accounts.Infrastructure.DbContexts;
 
-public class AccountsDbContext
-    : IdentityDbContext<User, Role, Guid>
+public class WriteAccountsDbContext : IdentityDbContext<User, Role, Guid>
 {
+    private readonly string _connectionString;
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<Permission> Permissions => Set<Permission>();
+    
     public DbSet<AdminAccount> AdminAccounts => Set<AdminAccount>();
-
-    private readonly string _connectionString;
+    public DbSet<ParticipantAccount> ParticipantAccounts => Set<ParticipantAccount>();
+    public DbSet<VolunteerAccount> VolunteerAccounts => Set<VolunteerAccount>();
+    public DbSet<User> Users => Set<User>();
     
-    public AccountsDbContext(string connectionString) 
-        => _connectionString = connectionString;
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public WriteAccountsDbContext(string connectionString)
     {
-        optionsBuilder.UseNpgsql(_connectionString);
-        optionsBuilder.UseSnakeCaseNamingConvention();
-        optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
-        optionsBuilder.EnableSensitiveDataLogging();
+        _connectionString = connectionString;
     }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -35,30 +30,8 @@ public class AccountsDbContext
         modelBuilder.Entity<User>()
             .ToTable("users");
 
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.Roles)
-            .WithMany()
-            .UsingEntity<IdentityUserRole<Guid>>();
-        
-        modelBuilder.Entity<User>()
-            .Property(u => u.SocialNetworks)
-            .HasConversion(
-                u => JsonSerializer.Serialize(u, JsonSerializerOptions.Default),
-                json => JsonSerializer.Deserialize<List<SocialNetwork>>(json, JsonSerializerOptions.Default)!);
-        
         modelBuilder.Entity<Role>()
             .ToTable("roles");
-        
-        modelBuilder.Entity<AdminAccount>()
-            .HasOne(a => a.User)
-            .WithOne()
-            .HasForeignKey<AdminAccount>(a => a.UserId);
-
-        modelBuilder.Entity<AdminAccount>()
-            .ComplexProperty(a => a.Name, dg =>
-            {
-                dg.Property(a => a.Value).IsRequired();
-            });
         
         modelBuilder.Entity<IdentityUserClaim<Guid>>()
             .ToTable("user_claims");
@@ -74,7 +47,7 @@ public class AccountsDbContext
         
         modelBuilder.Entity<IdentityUserRole<Guid>>()
             .ToTable("user_roles");
-        
+
         modelBuilder.Entity<Permission>()
             .ToTable("permissions");
         
@@ -85,7 +58,7 @@ public class AccountsDbContext
         modelBuilder.Entity<Permission>()
             .HasIndex(u => u.Code)
             .IsUnique();
-        
+
         modelBuilder.Entity<RolePermission>()
             .ToTable("role_permissions");
         
@@ -101,11 +74,22 @@ public class AccountsDbContext
             .HasOne(rp => rp.Permission)
             .WithMany()
             .HasForeignKey(rp => rp.PermissionId);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(
+        typeof(WriteAccountsDbContext).Assembly, 
+        type => type.FullName?.Contains("Configurations.Write") ?? false);
         
         modelBuilder.HasDefaultSchema("PetFamily_Accounts");
     }
     
     private static ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });
-
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(_connectionString);
+        optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+        optionsBuilder.EnableSensitiveDataLogging();
+    }
 }

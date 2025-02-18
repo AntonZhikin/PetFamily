@@ -6,6 +6,7 @@ using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.Extensions;
 using PetFamily.Kernel;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Pets.Domain.AggregateRoot;
 using PetFamily.Pets.Domain.ValueObjects;
@@ -46,12 +47,10 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, CreateVolunteerComma
         var description = Description.Create(command.Descriptions).Value;
         
         var phoneNumber = PhoneNumber.Create(command.PhoneNumbers).Value;
-
-        var experienceYears = ExperienceYear.Create(command.ExperienceYears).Value;
         
         var fullName = FullName.Create(command.Name, command.Surname, command.SecondName).Value;
 
-        var socialNetwork = command.SocialNetworkList.SocialNetworks
+        /*var socialNetwork = command.SocialNetworkList.SocialNetworks
             .Select(s => SocialNetwork.Create(s.Name, s.Link));
         if (socialNetwork.First().IsFailure)
             return Errors.General.ValueIsInvalid("socialNetworks").ToErrorList();
@@ -70,17 +69,14 @@ public class CreateVolunteerHandler : ICommandHandler<Guid, CreateVolunteerComma
         var assistanceDetails = new AssistanceDetailList(assistanceDetail
             .Select(x => x.Value).ToList());
         if(assistanceDetails is null)
-            return Errors.General.ValueIsInvalid("assistanceDetailsList").ToErrorList();
+            return Errors.General.ValueIsInvalid("assistanceDetailsList").ToErrorList();*/
         
         
         var volunteer = new Volunteer(
             volunteerId, 
             description, 
             phoneNumber, 
-            experienceYears, 
-            fullName,
-            socialNetworks,
-            assistanceDetails
+            fullName
             );
 
         await _volunteerRepository.Add(volunteer);

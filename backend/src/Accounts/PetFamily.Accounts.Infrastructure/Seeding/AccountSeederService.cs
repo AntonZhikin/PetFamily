@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Accounts.Infrastructure.IdentityManager;
+using PetFamily.Accounts.Infrastructure.Options;
 using PetFamily.Kernel.ValueObject;
 
 namespace PetFamily.Accounts.Infrastructure.Seeding;
@@ -40,7 +41,7 @@ public class AccountSeederService(
         await userManager.CreateAsync(adminUser, _adminOptions.Password);
 
         var name = Name.Create(_adminOptions.UserName).Value;
-        var adminAccount = new AdminAccount(name, adminUser);
+        var adminAccount = new AdminAccount(adminUser);
         
         await adminAccountManager.CreateAdminAccount(adminAccount);
     }

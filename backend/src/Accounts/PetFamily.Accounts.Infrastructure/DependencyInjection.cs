@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Application.AccountManagement;
 using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Infrastructure.DbContexts;
 using PetFamily.Accounts.Infrastructure.IdentityManager;
+using PetFamily.Accounts.Infrastructure.Options;
 using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Framework.Authorization;
 
@@ -18,20 +21,21 @@ public static class DependencyInjection
     public static IServiceCollection AddAccountsInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddDbContexts(configuration);
+        services.AddAccountsSeeding();
+        
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
         services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
-
+    
         services
             .AddIdentity<User, Role>(options =>
             {
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<AccountsDbContext>()
+            .AddEntityFrameworkStores<WriteAccountsDbContext>()
             .AddDefaultTokenProviders(); 
-
-        services.AddDbContext(configuration);
         
         services
             .AddAuthentication(options =>
@@ -58,12 +62,8 @@ public static class DependencyInjection
                 };
             });
 
-        services.AddSingleton<AccountsSeeder>();
-        services.AddScoped<AccountSeederService>();
-        
-        services.AddScoped<PermissionManager>();
-        services.AddScoped<RolePermissionManager>();
-        services.AddScoped<AdminAccountManager>();
+
+        services.AddManagers();
         
         services.AddAuthorization();
 
@@ -74,12 +74,32 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContexts(this IServiceCollection services
+        ,IConfiguration configuration)
     {
+        services.AddScoped<WriteAccountsDbContext>(_ => 
+            new WriteAccountsDbContext(configuration.GetConnectionString("Database")!));
         
-        services.AddScoped<AccountsDbContext>(_ => 
-            new AccountsDbContext(configuration.GetConnectionString("Database")!));
-
+        services.AddScoped<IAccountsReadDbContext, ReadAccountsDbContext>(_ => 
+            new ReadAccountsDbContext(configuration.GetConnectionString("Database")!));
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddManagers(this IServiceCollection services)
+    {
+        services.AddScoped<PermissionManager>();
+        services.AddScoped<RolePermissionManager>();
+        services.AddScoped<AdminAccountManager>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddAccountsSeeding(this IServiceCollection services)
+    {
+        services.AddSingleton<AccountsSeeder>();
+        services.AddScoped<AccountSeederService>();
+        
         return services;
     }
 }

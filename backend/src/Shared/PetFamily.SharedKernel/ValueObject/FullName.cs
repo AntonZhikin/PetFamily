@@ -1,11 +1,12 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Core;
-using PetFamily.Kernel;
 
-namespace PetFamily.Pets.Domain.ValueObjects;
+namespace PetFamily.Kernel.ValueObject;
 
 public record FullName
 {
+    //efcore
+    private FullName() { }
+    
     public string Name { get; }
     public string Surname { get; }
     public string SecondName { get; }
