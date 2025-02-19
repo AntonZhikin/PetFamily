@@ -45,42 +45,5 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("description");
         });
-        
-        builder.ComplexProperty(p => p.ExperienceYear, g =>
-        {
-            g.IsRequired();
-            g.Property(c => c.Value).HasColumnName("experienceyears");
-        });
-
-        builder.OwnsOne(r => r.AssistanceDetailList, rb => 
-        {
-            rb.ToJson();
-
-            rb.OwnsMany(s => s.AssistanceDetails, rf =>
-            {
-                rf.Property(g => g.Name)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-                rf.Property(g => g.Description)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-            });
-        });
-        
-        builder.OwnsOne(s => s.SocialNetworkList, sb => 
-        {
-            sb.ToJson();
-
-            sb.OwnsMany(s => s.SocialNetworks, sf =>
-            {
-                sf.Property(g => g.Name)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-                sf.Property(g => g.Path)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-            });
-        });
-        
     }
 }

@@ -2,6 +2,7 @@ using FluentValidation;
 using PetFamily.Core;
 using PetFamily.Core.Validation;
 using PetFamily.Kernel;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.Pets.Domain.ValueObjects;
 
 namespace PetFamily.Pets.Application.PetManagement.Commands.UpdateMainInfo;
@@ -20,8 +21,5 @@ public class UpdateMainInfoCommandValidator : AbstractValidator<UpdateMainInfoCo
         
         RuleFor(c => c.PhoneNumbers)
             .MustBeValueObject(PhoneNumber.Create);
-        
-        RuleFor(c => c.ExperienceYears)
-            .MustBeValueObject(ExperienceYear.Create);
     }
 }

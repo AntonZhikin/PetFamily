@@ -6,6 +6,7 @@ using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.Extensions;
 using PetFamily.Kernel;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.Pets.Domain.ValueObjects;
 
 namespace PetFamily.Pets.Application.PetManagement.Commands.UpdateMainInfo;
@@ -47,11 +48,10 @@ public class UpdateMainInfoHandler : ICommandHandler<Guid, UpdateMainInfoCommand
         
         var phoneNumber = PhoneNumber.Create(command.PhoneNumbers).Value;
 
-        var experienceYears = ExperienceYear.Create(command.ExperienceYears).Value;
         
         var fullName = FullName.Create(command.Name, command.Surname, command.SecondName).Value;
         
-        volunteerResult.Value.UpdateMainInfo(description, phoneNumber, experienceYears, fullName);
+        volunteerResult.Value.UpdateMainInfo(description, phoneNumber, fullName);
         
         await _unitOfWork.SaveChanges(cancellationToken);
         

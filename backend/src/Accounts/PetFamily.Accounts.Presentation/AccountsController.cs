@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.Accounts.Application.AccountManagement.Commands;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Login;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Register;
+using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Request;
 using PetFamily.Framework;
+using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Presentation;
 
@@ -39,7 +41,7 @@ public class AccountsController : ApplicationController
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Permission(Permissions.Volunteer.CreateVolunteer)]
     [HttpPost("Test")]
     public IActionResult Test()
     {
