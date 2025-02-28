@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Accounts.Domain;
+using PetFamily.Accounts.Domain.Accounts;
+using PetFamily.Core;
 using PetFamily.Kernel;
 
 namespace PetFamily.Accounts.Infrastructure.Configuration.Write;
@@ -12,43 +14,38 @@ public class UserConfiguration :  IEntityTypeConfiguration<User>
     {
         builder.ToTable("users");
         
-        //builder.HasKey(x => x.Id);
+        // builder
+        //     .HasMany(u => u.Roles)
+        //     .WithMany()
+        //     .UsingEntity<IdentityUserRole<Guid>>();
         
-        builder
-            .HasMany(u => u.Roles)
-            .WithMany()
-            .UsingEntity<IdentityUserRole<Guid>>();
+        builder.Property(r => r.RoleId)
+            .HasConversion(
+                i => i.Value,
+                value => RoleId.Create(value).Value)
+            .IsRequired()
+            .HasColumnName("role_id");
+        
+        builder.HasOne(d => d.Role)
+            .WithMany();
+        
+        builder.HasOne(u => u.Admin)
+            .WithOne(u => u.User)
+            .HasForeignKey<AdminAccount>(d => d.UserId)
+            .IsRequired(false);
 
-        /*builder.ComplexProperty(u => u.FullName, gf =>
-        {
-            gf.Property(n => n.Name)
-                .HasColumnName("name")
-                .IsRequired();
-            gf.Property(n => n.Surname)
-                .HasColumnName("surname")
-                .IsRequired();
-            gf.Property(n => n.SecondName)
-                .HasColumnName("second_name")
-                .IsRequired();
-        });*/
+        builder.HasOne(u => u.Participant)
+            .WithOne(u => u.User)
+            .HasForeignKey<ParticipantAccount>(d => d.UserId)
+            .IsRequired(false);
 
+        builder.HasOne(u => u.Volunteer)
+            .WithOne(u => u.User)
+            .HasForeignKey<VolunteerAccount>(d => d.UserId)
+            .IsRequired(false);
+        
         builder.Property(f => f.Email)
             .IsRequired();
-        
-        /*builder.OwnsOne(s => s.SocialNetworkList, sb => 
-        {
-            sb.ToJson();
-
-            sb.OwnsMany(s => s.SocialNetworks, sf =>
-            {
-                sf.Property(g => g.Name)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-                sf.Property(g => g.Path)
-                    .IsRequired()
-                    .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGHT);
-            });
-        });*/
     }
     
 }

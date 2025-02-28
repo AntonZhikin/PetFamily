@@ -10,76 +10,75 @@ namespace PetFamily.Accounts.Infrastructure.DbContexts;
 public class WriteAccountsDbContext : IdentityDbContext<User, Role, Guid>
 {
     private readonly string _connectionString;
-    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
-    public DbSet<Permission> Permissions => Set<Permission>();
-    
-    public DbSet<AdminAccount> AdminAccounts => Set<AdminAccount>();
-    public DbSet<ParticipantAccount> ParticipantAccounts => Set<ParticipantAccount>();
-    public DbSet<VolunteerAccount> VolunteerAccounts => Set<VolunteerAccount>();
-    public DbSet<User> Users => Set<User>();
     
     public WriteAccountsDbContext(string connectionString)
     {
         _connectionString = connectionString;
     }
+    public override DbSet<User> Users => Set<User>();
+    public DbSet<AdminAccount> AdminAccounts => Set<AdminAccount>();
+    public DbSet<ParticipantAccount> ParticipantAccounts => Set<ParticipantAccount>();
+    public DbSet<VolunteerAccount> VolunteerAccounts => Set<VolunteerAccount>();
+    public override DbSet<Role> Roles => Set<Role>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<RefreshSession> RefreshSessions => Set<RefreshSession>();
+    
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.Entity<User>()
-            .ToTable("users");
-
-        modelBuilder.Entity<Role>()
-            .ToTable("roles");
+        modelBuilder.HasDefaultSchema("PetFamily_Accounts");
         
-        modelBuilder.Entity<IdentityUserClaim<Guid>>()
-            .ToTable("user_claims");
+        modelBuilder.Entity<User>().ToTable("users");
         
-        modelBuilder.Entity<IdentityUserToken<Guid>>()
-            .ToTable("user_tokens");
+        modelBuilder.Entity<Role>().ToTable("roles");
         
-        modelBuilder.Entity<IdentityUserLogin<Guid>>()
-            .ToTable("user_logins");
+        modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("user_claims");
         
-        modelBuilder.Entity<IdentityRoleClaim<Guid>>()
-            .ToTable("role_claims");
+        modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("user_tokens");
         
-        modelBuilder.Entity<IdentityUserRole<Guid>>()
-            .ToTable("user_roles");
-
-        modelBuilder.Entity<Permission>()
-            .ToTable("permissions");
+        modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("user_logins");
+        
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("role_claims");
+        
+        modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("user_roles");
+        
+        modelBuilder.Entity<Permission>().ToTable("permissions");
         
         modelBuilder.Entity<Permission>()
             .HasIndex(u => u.Code)
             .IsUnique();
-
         modelBuilder.Entity<Permission>()
             .HasIndex(u => u.Code)
             .IsUnique();
-
+        
         modelBuilder.Entity<RolePermission>()
             .ToTable("role_permissions");
-        
         modelBuilder.Entity<RolePermission>()
             .HasKey(r => new { r.RoleId, r.PermissionId });
-        
         modelBuilder.Entity<RolePermission>()
             .HasOne(rp => rp.Role)
             .WithMany(r => r.RolePermissions)
             .HasForeignKey(rp => rp.RoleId);
-        
         modelBuilder.Entity<RolePermission>()
             .HasOne(rp => rp.Permission)
             .WithMany()
             .HasForeignKey(rp => rp.PermissionId);
 
+        
+        modelBuilder.Entity<RefreshSession>()
+            .ToTable("refresh_session");
+        
+        modelBuilder.Entity<RefreshSession>()
+            .HasOne(r => r.User)
+            .WithMany()
+            .HasForeignKey(r => r.UserId);
+
         modelBuilder.ApplyConfigurationsFromAssembly(
         typeof(WriteAccountsDbContext).Assembly, 
         type => type.FullName?.Contains("Configurations.Write") ?? false);
-        
-        modelBuilder.HasDefaultSchema("PetFamily_Accounts");
     }
     
     private static ILoggerFactory CreateLoggerFactory() =>

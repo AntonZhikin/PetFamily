@@ -60,7 +60,8 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContext(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddScoped<WriteDbContext>(_ => 
             new WriteDbContext(configuration.GetConnectionString("Database")!));

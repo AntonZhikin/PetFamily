@@ -1,4 +1,8 @@
+using CSharpFunctionalExtensions;
 using PetFamily.Accounts.Domain.Accounts.ValueObjects;
+using PetFamily.Core;
+using PetFamily.Core.RolesPermissions;
+using PetFamily.Kernel;
 
 namespace PetFamily.Accounts.Domain.Accounts;
 
@@ -13,16 +17,16 @@ public class VolunteerAccount
         ExperienceYear = experienceYear;
     }
     
-    public const string VOLUNTEER = nameof(VOLUNTEER);
-    public Guid Id { get; private set; }
+    private VolunteerAccount(UserId id)
+    {
+        UserId = id;
+    }
     
+    public static RoleName ROLE = RoleName.Create("volunteer").Value;
+    public Guid Id { get; private set; }
+    public User User { get; private set; }
     public Guid UserId { get; private set; }
     public int ExperienceYear { get; private set; }
     
-    //public AssistanceDetailList AssistanceDetails { get; private set; }
-    
-    // public void UpdateAssistanceDetail(AssistanceDetailList assistanceDetailList)
-    // {
-    //     AssistanceDetails = assistanceDetailList;
-    // }
+    public static Result<VolunteerAccount, Error> Create(UserId id) => new VolunteerAccount(id);
 }

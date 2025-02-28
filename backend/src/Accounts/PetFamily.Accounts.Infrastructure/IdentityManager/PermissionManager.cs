@@ -9,20 +9,20 @@ public class PermissionManager(WriteAccountsDbContext writeAccountsDbContext)
     public async Task<Permission?> FindByCode(string code) 
         => await writeAccountsDbContext.Permissions.FirstOrDefaultAsync(x => x.Code == code);
 
-    public async Task AddRangeIfExist(IEnumerable<string> permissionsToAdd)
+    public async Task AddRangeIfExist(IEnumerable<string> permissionsToAdd, CancellationToken cancellationToken = default)
     {
         foreach (var permissionCode in permissionsToAdd)
         {
             var isPermissionExist = await writeAccountsDbContext.Permissions
-                .AnyAsync(p => p.Code == permissionCode);
+                .AnyAsync(p => p.Code == permissionCode, cancellationToken: cancellationToken);
             
             if (isPermissionExist)
                 return;
             
-            await writeAccountsDbContext.Permissions.AddAsync(new Permission {Code = permissionCode});
+            await writeAccountsDbContext.Permissions.AddAsync(new Permission {Code = permissionCode}, cancellationToken);
         }
         
-        await writeAccountsDbContext.SaveChangesAsync();
+        await writeAccountsDbContext.SaveChangesAsync(cancellationToken);
         
     }
 

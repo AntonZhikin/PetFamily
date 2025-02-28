@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Accounts.Application.AccountManagement.Commands;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Login;
+using PetFamily.Accounts.Application.AccountManagement.Commands.RefreshTokens;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Register;
+using PetFamily.Accounts.Contracts.Request;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Request;
 using PetFamily.Framework;
@@ -13,18 +15,20 @@ namespace PetFamily.Accounts.Presentation;
 
 public class AccountsController : ApplicationController
 {
-    [HttpPost("registration")]
+    [HttpPost("participant/registration")]
     public async Task<IActionResult> Register(
         [FromBody] RegisterUserRequest request,
         [FromServices] RegisterUserHandler handler,
         CancellationToken cancellationToken
         )
     {
-        var result = await handler.Handle(request.ToCommand(), cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
+        var result = await handler.Handle(
+            request.ToCommand(), cancellationToken);
         
-        return Ok();
+        if(result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result);
     }
     
     [HttpPost("login")]
@@ -34,17 +38,26 @@ public class AccountsController : ApplicationController
         CancellationToken cancellationToken
     )
     {
-        var result = await handler.Handle(request.ToCommand(), cancellationToken);
+        var result = await handler.Handle(
+            request.ToCommand(), cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
         return Ok(result.Value);
     }
     
-    [Permission(Permissions.Volunteer.CreateVolunteer)]
-    [HttpPost("Test")]
-    public IActionResult Test()
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Login(
+        [FromBody] RefreshTokenRequest request,
+        [FromServices] RefreshTokenHandler handler,
+        CancellationToken cancellationToken
+    )
     {
-        return Ok();
+        var result = await handler.Handle(
+            new RefreshTokenCommand(request.AccessToken, request.RefreshToken), cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
     }
 }
