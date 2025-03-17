@@ -8,10 +8,11 @@ using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Kernel;
+using PetFamily.Kernel.ValueObject;
 
 namespace PetFamily.Accounts.Application.AccountManagement.Commands.Register;
 
-public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
+public class RegisterUserHandler : ICommandHandler<string, RegisterUserCommand>
 {
     private readonly UserManager<User> _userManager;
     private readonly ILogger<RegisterUserHandler> _logger;
@@ -33,50 +34,43 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<UnitResult<ErrorList>> Handle(
+    public async  Task<Result<string, ErrorList>> Handle(
         RegisterUserCommand command, CancellationToken cancellationToken = default)
     {
-        /*var participantRole = await _roleManager.FindByNameAsync(ParticipantAccount.RoleName)
-                              ?? throw new ApplicationException("Participant role is not found");
+        var transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+        try
+        {
+            var participantRole = await _roleManager.FindByNameAsync(ParticipantAccount.RoleName) 
+                                  ?? throw new ApplicationException("Invalid PARTISIPANT");
         
-        var user = User.CreatePartisipant(command.UserName, command.Email, participantRole!);
+            var userResult = User.Create(command.UserName, command.Email, participantRole);
+            if(userResult.IsFailure)
+                return Errors.General.Failure().ToErrorList();
         
-        var result = await _userManager.CreateAsync(user, command.Password);
-        
-        var participantAccount = new ParticipantAccount(user);
-        await _accountsManager.CreateParticipantAccount(participantAccount, cancellationToken);
-        
-        user.ParticipantAccount = participantAccount;
-        
-        await _userManager.UpdateAsync(user);
+            var result = await _userManager.CreateAsync(userResult.Value, command.Password);
 
-        await _unitOfWork.SaveChanges(cancellationToken);
+            var participantAccount = new ParticipantAccount(userResult.Value);
         
-        var errors = result.Errors
-            .Select(e => Error.Failure(e.Code, e.Description)).ToList();
+            await _accountsManager.CreateParticipantAccount(participantAccount, cancellationToken);
         
-        return new ErrorList(errors);*/
+            userResult.Value.ParticipantAccount = participantAccount;
         
-        var roleResult = await _accountsManager.GetRole(ParticipantAccount.ROLE);
-        if (roleResult.IsFailure)
-            return roleResult.Error.ToErrorList(); 
+            await _userManager.UpdateAsync(userResult.Value);
         
-        var role = roleResult.Value;
+            await _unitOfWork.SaveChanges(cancellationToken);
+            transaction.Commit();
         
-        var user = User.Create(role, command.Email, command.Password);
+            _logger.LogInformation("User was registered");
         
-        var result = await _userManager.CreateAsync(user, command.Password);
-
-        var participant = ParticipantAccount.Create(user).Value;
-        await _accountsManager.AddParticipant(participant);
+            return "User {username} was registered\", user.UserName";
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed to register user {username}", command.UserName);
+            transaction.Rollback();
         
-        await _unitOfWork.SaveChanges(cancellationToken);
-        
-        _logger.LogInformation("Patrisipant с id = {0} добавлен", user.Id);
-        var errors = result.Errors
-            .Select(e => Error.Failure(e.Code, e.Description)).ToList();
-        
-        return new ErrorList(errors);
+            return Error.Failure("could.not.register.user", e.Message).ToErrorList();
+        }
     }
 }
 

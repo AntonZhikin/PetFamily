@@ -9,10 +9,7 @@ public class VolunteerAccountConfiguration : IEntityTypeConfiguration<VolunteerA
     public void Configure(EntityTypeBuilder<VolunteerAccount> builder)
     {
         builder.ToTable("volunteer_accounts");
-        
         builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.ExperienceYear);
 
         /*builder.OwnsOne(r => r.AssistanceDetails, rb =>
         {

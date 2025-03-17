@@ -9,24 +9,14 @@ namespace PetFamily.Accounts.Domain.Accounts;
 public class VolunteerAccount
 {
     //efcore
-    private VolunteerAccount() { }
-    public VolunteerAccount(AssistanceDetailList assistanceDetails, int experienceYear)
+    private VolunteerAccount(){}
+    public VolunteerAccount(User user)
     {
-        Id = Guid.NewGuid();
-        //AssistanceDetails = assistanceDetails;
-        ExperienceYear = experienceYear;
+        User = user;
+        UserId = user.Id;
     }
-    
-    private VolunteerAccount(UserId id)
-    {
-        UserId = id;
-    }
-    
-    public static RoleName ROLE = RoleName.Create("volunteer").Value;
-    public Guid Id { get; private set; }
-    public User User { get; private set; }
-    public Guid UserId { get; private set; }
-    public int ExperienceYear { get; private set; }
-    
-    public static Result<VolunteerAccount, Error> Create(UserId id) => new VolunteerAccount(id);
+    public const string RoleName = "Volunteer";
+    public Guid UserId { get; set; }
+    public User User { get; set; }
+    public Guid Id { get; set; }
 }

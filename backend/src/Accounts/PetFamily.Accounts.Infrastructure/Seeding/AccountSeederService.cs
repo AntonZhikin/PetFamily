@@ -33,8 +33,8 @@ public class AccountSeederService(
         await SeedRoles(seedData);
 
         await SeedRolePermission(seedData);
-
-        var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN) 
+        //
+        var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName) 
                         ?? throw new ApplicationException("Invalid ADMIN");
         
         var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);

@@ -28,7 +28,7 @@ public class LoginHandler : ICommandHandler<LoginResponse, LoginCommand>
         LoginCommand command, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByEmailAsync(command.Email);
-        if (user is null)
+        if (user == null)
         {
             return Errors.General.NotFound().ToErrorList();
         }

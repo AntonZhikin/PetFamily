@@ -13,7 +13,7 @@ public class AccountsManagers(WriteAccountsDbContext writeAccountsDbContext) : I
 {
     public async Task CreateAdminAccount(AdminAccount adminAccount, CancellationToken cancellationToken = default)
     {
-        await writeAccountsDbContext.AdminAccounts.AddAsync(adminAccount);
+        await writeAccountsDbContext.AdminAccounts.AddAsync(adminAccount, cancellationToken);
         await writeAccountsDbContext.SaveChangesAsync(cancellationToken);
     }
 

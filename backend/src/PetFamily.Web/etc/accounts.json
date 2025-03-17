@@ -13,6 +13,18 @@
       "volunteer.get",
       "volunteer.update",
       "volunteer.delete"
+    ],
+    "Participant": [
+      "volunteer.create",
+      "volunteer.get",
+      "volunteer.update",
+      "volunteer.delete"
+    ],
+    "Volunteer": [
+      "volunteer.create",
+      "volunteer.get",
+      "volunteer.update",
+      "volunteer.delete"
     ]
   }
 }

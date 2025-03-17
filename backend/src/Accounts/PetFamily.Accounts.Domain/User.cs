@@ -1,43 +1,33 @@
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Identity;
 using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Accounts.Domain.Accounts.ValueObjects;
 using PetFamily.Core;
+using PetFamily.Kernel;
 using PetFamily.Kernel.ValueObject;
 
 namespace PetFamily.Accounts.Domain;
 
-public sealed class User : IdentityUser<Guid>
+public class User : IdentityUser<Guid>
 {
     //efcore
     private User() { }
-    private User(Role role, string email, string username)
+
+    private User(
+        string email,
+        string userName,
+        Role role)
     {
-        Role = role;
         Email = email;
-        UserName = username;
+        UserName = userName;
+        _roles = [role];
     }
     
     private List<Role> _roles = [];
-    public RoleId RoleId { get; set; }
     
-    public Role Role { get; set; }
-    
-    public static RoleName ROLE = RoleName.Create("user").Value;
     public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
-    
-    public AdminAccount? Admin { get; private set; }
-    
-    public VolunteerAccount? Volunteer { get; private set; }
-    
-    public ParticipantAccount? Participant { get; private set; }
-    
-    
-    public string Email { get; private set; }
-    
-    public static User Create(Role role, string email, string password)
-    {
-        return new User(role, email, password);
-    }
+    public ParticipantAccount? ParticipantAccount { get; set; }
+
     
     public static User CreateAdmin(string userName, string email, Role role)
     {
@@ -57,5 +47,19 @@ public sealed class User : IdentityUser<Guid>
             Email = email,
             _roles = [role]
         };
+    }
+    
+    public static Result<User, Error> Create(string userName, string email, Role role)
+    {
+        if (userName != null && email != null)
+        {
+            return new User
+            {
+                UserName = userName,    
+                Email = email,
+                _roles = [role]
+            };
+        }
+        return Errors.General.ValueIsInvalid("User");
     }
 }

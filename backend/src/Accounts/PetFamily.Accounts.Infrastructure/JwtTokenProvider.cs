@@ -47,7 +47,7 @@ public class JwtTokenProvider : ITokenProvider
         var jwtToken = new JwtSecurityToken(
             issuer: _jwtOptions.Issuer,
             audience: _jwtOptions.Audience,
-            expires: DateTime.UtcNow.AddMinutes(int.Parse(_jwtOptions.ExpiredMinutesTime)),
+            expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiredMinute),
             signingCredentials: signingCredentials,
             claims: claims);    
 
@@ -64,12 +64,12 @@ public class JwtTokenProvider : ITokenProvider
         {
             User = user,
             CreatedAt = DateTime.UtcNow,
-            ExpiresIn = DateTime.Now.AddDays(30),
+            ExpiresIn = DateTime.UtcNow.AddDays(30),
             Jti = accessTokenJti,
             RefreshToken = Guid.NewGuid()
         };
         
-        _accountsDbContext.Add(refreshSession);
+        _accountsDbContext.RefreshSessions.Add(refreshSession);
         await _accountsDbContext.SaveChangesAsync(cancellationToken);
         
         return refreshSession.RefreshToken;
