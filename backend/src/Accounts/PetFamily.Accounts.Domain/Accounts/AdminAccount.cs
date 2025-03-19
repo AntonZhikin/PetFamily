@@ -4,22 +4,17 @@ namespace PetFamily.Accounts.Domain.Accounts;
 
 public class AdminAccount
 {
-    public const string ADMIN = nameof(ADMIN);
+    public const string RoleName = "Admin";
     
-    //efcore
-    private AdminAccount()
-    {
-        
-    }
+    private AdminAccount() {}
+    
     public AdminAccount(User user)
     {
-        Id = Guid.NewGuid();
+        //Id = Guid.NewGuid();
         User = user;
         UserId = user.Id;
     }
     
-    //public static string Role {get; private set;}
-
     public Guid Id { get; set; }
     
     public Guid UserId { get; set; }

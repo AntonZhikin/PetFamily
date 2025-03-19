@@ -14,7 +14,7 @@ public class AccountSeederService(
     UserManager<User> userManager, 
     RoleManager<Role> roleManager,
     PermissionManager permissionManager,
-    AdminAccountManager adminAccountManager,
+    AccountsManagers accountsManagers,
     RolePermissionManager rolePermissionManager,
     IOptions<AdminOptions> adminOptions,
     ILogger<AccountSeederService> logger)
@@ -32,9 +32,9 @@ public class AccountSeederService(
 
         await SeedRoles(seedData);
 
-        await SeedRolePermision(seedData);
-
-        var adminRole = await roleManager.FindByNameAsync(AdminAccount.ADMIN) 
+        await SeedRolePermission(seedData);
+        //
+        var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName) 
                         ?? throw new ApplicationException("Invalid ADMIN");
         
         var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
@@ -43,10 +43,10 @@ public class AccountSeederService(
         var name = Name.Create(_adminOptions.UserName).Value;
         var adminAccount = new AdminAccount(adminUser);
         
-        await adminAccountManager.CreateAdminAccount(adminAccount);
-    }
+        await accountsManagers.CreateAdminAccount(adminAccount);
+    }   
     
-    private async Task SeedRolePermision(RolePermissionConfig seedData)
+    private async Task SeedRolePermission(RolePermissionConfig seedData)
     {
         foreach (var roleName in seedData.Roles.Keys)
         {

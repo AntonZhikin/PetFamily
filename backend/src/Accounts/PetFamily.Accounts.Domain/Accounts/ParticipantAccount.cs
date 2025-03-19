@@ -1,30 +1,24 @@
+using CSharpFunctionalExtensions;
 using PetFamily.Accounts.Domain.Accounts.ValueObjects;
+using PetFamily.Core;
+using PetFamily.Core.RolesPermissions;
+using PetFamily.Kernel;
 
 namespace PetFamily.Accounts.Domain.Accounts;
 
 public class ParticipantAccount
 {
-    //effcore
-    private ParticipantAccount()
-    {
-    }
+    public const string RoleName = "Participant";
     
-    public ParticipantAccount(User user, string favoritePets)
+    private ParticipantAccount(){}
+    public ParticipantAccount(User user)
     {
         Id = Guid.NewGuid();
         User = user;
-        FavoritePets = favoritePets;
         UserId = user.Id;
     }
     
-    public const string PARTISIPANT = nameof(PARTISIPANT);
-    
-    public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    
-    //public static string Role {get; private set;}
-    
-    public string FavoritePets { get; private set; }
-    
-    public User User { get; private set; }
+    public User User { get; set; }
+    public Guid Id { get; set; }
 }

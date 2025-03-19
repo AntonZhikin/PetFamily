@@ -1,5 +1,9 @@
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Identity;
+using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Accounts.Domain.Accounts.ValueObjects;
+using PetFamily.Core;
+using PetFamily.Kernel;
 using PetFamily.Kernel.ValueObject;
 
 namespace PetFamily.Accounts.Domain;
@@ -7,19 +11,23 @@ namespace PetFamily.Accounts.Domain;
 public class User : IdentityUser<Guid>
 {
     //efcore
-    private User()
+    private User() { }
+
+    private User(
+        string email,
+        string userName,
+        Role role)
     {
+        Email = email;
+        UserName = userName;
+        _roles = [role];
     }
     
     private List<Role> _roles = [];
     
-    //public SocialNetworkList SocialNetworkList { get; set; }
-    
-    public IReadOnlyList<Role> Roles => _roles;
-    
-    public string Email { get; private set; }
-    
-    //public FullName FullName { get; private set; }
+    public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
+    public ParticipantAccount? ParticipantAccount { get; set; }
+
     
     public static User CreateAdmin(string userName, string email, Role role)
     {
@@ -31,12 +39,27 @@ public class User : IdentityUser<Guid>
         };
     }
     
-    public static User CreatePartisipant(string userName, string email)
+    public static User CreatePartisipant(string userName, string email, Role role)
     {
         return new User
         {
             UserName = userName,    
-            Email = email
+            Email = email,
+            _roles = [role]
         };
+    }
+    
+    public static Result<User, Error> Create(string userName, string email, Role role)
+    {
+        if (userName != null && email != null)
+        {
+            return new User
+            {
+                UserName = userName,    
+                Email = email,
+                _roles = [role]
+            };
+        }
+        return Errors.General.ValueIsInvalid("User");
     }
 }

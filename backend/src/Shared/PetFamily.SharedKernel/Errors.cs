@@ -24,6 +24,10 @@ public static class Errors
             var forId = id == null ? "" : $"for Id '{id}'";
             return Error.Validation("record found", $"record found{forId} :");
         }
+        public static Error Failure(Guid? id = null)
+        {
+            return Error.Failure("failure", "failure");
+        }
     }
 
     public static class User
@@ -31,6 +35,18 @@ public static class Errors
         public static Error InvalidCredentials(string? name = null)
         {
             return Error.Validation("credentials.is.invalid", $"credentials is invalid");
+        }
+    }
+    
+    public static class Tokens
+    {
+        public static Error ExpiredToken()
+        {
+            return Error.Validation("token.is.expired", "your token is expired");
+        }
+        public static Error InvalidToken()
+        {
+            return Error.Validation("token.is.invalid", "your token is invalid");
         }
     }
 }

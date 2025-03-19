@@ -1,28 +1,22 @@
+using CSharpFunctionalExtensions;
 using PetFamily.Accounts.Domain.Accounts.ValueObjects;
+using PetFamily.Core;
+using PetFamily.Core.RolesPermissions;
+using PetFamily.Kernel;
 
 namespace PetFamily.Accounts.Domain.Accounts;
 
 public class VolunteerAccount
 {
     //efcore
-    private VolunteerAccount() { }
-    public VolunteerAccount(AssistanceDetailList assistanceDetails, int experienceYear)
+    private VolunteerAccount(){}
+    public VolunteerAccount(User user)
     {
-        Id = Guid.NewGuid();
-        //AssistanceDetails = assistanceDetails;
-        ExperienceYear = experienceYear;
+        User = user;
+        UserId = user.Id;
     }
-    
-    public const string VOLUNTEER = nameof(VOLUNTEER);
-    public Guid Id { get; private set; }
-    
-    public Guid UserId { get; private set; }
-    public int ExperienceYear { get; private set; }
-    
-    //public AssistanceDetailList AssistanceDetails { get; private set; }
-    
-    // public void UpdateAssistanceDetail(AssistanceDetailList assistanceDetailList)
-    // {
-    //     AssistanceDetails = assistanceDetailList;
-    // }
+    public const string RoleName = "Volunteer";
+    public Guid UserId { get; set; }
+    public User User { get; set; }
+    public Guid Id { get; set; }
 }

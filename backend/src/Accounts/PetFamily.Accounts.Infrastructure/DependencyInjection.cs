@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Application.AccountManagement;
+using PetFamily.Accounts.Application.Models;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.DbContexts;
 using PetFamily.Accounts.Infrastructure.IdentityManager;
 using PetFamily.Accounts.Infrastructure.Options;
 using PetFamily.Accounts.Infrastructure.Seeding;
+using PetFamily.Core;
 using PetFamily.Framework.Authorization;
 
 namespace PetFamily.Accounts.Infrastructure;
@@ -23,20 +25,12 @@ public static class DependencyInjection
     {
         services.AddDbContexts(configuration);
         services.AddAccountsSeeding();
+        services.AddDatabase();
         
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
         services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
-    
-        services
-            .AddIdentity<User, Role>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<WriteAccountsDbContext>()
-            .AddDefaultTokenProviders(); 
-        
         services
             .AddAuthentication(options =>
             {
@@ -49,21 +43,17 @@ public static class DependencyInjection
                 var jwtOptions = configuration.GetSection(JwtOptions.JWT).Get<JwtOptions>() 
                                    ?? throw new ApplicationException("Missing jwt configuration"); 
                 
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = jwtOptions.Issuer,
-                    ValidAudience = jwtOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero
-                };
+                options.TokenValidationParameters = TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
             });
-
-
-        services.AddManagers();
+        services
+            .AddIdentity<User, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<WriteAccountsDbContext>()
+            .AddDefaultTokenProviders(); 
+        
+        services.AddIdentity();
         
         services.AddAuthorization();
 
@@ -73,7 +63,6 @@ public static class DependencyInjection
         
         return services;
     }
-    
     private static IServiceCollection AddDbContexts(this IServiceCollection services
         ,IConfiguration configuration)
     {
@@ -86,12 +75,15 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddManagers(this IServiceCollection services)
+    private static IServiceCollection AddIdentity(this IServiceCollection services)
     {
         services.AddScoped<PermissionManager>();
         services.AddScoped<RolePermissionManager>();
-        services.AddScoped<AdminAccountManager>();
-        
+        services.AddScoped<AccountsManagers>();
+        services.AddScoped<IRefreshSessionManager, RefreshSessionManager>();
+        services.AddScoped<IAccountsManager, AccountsManagers>();
+        services.AddSingleton<AccountsSeeder>();
+        services.AddScoped<AccountSeederService>();
         return services;
     }
     
@@ -99,6 +91,13 @@ public static class DependencyInjection
     {
         services.AddSingleton<AccountsSeeder>();
         services.AddScoped<AccountSeederService>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddDatabase(this IServiceCollection services)
+    {
+        services.AddKeyedScoped<IUnitOfWork, UnitOfWork>(Modules.Accounts);
         
         return services;
     }
