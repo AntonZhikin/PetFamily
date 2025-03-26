@@ -6,7 +6,7 @@ using PetFamily.Species.Domain.SpeciesManagement.Entity;
 
 namespace PetFamily.Species.Domain.SpeciesManagement.AggregateRoot;
 
-public class Species : Core.Abstractions.Entity<SpeciesId>
+public class Species : SoftDeletableEntity<SpeciesId>
 {
     //ef core
     private Species(SpeciesId id) : base(id)
@@ -35,12 +35,16 @@ public class Species : Core.Abstractions.Entity<SpeciesId>
         return Result.Success<Error>();
     }
     
-    public Result<Guid, ErrorList> DeleteBreed(Guid breedId)
+    public UnitResult<Error> DeleteBreed(Guid breedId)
     {
         var result = _breeds.FirstOrDefault(b => b.Id == breedId);
+        if (result is null)
+        {
+            return Result.Success<Error>();
+        }
         _breeds.Remove(result);
 
-        return result.Id.Value;
+        return Result.Success<Error>();
     }
 
     public static Result<Species, ErrorList> Create(SpeciesId id, Name name)
@@ -49,4 +53,22 @@ public class Species : Core.Abstractions.Entity<SpeciesId>
         
         return specie;
     }
+
+    public override void SoftDelete()
+    {
+        base.SoftDelete();
+
+        foreach (var breed in _breeds)
+        {
+            breed.SoftDelete();
+        }
+    }
+
+    public void DeleteExpiredBreed()
+    {
+        _breeds.RemoveAll(
+            i => i.DeletionDate != null 
+                 && DateTime.UtcNow >= i.DeletionDate.Value
+                    .AddDays(Constants.LIFETIME_AFTER_DELETION));
+    } 
 }
