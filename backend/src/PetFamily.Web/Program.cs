@@ -105,6 +105,14 @@ app.UseHttpLogging();
 
 app.UseHttpsRedirection();
 
+app.UseCors(config => 
+{ 
+    config.WithOrigins("http://localhost:5173")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials(); 
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -113,6 +121,15 @@ app.MapControllers();
 app.Use(async (context, next) =>
 {
     await next.Invoke();
+});
+
+app.MapGet("api/users", () =>
+{
+    return Results.BadRequest("Users not found");
+    
+    List<string> users = ["user1", "user2", "user3"];
+    
+    return Results.Ok(users);
 });
 
 app.Run();

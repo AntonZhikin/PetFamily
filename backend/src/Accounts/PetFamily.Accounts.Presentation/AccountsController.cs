@@ -40,24 +40,43 @@ public class AccountsController : ApplicationController
     {
         var result = await handler.Handle(
             request.ToCommand(), cancellationToken);
+        
         if (result.IsFailure)
             return result.Error.ToResponse();
+        
+        HttpContext.Response.Cookies.Append("refreshToken", result.Value.RefreshToken.ToString());
         
         return Ok(result.Value);
     }
     
     [HttpPost("refresh")]
-    public async Task<IActionResult> Login(
-        [FromBody] RefreshTokenRequest request,
+    public async Task<IActionResult> RefreshTokens(
         [FromServices] RefreshTokenHandler handler,
         CancellationToken cancellationToken
     )
     {
+        if (!HttpContext.Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+        {
+            return Unauthorized();
+        };
+        
         var result = await handler.Handle(
-            new RefreshTokenCommand(request.AccessToken, request.RefreshToken), cancellationToken);
+            new RefreshTokenCommand(Guid.Parse(refreshToken)), cancellationToken);
         if (result.IsFailure)
             return result.Error.ToResponse();
         
+        HttpContext.Response.Cookies.Append("refreshToken", result.Value.RefreshToken.ToString());
+
+        
         return Ok(result.Value);
+    }
+    
+    [HttpPost("logout")]
+    public Task<IActionResult> Logout(
+        CancellationToken cancellationToken
+    )
+    {
+        HttpContext.Response.Cookies.Delete("refreshToken");
+        return Task.FromResult<IActionResult>(Ok());
     }
 }
