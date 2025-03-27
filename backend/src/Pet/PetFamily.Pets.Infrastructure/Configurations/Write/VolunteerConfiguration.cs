@@ -22,9 +22,9 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 id => id.Value,
                 value => VolunteerId.Create(value));
         
-        builder.Property<bool>("_isDeleted")
-            .UsePropertyAccessMode(PropertyAccessMode.Field)
-            .HasColumnName("is_deleted");
+        // builder.Property<bool>("_isDeleted")
+        //     .UsePropertyAccessMode(PropertyAccessMode.Field)
+        //     .HasColumnName("is_deleted");
         
         builder.ComplexProperty(v => v.FullName, g =>
         {
@@ -45,5 +45,11 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             g.IsRequired();
             g.Property(c => c.Value).HasColumnName("description");
         });
+        
+        builder.Property(v => v.DeletionDate)
+            .IsRequired(false)
+            .HasColumnName("deleted_on");
+
+        builder.HasQueryFilter(v => v.IsDeleted == false);
     }
-}
+} 

@@ -20,10 +20,21 @@ public static class DependencyInjection
             .AddRepositories()
             .AddDatabase()
             .AddDbContext(configuration)
+            .AddServices(configuration)
             .AddHostedServices();
         
         services.AddScoped<ISpecieContract, SpecieContracts>();
             
+        return services;
+    }
+    
+    private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        //services.AddScoped<DeleteExpiredEntityService>();
+        
+        // services.Configure<ExpiredEntitiesDeletionOptions>(
+        //     configuration.GetSection(ExpiredEntitiesDeletionOptions.EXPIRED_ENTITIES_DELETION));
+        //
         return services;
     }
     
@@ -56,7 +67,7 @@ public static class DependencyInjection
     private static IServiceCollection AddHostedServices(
         this IServiceCollection services)
     {
-        services.AddHostedService<DeleteExpiredBreedBackgroundService>();
+        //services.AddHostedService<DeleteExpiredEntitiesBackgroundService>();
         return services;
     }
 

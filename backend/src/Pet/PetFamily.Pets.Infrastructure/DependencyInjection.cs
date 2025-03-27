@@ -31,7 +31,7 @@ public static class DependencyInjection
             .AddDatabase()
             .AddHostedServices()
             .AddMessageQueues()
-            .AddServices();
+            .AddServices(configuration);
         
         services.AddScoped<IPetsContracts, PetsContracts>();
         
@@ -78,9 +78,13 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddServices(this IServiceCollection services)
+    private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IFilesCleanerService, FilesCleanerService>();
+        services.AddScoped<DeleteExpiredEntityService>();
+        
+        services.Configure<ExpiredEntitiesDeletionOptions>(
+            configuration.GetSection(ExpiredEntitiesDeletionOptions.ExpiredEntitiesDeleteRemoveService));
         
         return services;
     }
@@ -88,6 +92,7 @@ public static class DependencyInjection
     private static IServiceCollection AddHostedServices(this IServiceCollection services)
     {
         services.AddHostedService<FilesCleanerBackgroundServices>();
+        services.AddHostedService<DeleteExpiredEntitiesBackgroundService>();
 
         return services;
     }

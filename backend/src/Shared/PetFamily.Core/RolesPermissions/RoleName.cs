@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Kernel;
 
-namespace PetFamily.Core;
+namespace PetFamily.Core.RolesPermissions;
 
 public record RoleName
 {

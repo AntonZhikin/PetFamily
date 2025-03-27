@@ -61,7 +61,7 @@ public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
         if (speciesResult.IsFailure)
             return speciesResult.Error.ToErrorList();
         
-        speciesResult.Value.SoftDelete();
+        speciesResult.Value.Delete();
         
         await _unitOfWork.SaveChanges(cancellationToken);
         

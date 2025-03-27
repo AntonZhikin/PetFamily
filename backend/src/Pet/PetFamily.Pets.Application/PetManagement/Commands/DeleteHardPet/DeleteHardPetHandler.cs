@@ -63,7 +63,7 @@ public class DeleteHardPetHandler : ICommandHandler<Guid, DeleteHardPetCommand>
             await _fileProvider.RemoveFile(photo, cancellationToken);
         }
         
-        volunteerResult.Value.DeletePet(petResult.Value);
+        volunteerResult.Value.HardDeletePet(petResult.Value);
         if (volunteerResult.IsFailure)
             return volunteerResult.Error.ToErrorList();
         

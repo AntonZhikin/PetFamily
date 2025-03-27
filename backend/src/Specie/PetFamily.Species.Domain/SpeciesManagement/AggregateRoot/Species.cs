@@ -54,21 +54,31 @@ public class Species : SoftDeletableEntity<SpeciesId>
         return specie;
     }
 
-    public override void SoftDelete()
+    public override void Delete()
     {
-        base.SoftDelete();
+        base.Delete();
 
         foreach (var breed in _breeds)
         {
-            breed.SoftDelete();
+            breed.Delete();
         }
     }
 
-    public void DeleteExpiredBreed()
+    public void DeleteExpiredBreed(int lifetimeAfterDeletion)
     {
-        _breeds.RemoveAll(
-            i => i.DeletionDate != null 
-                 && DateTime.UtcNow >= i.DeletionDate.Value
-                    .AddDays(Constants.LIFETIME_AFTER_DELETION));
-    } 
+        var breedToDelete = _breeds.Where(pet => 
+                pet.DeletionDate != null && 
+                DateTime.UtcNow >= pet.DeletionDate.Value.AddDays(lifetimeAfterDeletion))
+            .ToList();
+
+        foreach (var breed in breedToDelete)
+        {
+            HardDeleteBreed(breed);
+        }
+    }
+    
+    public void HardDeleteBreed(Breed breed)
+    {
+        _breeds.Remove(breed);
+    }
 }

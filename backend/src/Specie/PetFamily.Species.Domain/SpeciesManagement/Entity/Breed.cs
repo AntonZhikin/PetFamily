@@ -1,4 +1,5 @@
 using PetFamily.Core.Abstractions;
+using PetFamily.Kernel;
 using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Species.Domain.SpeciesManagement.AggregateRoot;
@@ -17,5 +18,4 @@ public class Breed : SoftDeletableEntity<BreedId>
     {
         Name = name;
     }
-    
 }

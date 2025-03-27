@@ -1,12 +1,10 @@
-using PetFamily.Kernel;
-
-namespace PetFamily.Species.Domain.SpeciesManagement.AggregateRoot;
+namespace PetFamily.Kernel;
 
 public abstract class SoftDeletableEntity<TId> : Entity<TId> where TId: notnull
 {
     protected SoftDeletableEntity(TId id) : base(id) { }
 
-    public virtual void SoftDelete()
+    public virtual void Delete()
     {
         if (IsDeleted) return;
         
