@@ -8,7 +8,7 @@ using PetFamily.Pets.Domain.ValueObjects;
 
 namespace PetFamily.Pets.Domain.Entity;
 
-public class Pet : Core.Abstractions.Entity<PetId>//, ISoftDeletable
+public class Pet : SoftDeletableEntity<PetId>
 {
     //ef core
     private Pet(PetId id) : base(id)
@@ -93,20 +93,6 @@ public class Pet : Core.Abstractions.Entity<PetId>//, ISoftDeletable
     }
 
     public void DeleteAllPhotos() => _photos = [];
-    
-    public void Delete()
-    {
-        if (_isDeleted) return;
-        {
-            _isDeleted = true;
-        }
-    }
-
-    public void Restore()
-    {
-        if(_isDeleted)
-            _isDeleted = false;
-    }
     
     public void SetPosition(Position position) =>
         Position = position;

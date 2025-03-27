@@ -5,6 +5,7 @@ using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Domain.Accounts;
 using PetFamily.Accounts.Infrastructure.DbContexts;
 using PetFamily.Core;
+using PetFamily.Core.RolesPermissions;
 using PetFamily.Kernel;
 
 namespace PetFamily.Accounts.Infrastructure.IdentityManager;

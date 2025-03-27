@@ -123,15 +123,6 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
-app.MapGet("api/users", () =>
-{
-    return Results.BadRequest("Users not found");
-    
-    List<string> users = ["user1", "user2", "user3"];
-    
-    return Results.Ok(users);
-});
-
 app.Run();
 
 namespace PetFamily.Web
