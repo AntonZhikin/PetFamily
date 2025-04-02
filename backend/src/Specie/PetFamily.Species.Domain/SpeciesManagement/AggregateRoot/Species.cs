@@ -6,7 +6,7 @@ using PetFamily.Species.Domain.SpeciesManagement.Entity;
 
 namespace PetFamily.Species.Domain.SpeciesManagement.AggregateRoot;
 
-public class Species : Core.Abstractions.Entity<SpeciesId>
+public class Species : SoftDeletableEntity<SpeciesId>
 {
     //ef core
     private Species(SpeciesId id) : base(id)
@@ -35,12 +35,16 @@ public class Species : Core.Abstractions.Entity<SpeciesId>
         return Result.Success<Error>();
     }
     
-    public Result<Guid, ErrorList> DeleteBreed(Guid breedId)
+    public UnitResult<Error> DeleteBreed(Guid breedId)
     {
         var result = _breeds.FirstOrDefault(b => b.Id == breedId);
+        if (result is null)
+        {
+            return Result.Success<Error>();
+        }
         _breeds.Remove(result);
 
-        return result.Id.Value;
+        return Result.Success<Error>();
     }
 
     public static Result<Species, ErrorList> Create(SpeciesId id, Name name)
@@ -48,5 +52,27 @@ public class Species : Core.Abstractions.Entity<SpeciesId>
         var specie = new Species(id, name);
         
         return specie;
+    }
+
+    public override void Delete()
+    {
+        base.Delete();
+
+        foreach (var breed in _breeds)
+        {
+            breed.Delete();
+        }
+    }
+
+    public void DeleteExpiredBreed(int daysBeforeDelete)
+    {
+        _breeds.RemoveAll(p => p.DeletionDate != null 
+                             && DateTime.UtcNow > p.DeletionDate.Value
+                                 .AddDays(daysBeforeDelete));
+    }
+    
+    public void HardDeleteBreed(Breed breed)
+    {
+        _breeds.Remove(breed);
     }
 }

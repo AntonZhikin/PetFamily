@@ -61,13 +61,13 @@ public class DeleteBreedHandler : ICommandHandler<Guid, DeleteBreedCommand>
         if (speciesResult.IsFailure)
             return speciesResult.Error.ToErrorList();
         
-        var result = speciesResult.Value.DeleteBreed(command.BreedId);
+        speciesResult.Value.Delete();
         
         await _unitOfWork.SaveChanges(cancellationToken);
         
         _logger.LogInformation("Breed with id {breedId} was deleted from specie: {specieId} .",
             command.BreedId, command.SpeciesId);
         
-        return result;
+        return Result.Success(command.BreedId).Value;
     }
 }

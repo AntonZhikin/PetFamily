@@ -10,7 +10,7 @@ using PhoneNumber = PetFamily.Pets.Domain.ValueObjects.PhoneNumber;
 
 namespace PetFamily.Pets.Domain.AggregateRoot;
 
-public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletable
+public class Volunteer : SoftDeletableEntity<VolunteerId>
 {
     public const int MAX_LENGHT = 100;
 
@@ -49,7 +49,17 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
     public int GetPetHealing() => _pets.Count(p => p.HelpStatus == HelpStatus.PetHealing);
 
     public PhoneNumber PhoneNumber;
+    
+    public override void Delete()
+    {
+        base.Delete();
 
+        foreach (var pet in _pets)
+        {
+            pet.Delete();
+        }
+    }
+    
     public void UpdateMainInfo(Description description,
         PhoneNumber phoneNumber,
         FullName fullName)
@@ -57,18 +67,6 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
         Description = description;
         PhoneNumber = phoneNumber;
         FullName = fullName;
-    }
-
-    public void SoftDelete()
-    {
-        if (_isDeleted) return;
-        {
-            _isDeleted = true;
-            foreach (var pet in _pets)
-            {
-                pet.Delete();
-            }
-        }
     }
 
     public UnitResult<Error> DeletePetPhotos(PetId petId)
@@ -87,12 +85,6 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
             return Errors.General.NotFound(petId.Value);
 
         return pet;
-    }
-
-    public void Restore()
-    {
-        if (_isDeleted)
-            _isDeleted = false;
     }
 
     public UnitResult<Error> UpdatePetPosition(List<Pet> orderedList)
@@ -125,12 +117,7 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
 
         return Result.Success<Error>();
     }
-
-    public void DeletePet(Pet pet)
-    {
-        _pets.Remove(pet);
-    }
-
+    
     public UnitResult<Error> MovePet(Pet pet, Position newPosition)
     {
         var currentPosition = pet.Position;
@@ -197,5 +184,21 @@ public class Volunteer : Core.Abstractions.Entity<VolunteerId> //, ISoftDeletabl
             return lastPosition.Error;
 
         return lastPosition.Value;
+    }
+
+    public void DeleteExpiredPets(int daysBeforeDelete)
+    {
+        _pets.RemoveAll(p => p.DeletionDate != null 
+                             && DateTime.UtcNow > p.DeletionDate.Value
+                                 .AddDays(daysBeforeDelete));
+    }
+    public void HardDeletePet(Pet pet)
+    {
+        _pets.Remove(pet);
+        foreach (var p in _pets.Where(p => p.Position.Value > pet.Position.Value))
+        {
+            var newPosition = (Position.Create(p.Position.Value - 1).Value);
+            p.SetPosition(newPosition);
+        }
     }
 }

@@ -4,6 +4,7 @@ using PetFamily.Core;
 using PetFamily.Species.Application;
 using PetFamily.Species.Application.Species;
 using PetFamily.Species.Contracts;
+using PetFamily.Species.Infrastructure.BackgroundService;
 using PetFamily.Species.Infrastructure.DbContext;
 using PetFamily.Species.Infrastructure.Repository;
 using PetFamily.Species.Presentation;
@@ -18,10 +19,22 @@ public static class DependencyInjection
         services
             .AddRepositories()
             .AddDatabase()
-            .AddDbContext(configuration);
+            .AddDbContext(configuration)
+            .AddServices(configuration)
+            .AddHostedServices();
         
         services.AddScoped<ISpecieContract, SpecieContracts>();
             
+        return services;
+    }
+    
+    private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        //services.AddScoped<DeleteExpiredEntityService>();
+        
+        // services.Configure<ExpiredEntitiesDeletionOptions>(
+        //     configuration.GetSection(ExpiredEntitiesDeletionOptions.EXPIRED_ENTITIES_DELETION));
+        //
         return services;
     }
     
@@ -50,4 +63,12 @@ public static class DependencyInjection
 
         return services;
     }
+    
+    private static IServiceCollection AddHostedServices(
+        this IServiceCollection services)
+    {
+        //services.AddHostedService<DeleteExpiredEntitiesBackgroundService>();
+        return services;
+    }
+
 }

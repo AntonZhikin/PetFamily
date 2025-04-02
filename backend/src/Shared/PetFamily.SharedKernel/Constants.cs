@@ -8,4 +8,7 @@ public class Constants
     
     public const int MAX_LENGHT = 100;
 
+    public const int DELETE_EXPIRED_BREED_SERVICE_REDUCTION_HOURS = 24;
+    
+    public const int LIFETIME_AFTER_DELETION = 24;
 }
