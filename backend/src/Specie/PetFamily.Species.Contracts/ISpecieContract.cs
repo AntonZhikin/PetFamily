@@ -1,4 +1,5 @@
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Species;
 using PetFamily.Species.Contracts.Request;
 
 namespace PetFamily.Species.Contracts;

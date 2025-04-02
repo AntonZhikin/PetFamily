@@ -17,4 +17,5 @@ public interface IAccountsManager
     public Task<Result<Role, Error>> GetRole(RoleName roleName);
     public Task<Result<Role, Error>> GetRoleId(Guid roleId);
     public Task AddParticipant(ParticipantAccount participant);
+    
 }

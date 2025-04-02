@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Pets;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Contracts;
 using PetFamily.Pets.Contracts.Request;

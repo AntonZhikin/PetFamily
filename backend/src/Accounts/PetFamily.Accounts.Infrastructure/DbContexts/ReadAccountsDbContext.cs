@@ -1,17 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Accounts.Application;
+using PetFamily.Core.DTOs.Accounts;
 
 namespace PetFamily.Accounts.Infrastructure.DbContexts;
 
-public class ReadAccountsDbContext(string connectionString) : DbContext, IAccountsReadDbContext
+public class ReadAccountsDbContext : DbContext, IAccountsReadDbContext
 {
-    
-    //Models
+    private readonly string _connectionString;
+
+    public ReadAccountsDbContext(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+    public IQueryable<UserDto> Users => Set<UserDto>(); 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(_connectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
@@ -20,6 +26,7 @@ public class ReadAccountsDbContext(string connectionString) : DbContext, IAccoun
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("PetFamily_Accounts");
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ReadAccountsDbContext).Assembly,
             x => x.FullName!.Contains("Configurations.Read"));

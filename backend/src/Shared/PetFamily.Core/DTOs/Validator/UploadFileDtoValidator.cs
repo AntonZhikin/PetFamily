@@ -1,4 +1,5 @@
 using FluentValidation;
+using PetFamily.Core.DTOs.Pets;
 using PetFamily.Core.DTOs.ValueObject;
 using PetFamily.Core.Validation;
 using PetFamily.Kernel;

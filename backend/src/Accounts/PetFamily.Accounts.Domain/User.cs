@@ -28,7 +28,7 @@ public class User : IdentityUser<Guid>
     public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
     public ParticipantAccount? ParticipantAccount { get; set; }
 
-    
+    public AdminAccount? AdminAccount { get; set; }
     public static User CreateAdmin(string userName, string email, Role role)
     {
         return new User

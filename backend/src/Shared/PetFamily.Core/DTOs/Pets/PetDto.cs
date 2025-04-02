@@ -1,6 +1,6 @@
 using PetFamily.Core.DTOs.ValueObject;
 
-namespace PetFamily.Core.DTOs;
+namespace PetFamily.Core.DTOs.Pets;
 
 public class PetDto
 {

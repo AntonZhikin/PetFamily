@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Pets;
 using PetFamily.Core.Extensions;
 using PetFamily.Core.Models;
 
