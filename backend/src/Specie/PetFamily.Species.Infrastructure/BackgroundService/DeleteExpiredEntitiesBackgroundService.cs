@@ -1,45 +1,43 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetFamily.Core;
+using PetFamily.Framework.Authorization;
+using PetFamily.Species.Infrastructure.DbContext;
 
 namespace PetFamily.Species.Infrastructure.BackgroundService;
 
-/*public class DeleteExpiredEntitiesBackgroundService : Microsoft.Extensions.Hosting.BackgroundService
+public class DeleteExpiredEntityService
 {
-    private readonly ILogger<DeleteExpiredEntitiesBackgroundService> _logger;
-    private readonly IServiceScopeFactory _scopeFactory;
-    private readonly ExpiredEntitiesDeletionOptions _options;
+    private readonly WriteDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteExpiredEntitiesBackgroundService(
-        ILogger<DeleteExpiredEntitiesBackgroundService> logger,
-        IServiceScopeFactory scopeFactory,
-        IOptions<ExpiredEntitiesDeletionOptions> options)
+    public DeleteExpiredEntityService(
+        WriteDbContext context,
+        [FromKeyedServices(Modules.Specie)] IUnitOfWork unitOfWork)
     {
-        _logger = logger;
-        _scopeFactory = scopeFactory;
-        _options = options.Value;
+        _context = context;
+        _unitOfWork = unitOfWork;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    public async Task Process(int daysBeforeDelete, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("DeleteExpiredEntitiesBackgroundService is starting to work");
-        
-        while (!cancellationToken.IsCancellationRequested)
+        var speciesWithBreed = await GetSpeciesWithBreedAsync(cancellationToken);
+
+        foreach (var species in speciesWithBreed)
         {
-            await using var scope = _scopeFactory.CreateAsyncScope();
-            
-            var deleteExpiredEntitiesService = scope.ServiceProvider
-                .GetRequiredService<DeleteExpiredEntityService>();
-            
-            _logger.LogInformation("DeleteExpiredEntitiesBackgroundService is deleting expired entities");
-            
-            await deleteExpiredEntitiesService.Process(_options.EntityExpiredDaysTime, cancellationToken);
-            
-            await Task.Delay(TimeSpan.FromHours(_options.WorkHoursInterval), cancellationToken);
-            
+            species.DeleteExpiredBreed(daysBeforeDelete);
         }
-        
-        _logger.LogInformation("DeleteExpiredEntitiesBackgroundService is stopping to work");
+
+        await _unitOfWork.SaveChanges(cancellationToken);
     }
-}*/
+
+    private async Task<IEnumerable<Domain.SpeciesManagement.AggregateRoot.Species>> GetSpeciesWithBreedAsync(
+        CancellationToken cancellationToken)
+    {
+        return await _context.Species
+            .Include(s => s.Breeds)
+            .ToListAsync(cancellationToken);
+    }
+}
