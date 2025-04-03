@@ -28,11 +28,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .IsRequired()
                 .HasColumnName("position");
         });
-        
-        builder.Property<bool>("_isDeleted")
-            .UsePropertyAccessMode(PropertyAccessMode.Field)
-            .HasColumnName("is_deleted");
-        
+
         builder.ComplexProperty(c => c.Name, b =>
         {
             b.IsRequired();

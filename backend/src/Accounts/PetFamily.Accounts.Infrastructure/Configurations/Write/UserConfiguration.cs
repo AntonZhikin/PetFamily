@@ -2,11 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Accounts.Domain;
-using PetFamily.Accounts.Domain.Accounts;
-using PetFamily.Core;
-using PetFamily.Kernel;
 
-namespace PetFamily.Accounts.Infrastructure.Configuration.Write;
+namespace PetFamily.Accounts.Infrastructure.Configurations.Write;
 
 public class UserConfiguration :  IEntityTypeConfiguration<User>
 {

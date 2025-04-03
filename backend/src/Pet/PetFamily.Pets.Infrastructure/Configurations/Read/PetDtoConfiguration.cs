@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Core;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Pets;
 using PetFamily.Core.DTOs.ValueObject;
 using PetFamily.Kernel;
 

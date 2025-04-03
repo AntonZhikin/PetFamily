@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Pets;
 
 namespace PetFamily.Pets.Application.PetManagement.Queries.GetPetById;
 

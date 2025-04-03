@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Species;
 using PetFamily.Species.Application;
 using PetFamily.Species.Contracts;
 using PetFamily.Species.Contracts.Request;

@@ -59,8 +59,6 @@ public class Pet : SoftDeletableEntity<PetId>
     
     public Description Description { get; private set;}
     
-    public bool _isDeleted { get; private set; } = false;
-    
     public Color Color { get; private set;}
 
     public PetHealthInfo PetHealthInfo { get; private set;}

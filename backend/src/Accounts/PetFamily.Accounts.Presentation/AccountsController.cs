@@ -6,6 +6,7 @@ using PetFamily.Accounts.Application.AccountManagement.Commands.Login;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Logout;
 using PetFamily.Accounts.Application.AccountManagement.Commands.RefreshTokens;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Register;
+using PetFamily.Accounts.Application.AccountManagement.Queries.GetUserInformation;
 using PetFamily.Accounts.Contracts.Request;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Request;
@@ -80,5 +81,19 @@ public class AccountsController : ApplicationController
         HttpContext.Response.Cookies.Delete("refreshToken");
 
         return Task.FromResult<IActionResult>(Ok());
+    }
+    
+    [HttpGet("user-info/{id:guid}")]
+    public async Task<IActionResult> GetUserById(
+        [FromServices] GetUserInformationHandler handler,
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = new GetUserInformationQuery(id);
+        
+        var result = await handler.Handle(query, cancellationToken);
+
+        return Ok(result);
     }
 }

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetFamily.Core.DTOs;
+using PetFamily.Core.DTOs.Pets;
+using PetFamily.Core.DTOs.Species;
 using PetFamily.Pets.Application;
 
 namespace PetFamily.Pets.Infrastructure.DbContext;
@@ -18,7 +20,7 @@ public class ReadDbContext(string ConnectionString) :
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(ConnectionString);
-        optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.UseSnakeCaseNamingConvention(); 
         optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
         optionsBuilder.EnableSensitiveDataLogging();
         
