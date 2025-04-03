@@ -22,7 +22,7 @@ public class GetUserInformationHandler : IQueryHandler<UserDto, GetUserInformati
 
         if (userDto is null)
         {
-            throw new ApplicationException("User not found");
+            return null;
         }
         
         return userDto;
