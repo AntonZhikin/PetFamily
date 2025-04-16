@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Kernel;
 
-namespace PetFamily.VolunteerRequest.Domain;
+namespace PetFamily.VolunteerRequest.Domain.ValueObject;
 
 public record VolunteerInfo
 {
