@@ -1,10 +1,7 @@
-using System;
-using CSharpFunctionalExtensions;
 using FluentAssertions;
-using PetFamily.Kernel.ValueObject.Ids;
-using PetFamily.VolunteerRequest.Domain;
 using PetFamily.VolunteerRequest.Domain.ValueObject;
-using Xunit;
+
+namespace PetFamily.UnitTests;
 
 public class VolunteerRequestTests
 {
@@ -17,7 +14,7 @@ public class VolunteerRequestTests
         var volunteerInfo = VolunteerInfo.Create("Test info").Value;
 
         // act
-        var result = VolunteerRequest.Create(requestId, userId, volunteerInfo);
+        var result = VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId, volunteerInfo);
 
         // assert
         result.IsSuccess.Should().BeTrue();
@@ -92,11 +89,11 @@ public class VolunteerRequestTests
         request.Status.Should().Be(VolunteerRequestStatus.Create(Status.Approved).Value);
     }
 
-    private VolunteerRequest CreateSampleRequest()
+    private VolunteerRequest.Domain.VolunteerRequest CreateSampleRequest()
     {
         var requestId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         var volunteerInfo = VolunteerInfo.Create("Some info").Value;
-        return VolunteerRequest.Create(requestId, userId, volunteerInfo).Value;
+        return VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId, volunteerInfo).Value;
     }
 }
