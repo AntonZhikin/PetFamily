@@ -49,4 +49,17 @@ public static class Errors
             return Error.Validation("token.is.invalid", "your token is invalid");
         }
     }
+
+    public static class Disscusion
+    {
+        public static Error ClosedDissusion()
+        {
+            return Error.Failure("disscusion", "this disscusion is closed");
+        }
+
+        public static Error UserNotInDisscusion()
+        {
+            return Error.Failure("disscusion", "user not found of this disscusion");
+        }
+    }
 }
