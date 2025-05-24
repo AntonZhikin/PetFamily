@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PetFamily.Accounts.Application;
 using PetFamily.Accounts.Infrastructure;
+using PetFamily.Accounts.Infrastructure.DbContexts;
 using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Accounts.Presentation;
 using PetFamily.Pets.Application;
@@ -84,15 +86,20 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
-var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
+// await using var scope = app.Services.CreateAsyncScope();
+//
+// var dbContext = scope.ServiceProvider.GetRequiredService<WriteAccountsDbContext>();
+//
+// await dbContext.Database.MigrateAsync();
 
-await accountsSeeder.SeedAsync();
+// var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
+//
+// await accountsSeeder.SeedAsync();
 
 app.UseSerilogRequestLogging();
 
 app.UseExceptionMiddleware();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

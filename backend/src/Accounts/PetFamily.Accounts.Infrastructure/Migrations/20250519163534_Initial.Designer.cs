@@ -12,7 +12,7 @@ using PetFamily.Accounts.Infrastructure.DbContexts;
 namespace PetFamily.Accounts.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteAccountsDbContext))]
-    [Migration("20250402120753_Initial")]
+    [Migration("20250519163534_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -171,6 +171,7 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                         .HasName("pk_admin_accounts");
 
                     b.HasIndex("UserId")
+                        .IsUnique()
                         .HasDatabaseName("ix_admin_accounts_user_id");
 
                     b.ToTable("admin_accounts", "PetFamily_Accounts");
@@ -297,19 +298,12 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("normalized_name");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id")
                         .HasName("pk_roles");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_roles_user_id");
 
                     b.ToTable("roles", "PetFamily_Accounts");
                 });
@@ -474,8 +468,8 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
             modelBuilder.Entity("PetFamily.Accounts.Domain.Accounts.AdminAccount", b =>
                 {
                     b.HasOne("PetFamily.Accounts.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("AdminAccount")
+                        .HasForeignKey("PetFamily.Accounts.Domain.Accounts.AdminAccount", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_admin_accounts_user_user_id");
@@ -519,14 +513,6 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PetFamily.Accounts.Domain.Role", b =>
-                {
-                    b.HasOne("PetFamily.Accounts.Domain.User", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_roles_users_user_id");
-                });
-
             modelBuilder.Entity("PetFamily.Accounts.Domain.RolePermission", b =>
                 {
                     b.HasOne("PetFamily.Accounts.Domain.Permission", "Permission")
@@ -555,9 +541,9 @@ namespace PetFamily.Accounts.Infrastructure.Migrations
 
             modelBuilder.Entity("PetFamily.Accounts.Domain.User", b =>
                 {
-                    b.Navigation("ParticipantAccount");
+                    b.Navigation("AdminAccount");
 
-                    b.Navigation("Roles");
+                    b.Navigation("ParticipantAccount");
                 });
 #pragma warning restore 612, 618
         }
