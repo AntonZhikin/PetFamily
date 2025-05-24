@@ -25,7 +25,7 @@ using PetFamily.Pets.Controllers.Volunteers.Request;
 
 namespace PetFamily.Pets.Controllers.Volunteers;
 
-public class VolunteersController : ApplicationController
+public class  VolunteersController : ApplicationController
 {
     [HttpGet("volunteer-by-id")]
     public async Task<ActionResult> GetById(
@@ -52,7 +52,7 @@ public class VolunteersController : ApplicationController
         var response = await handler.Handle(query, cancellationToken);
         
         return Ok(response);
-    }
+    } 
     
     [Authorize]
     [HttpPost]
