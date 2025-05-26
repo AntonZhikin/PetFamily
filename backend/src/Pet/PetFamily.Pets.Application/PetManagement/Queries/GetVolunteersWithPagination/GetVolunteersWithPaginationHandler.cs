@@ -1,6 +1,7 @@
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
+using PetFamily.Core.DTOs.Volunteer;
 using PetFamily.Core.Extensions;
 using PetFamily.Core.Models;
 

@@ -1,4 +1,4 @@
-namespace PetFamily.Kernel;
+namespace PetFamily.Kernel.BaseClasses;
 
 public abstract class Entity<TId> where TId : notnull 
 {

@@ -1,7 +1,8 @@
-namespace PetFamily.Kernel;
+namespace PetFamily.Kernel.BaseClasses;
 
 public abstract class SoftDeletableEntity<TId> : Entity<TId> where TId: notnull
 {
+    
     protected SoftDeletableEntity(TId id) : base(id) { }
 
     public virtual void Delete()

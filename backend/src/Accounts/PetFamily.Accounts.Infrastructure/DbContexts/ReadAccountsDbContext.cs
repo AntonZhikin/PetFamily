@@ -13,7 +13,10 @@ public class ReadAccountsDbContext : DbContext, IAccountsReadDbContext
     {
         _connectionString = connectionString;
     }
-    public IQueryable<UserDto> Users => Set<UserDto>(); 
+    public IQueryable<UserDto> Users => Set<UserDto>();
+    public IQueryable<AdminAccountDto> AdminAccounts => Set<AdminAccountDto>();
+    public IQueryable<VolunteerAccountDto> VolunteerAccounts => Set<VolunteerAccountDto>();
+    public IQueryable<ParticipantAccountDto> ParticipantAccounts => Set<ParticipantAccountDto>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

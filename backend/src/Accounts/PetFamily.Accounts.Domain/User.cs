@@ -27,19 +27,10 @@ public class User : IdentityUser<Guid>
     
     public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
     public ParticipantAccount? ParticipantAccount { get; set; }
+    public VolunteerAccount? VolunteerAccount { get; set; }
 
     public AdminAccount? AdminAccount { get; set; }
     public static User CreateAdmin(string userName, string email, Role role)
-    {
-        return new User
-        {
-            UserName = userName,    
-            Email = email,
-            _roles = [role]
-        };
-    }
-    
-    public static User CreatePartisipant(string userName, string email, Role role)
     {
         return new User
         {
@@ -62,4 +53,5 @@ public class User : IdentityUser<Guid>
         }
         return Errors.General.ValueIsInvalid("User");
     }
+    public void AddRole(Role role) => _roles.Add(role);
 }

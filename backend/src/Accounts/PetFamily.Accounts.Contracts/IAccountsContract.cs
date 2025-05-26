@@ -2,5 +2,9 @@ namespace PetFamily.Accounts.Contracts;
 
 public interface IAccountsContract
 {
-    Task<HashSet<string>> GetUserPermissionsCodes(Guid userId);
+    public Task<HashSet<string>> GetUserPermissionsCodes(Guid userId);
+    
+    public Task BanUser(Guid userId, CancellationToken cancellationToken);
+    public Task<bool> IsUserBannedForVolunteerRequests(
+        Guid userId, CancellationToken cancellationToken);
 }

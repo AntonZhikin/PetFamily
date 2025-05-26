@@ -38,4 +38,17 @@ public class PermissionManager(WriteAccountsDbContext writeAccountsDbContext)
         
         return permissions.ToHashSet();
     }
+    
+    public async Task<HashSet<string>> GetUserRole(Guid userId)
+    {
+        var permissions = await writeAccountsDbContext.Users
+            .Include(u => u.Roles)
+            .Where(u => u.Id == userId)
+            .SelectMany(u => u.Roles)
+            .SelectMany(r => r.RolePermissions)
+            .Select(rp => rp.Permission.Code)
+            .ToListAsync();
+        
+        return permissions.ToHashSet();
+    }
 }

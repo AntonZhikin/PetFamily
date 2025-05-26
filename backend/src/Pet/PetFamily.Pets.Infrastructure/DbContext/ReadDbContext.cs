@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
 using PetFamily.Core.DTOs.Species;
+using PetFamily.Core.DTOs.Volunteer;
 using PetFamily.Pets.Application;
 
 namespace PetFamily.Pets.Infrastructure.DbContext;

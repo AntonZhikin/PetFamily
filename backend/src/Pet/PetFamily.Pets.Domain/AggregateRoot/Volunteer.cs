@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using PetFamily.Core.DTOs.ValueObject;
 using PetFamily.Kernel;
+using PetFamily.Kernel.BaseClasses;
 using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Pets.Domain.Entity;

@@ -14,6 +14,9 @@ public interface IAccountsManager
     public Task CreateParticipantAccount(
         ParticipantAccount participantAccount, CancellationToken cancellationToken = default);
     
+    public Task<UnitResult<Error>> CreateVolunteerAccount(
+        VolunteerAccount volunteerAccount, CancellationToken cancellationToken = default);
+    
     public Task<Result<Role, Error>> GetRole(RoleName roleName);
     public Task<Result<Role, Error>> GetRoleId(Guid roleId);
     public Task AddParticipant(ParticipantAccount participant);

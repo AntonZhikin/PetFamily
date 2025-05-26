@@ -6,8 +6,8 @@ using PetFamily.Accounts.Application.AccountManagement.Commands.Login;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Logout;
 using PetFamily.Accounts.Application.AccountManagement.Commands.RefreshTokens;
 using PetFamily.Accounts.Application.AccountManagement.Commands.Register;
+using PetFamily.Accounts.Application.AccountManagement.Commands.RegisterVolunteer;
 using PetFamily.Accounts.Application.AccountManagement.Queries.GetUserInformation;
-using PetFamily.Accounts.Contracts.Request;
 using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Presentation.Request;
 using PetFamily.Framework;
@@ -21,6 +21,22 @@ public class AccountsController : ApplicationController
     public async Task<IActionResult> Register(
         [FromBody] RegisterUserRequest request,
         [FromServices] RegisterUserHandler handler,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await handler.Handle(
+            request.ToCommand(), cancellationToken);
+
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result);
+    }
+
+    [HttpPost("volunteer/registration")]
+    public async Task<IActionResult> Create(
+        [FromBody] RegisterVolunteerRequest request,
+        [FromServices] RegisterVolunteerHandler handler,
         CancellationToken cancellationToken
     )
     {

@@ -6,4 +6,6 @@ public class UserDto
     public string Email { get; init; } = string.Empty;
     public AdminAccountDto? AdminAccount { get; init; }
     public ParticipantAccountDto? ParticipantAccount { get; init; }
+    
+    public VolunteerAccountDto? VolunteerAccount { get; init; }
 }

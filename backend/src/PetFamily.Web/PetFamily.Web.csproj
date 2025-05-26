@@ -40,6 +40,9 @@
       <ProjectReference Include="..\Specie\PetFamily.Species.Application\PetFamily.Species.Application.csproj" />
       <ProjectReference Include="..\Specie\PetFamily.Species.Infrastructure\PetFamily.Species.Infrastructure.csproj" />
       <ProjectReference Include="..\Specie\PetFamily.Species.Presentation\PetFamily.Species.Presentation.csproj" />
+      <ProjectReference Include="..\VolunteerRequest\PetFamily.VolunteerRequest.Application\PetFamily.VolunteerRequest.Application.csproj" />
+      <ProjectReference Include="..\VolunteerRequest\PetFamily.VolunteerRequest.Infrastructure\PetFamily.VolunteerRequest.Infrastructure.csproj" />
+      <ProjectReference Include="..\VolunteerRequest\PetFamily.VolunteerRequest.Presentation\PetFamily.VolunteerRequest.Presentation.csproj" />
     </ItemGroup>
 
     <ItemGroup>

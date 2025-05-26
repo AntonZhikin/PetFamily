@@ -5,7 +5,8 @@ namespace PetFamily.VolunteerRequest.Domain.ValueObject;
 
 public record VolunteerInfo
 {
-    public string Value { get; }
+    private VolunteerInfo() { }
+    public string Value { get; init; }
 
     public VolunteerInfo(string value)
     {

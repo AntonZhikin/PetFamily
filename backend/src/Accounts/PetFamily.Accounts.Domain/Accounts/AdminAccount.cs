@@ -10,7 +10,7 @@ public class AdminAccount
     
     public AdminAccount(User user)
     {
-        //Id = Guid.NewGuid();
+        Id = Guid.NewGuid();
         User = user;
         UserId = user.Id;
     }

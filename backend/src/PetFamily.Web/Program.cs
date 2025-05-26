@@ -12,6 +12,9 @@ using PetFamily.Pets.Infrastructure;
 using PetFamily.Species.Application;
 using PetFamily.Species.Infrastructure;
 using PetFamily.Species.Presentation.Species;
+using PetFamily.VolunteerRequest.Application;
+using PetFamily.VolunteerRequest.Infrastructure;
+using PetFamily.VolunteerRequest.Presentation;
 using PetFamily.Web.Middlewares;
 using Serilog;
 using Serilog.Events;
@@ -77,7 +80,11 @@ builder.Services
 
     .AddAccountsApplication()
     .AddAccountsPresentation()
-    .AddAccountsInfrastructure(builder.Configuration);
+    .AddAccountsInfrastructure(builder.Configuration)
+
+    .AddVolunteerRequestApplication()
+    .AddVolunteerRequestPresentation()
+    .AddVolunteerRequestsInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)
@@ -86,15 +93,17 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
+//
 // await using var scope = app.Services.CreateAsyncScope();
 //
 // var dbContext = scope.ServiceProvider.GetRequiredService<WriteAccountsDbContext>();
 //
 // await dbContext.Database.MigrateAsync();
-
+//
 // var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
 //
 // await accountsSeeder.SeedAsync();
+//
 
 app.UseSerilogRequestLogging();
 
