@@ -112,4 +112,10 @@ public class AccountsController : ApplicationController
 
         return Ok(result);
     }
+    
+    [HttpPost("Test")]
+    public async Task<IActionResult> Test()
+    {
+        return Ok(200);
+    }
 }

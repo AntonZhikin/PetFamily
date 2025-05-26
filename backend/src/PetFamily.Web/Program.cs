@@ -83,27 +83,27 @@ builder.Services
     .AddAccountsInfrastructure(builder.Configuration)
 
     .AddVolunteerRequestApplication()
-    .AddVolunteerRequestPresentation()
     .AddVolunteerRequestsInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)
     .AddApplicationPart(typeof(SpeciesController).Assembly)
-    .AddApplicationPart(typeof(AccountsController).Assembly);
+    .AddApplicationPart(typeof(AccountsController).Assembly)
+    .AddApplicationPart(typeof(VolunteerRequestsController).Assembly);
 
 var app = builder.Build();
 
-//
-// await using var scope = app.Services.CreateAsyncScope();
-//
-// var dbContext = scope.ServiceProvider.GetRequiredService<WriteAccountsDbContext>();
-//
-// await dbContext.Database.MigrateAsync();
-//
-// var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
-//
-// await accountsSeeder.SeedAsync();
-//
+
+await using var scope = app.Services.CreateAsyncScope();
+
+var dbContext = scope.ServiceProvider.GetRequiredService<WriteAccountsDbContext>();
+
+await dbContext.Database.MigrateAsync();
+
+var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
+
+await accountsSeeder.SeedAsync();
+
 
 app.UseSerilogRequestLogging();
 

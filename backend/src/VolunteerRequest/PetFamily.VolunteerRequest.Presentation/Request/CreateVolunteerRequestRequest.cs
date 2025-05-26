@@ -6,12 +6,12 @@ namespace PetFamily.VolunteerRequest.Presentation.Request;
 public record CreateVolunteerRequestRequest(
     Guid UserId,
     FullNameDto FullName,
-    VolunteerInfoDto VolunteerInfo,
-    string Gender)
+    string PhoneNumber,
+    VolunteerInfoDto VolunteerInfo)
 {
     public CreateVolunteerRequestCommand ToCommand() =>
         new(UserId,
             FullName,
-            VolunteerInfo,
-            Gender);
+            PhoneNumber,
+            VolunteerInfo);
 }

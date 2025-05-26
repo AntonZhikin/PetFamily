@@ -36,6 +36,7 @@ public class User : IdentityUser<Guid>
         {
             UserName = userName,    
             Email = email,
+            NormalizedEmail = email.ToUpper(),
             _roles = [role]
         };
     }

@@ -16,7 +16,7 @@ public class CreateVolunteerRequestValidator :
             .WithError(Errors.General.ValueIsRequired());
         
         RuleFor(vr => vr.FullName).MustBeValueObject(fn =>
-            FullName.Create(fn.FirstName, fn.SecondName, fn.LastName));
+            FullName.Create(fn.Name, fn.Surname, fn.SecondName));
         
         RuleFor(vr => vr.PhoneNumber)
             .NotEmpty().WithError(Errors.General.ValueIsRequired());

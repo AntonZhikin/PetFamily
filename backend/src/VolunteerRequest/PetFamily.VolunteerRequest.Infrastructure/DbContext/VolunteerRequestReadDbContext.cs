@@ -37,6 +37,6 @@ public class VolunteerRequestsReadDbContext :
             
         builder.ApplyConfigurationsFromAssembly(
             typeof(VolunteerRequestsReadDbContext).Assembly,
-            type => type.FullName?.Contains("Configurations.Read") ?? false);
+            type => type.FullName?.Contains("Configuration.Read") ?? false);
     }
 }

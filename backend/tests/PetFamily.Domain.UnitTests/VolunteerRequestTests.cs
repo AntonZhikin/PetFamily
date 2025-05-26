@@ -12,7 +12,7 @@ public class VolunteerRequestTests
         // arrange
         var requestId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        var volunteerInfo = VolunteerInfo.Create("Test info").Value;
+        var volunteerInfo = VolunteerInfo.Create(1).Value;
         var fullname = FullName.Create("13341", "14", "4231").Value;
 
         // act
@@ -95,7 +95,7 @@ public class VolunteerRequestTests
     {
         var requestId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        var volunteerInfo = VolunteerInfo.Create("Some info").Value;
+        var volunteerInfo = VolunteerInfo.Create(1).Value;
         var fullname = FullName.Create("13341", "14", "4231").Value;
         return VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId,fullname, volunteerInfo).Value;
     }

@@ -30,7 +30,6 @@ public class JwtTokenProvider : ITokenProvider
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         
         var roleClaims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Name ?? string.Empty));
-        
         var jti = Guid.NewGuid();
         
         Claim[] claims =

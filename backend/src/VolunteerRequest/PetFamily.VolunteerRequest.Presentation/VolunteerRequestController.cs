@@ -15,11 +15,11 @@ using PetFamily.VolunteerRequest.Presentation.Request;
 
 namespace PetFamily.VolunteerRequest.Presentation;
 
-[Authorize]
 public class VolunteerRequestsController : ApplicationController
 {
+    [Authorize]
     [Permission(PermissionsConfig.VolunteerRequests.Create)]
-    [HttpPost]
+    [HttpPost("Create")]
     public async Task<ActionResult> Create(
         [FromBody] CreateVolunteerRequestRequest request,
         [FromServices] CreateVolunteerRequestHandler handler,

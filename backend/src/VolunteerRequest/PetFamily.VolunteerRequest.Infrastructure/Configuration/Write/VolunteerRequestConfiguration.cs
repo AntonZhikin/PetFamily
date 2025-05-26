@@ -30,7 +30,7 @@ public class VolunteerRequestConfiguration : IEntityTypeConfiguration<Domain.Vol
         builder.ComplexProperty(v => v.VolunteerInfo, g =>
         {
             g.IsRequired();
-            g.Property(c => c.Value).HasColumnName("volunteer_info");
+            g.Property(c => c.Age).HasColumnName("volunteer_info");
         });
         
         builder.Property(s => s.AdminId)

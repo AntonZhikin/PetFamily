@@ -11,7 +11,7 @@ public class VolunteerRequest : SoftDeletableEntity<VolunteerRequestId>
 {
     private VolunteerRequest(VolunteerRequestId id) : base(id) { }
     
-    public Guid AdminId { get; private set; }
+    public Guid? AdminId { get; private set; }
     public Guid UserId { get; private set; }
     
     public Guid DiscussionId { get; private set; }

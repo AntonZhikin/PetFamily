@@ -24,11 +24,11 @@ public class VolunteerRequestsWriteDbContext : Microsoft.EntityFrameworkCore.DbC
         
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.HasDefaultSchema("volunteer_requests");
+        builder.HasDefaultSchema("PetFamily_VolunteerRequest");
 
         builder.ApplyConfigurationsFromAssembly(
             typeof(VolunteerRequestsWriteDbContext).Assembly,
-            type => type.FullName?.Contains("Configurations.Write") ?? false);
+            type => type.FullName?.Contains("Configuration.Write") ?? false);
     }
     private ILoggerFactory CreateLoggerFactory() =>
         LoggerFactory.Create(builder => { builder.AddConsole(); });

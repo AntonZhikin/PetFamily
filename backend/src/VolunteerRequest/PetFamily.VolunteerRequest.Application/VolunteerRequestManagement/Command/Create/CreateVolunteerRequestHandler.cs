@@ -2,6 +2,7 @@ using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PetFamily.Accounts.Contracts;
 using PetFamily.Core;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.Extensions;
@@ -18,18 +19,20 @@ public class CreateVolunteerRequestHandler :
     private readonly IValidator<CreateVolunteerRequestCommand> _validator;
     private readonly IVolunteerRequestsRepository _volunteerRequestsRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccountsContract _accountsContract;
     private readonly ILogger<CreateVolunteerRequestHandler> _logger;
 
     public CreateVolunteerRequestHandler(
         IValidator<CreateVolunteerRequestCommand> validator,
         IVolunteerRequestsRepository volunteerRequestsRepository,
         [FromKeyedServices(Modules.VolunteerRequests)] IUnitOfWork unitOfWork,
-        ILogger<CreateVolunteerRequestHandler> logger)
+        ILogger<CreateVolunteerRequestHandler> logger, IAccountsContract accountsContract)
     {
         _validator = validator;
         _volunteerRequestsRepository = volunteerRequestsRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _accountsContract = accountsContract;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
@@ -41,14 +44,19 @@ public class CreateVolunteerRequestHandler :
         if (validationResult.IsValid == false)
             return validationResult.ToErrorList();
         
+        var isUserBanned = await _accountsContract.IsUserBannedForVolunteerRequests(command.UserId, cancellationToken);
+        if (isUserBanned)
+            return Errors.Review.Failure("user is banned").ToErrorList();
+        
         var requestId = VolunteerRequestId.Create(Guid.NewGuid());
         
         var fullName = FullName.Create(
-            command.FullName.FirstName,
-            command.FullName.SecondName,
-            command.FullName.LastName).Value;
+            command.FullName.Name,
+            command.FullName.Surname,
+            command.FullName.SecondName).Value;
         
-        var volunteerInfo = VolunteerInfo.Create(command.VolunteerInfo).Value;
+        
+        var volunteerInfo = VolunteerInfo.Create(command.VolunteerInfo.Age).Value;
         
         var newVolunteerRequest = Domain.VolunteerRequest.Create(
             requestId,
