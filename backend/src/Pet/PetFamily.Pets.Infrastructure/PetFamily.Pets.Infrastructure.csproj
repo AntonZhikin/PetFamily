@@ -19,4 +19,13 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Migrations\WriteDbContextModelSnapshot.cs" />
+      <Compile Remove="Migrations\20250526104913_Initial.Designer.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>
