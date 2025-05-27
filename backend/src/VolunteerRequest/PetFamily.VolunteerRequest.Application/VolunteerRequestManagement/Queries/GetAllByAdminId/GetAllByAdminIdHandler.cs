@@ -33,7 +33,7 @@ public class GetAllByAdminIdHandler :
             return validationResult.ToErrorList();
         
         var requestsQuery = _readDbContext.VolunteerRequests.WhereIf(true,
-            x => x.Status == query.Status);
+            x => x.Status == query.Status).AsQueryable();
         
         requestsQuery = requestsQuery.WhereIf(
             !string.IsNullOrWhiteSpace(

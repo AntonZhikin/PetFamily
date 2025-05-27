@@ -8,6 +8,7 @@ using PetFamily.Accounts.Application.AccountManagement;
 using PetFamily.Accounts.Application.Models;
 using PetFamily.Accounts.Domain;
 using PetFamily.Accounts.Infrastructure.DbContexts;
+using PetFamily.Accounts.Infrastructure.IdentityManager;
 using PetFamily.Core;
 using PetFamily.Kernel;
 
@@ -17,10 +18,12 @@ public class JwtTokenProvider : ITokenProvider
 {
     private readonly JwtOptions _jwtOptions;
     private readonly WriteAccountsDbContext _accountsDbContext;
+    private readonly PermissionManager _permissionManager;
     
-    public JwtTokenProvider(IOptions<JwtOptions> options, WriteAccountsDbContext accountsDbContext)
+    public JwtTokenProvider(IOptions<JwtOptions> options, WriteAccountsDbContext accountsDbContext, PermissionManager permissionManager)
     {
         _accountsDbContext = accountsDbContext;
+        _permissionManager = permissionManager;
         _jwtOptions = options.Value;
     }
     
@@ -29,7 +32,13 @@ public class JwtTokenProvider : ITokenProvider
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         
-        var roleClaims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Name ?? string.Empty));
+        var roleClaims = user.Roles
+            .Select(r => new Claim(ClaimTypes.Role, r.Name ?? string.Empty));
+        
+        var permissions = await _permissionManager.GetUserPermissions(user.Id);
+        var permissionClaims = permissions
+            .Select(p => new Claim(CustomClaims.Permissions, p));
+        
         var jti = Guid.NewGuid();
         
         Claim[] claims =
@@ -41,6 +50,7 @@ public class JwtTokenProvider : ITokenProvider
 
         claims = claims
             .Concat(roleClaims)
+            .Concat(permissionClaims)
             .ToArray();
         
         var jwtToken = new JwtSecurityToken(

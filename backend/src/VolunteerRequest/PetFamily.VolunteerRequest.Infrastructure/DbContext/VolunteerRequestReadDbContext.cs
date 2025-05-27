@@ -33,7 +33,7 @@ public class VolunteerRequestsReadDbContext :
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.HasDefaultSchema("volunteer_requests");
+        builder.HasDefaultSchema("PetFamily_VolunteerRequest");
             
         builder.ApplyConfigurationsFromAssembly(
             typeof(VolunteerRequestsReadDbContext).Assembly,

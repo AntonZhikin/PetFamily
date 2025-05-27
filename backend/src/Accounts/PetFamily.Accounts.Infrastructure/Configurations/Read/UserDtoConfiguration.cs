@@ -14,15 +14,17 @@ public class UserDtoConfiguration : IEntityTypeConfiguration<UserDto>
         
         builder.Property(u => u.Email)
             .HasColumnName("email");
-        
+
         builder.HasOne(u => u.ParticipantAccount)
             .WithOne()
-            .HasForeignKey<ParticipantAccountDto>(p => p.UserId)
-            .IsRequired(false);
-        
+            .HasForeignKey<ParticipantAccountDto>(p => p.UserId);
+
         builder.HasOne(u => u.AdminAccount)
             .WithOne()
-            .HasForeignKey<AdminAccountDto>(p => p.UserId)
-            .IsRequired(false);
+            .HasForeignKey<AdminAccountDto>(p => p.UserId);
+        
+        builder.HasOne(u => u.VolunteerAccount)
+            .WithOne()
+            .HasForeignKey<VolunteerAccountDto>(v => v.UserId);
     }
 }

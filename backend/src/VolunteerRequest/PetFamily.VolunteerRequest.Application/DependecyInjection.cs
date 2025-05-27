@@ -30,7 +30,7 @@ public static class DependencyInjection
     {
         return services.Scan(scan => scan.FromAssemblies(typeof(DependencyInjection).Assembly)
             .AddClasses(classes => classes
-                .AssignableTo(typeof(IQueryHandler<,>)))
+                .AssignableToAny(typeof(IQueryHandler<,>), typeof(IQueryValidationHandler<,>)))
             .AsSelf()
             .WithScopedLifetime());
     }

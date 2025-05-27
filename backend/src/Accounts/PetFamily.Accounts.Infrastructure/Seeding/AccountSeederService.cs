@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetFamily.Accounts.Domain;
@@ -21,7 +22,7 @@ public class AccountSeederService(
 {
     private readonly AdminOptions _adminOptions = adminOptions.Value;
     
-    public async Task SeedAsync()
+    public async Task SeedAsync(CancellationToken cancellationToken = default)
     {
         var json = await File.ReadAllTextAsync("etc/accounts.json");
         
@@ -33,17 +34,22 @@ public class AccountSeederService(
         await SeedRoles(seedData);
 
         await SeedRolePermission(seedData);
+        
+        await SeedAdmin(cancellationToken);
         //
-        var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName) 
-                        ?? throw new ApplicationException("Invalid ADMIN");
+       
         
-        var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
-        await userManager.CreateAsync(adminUser, _adminOptions.Password);
-
-        var name = Name.Create(_adminOptions.UserName).Value;
-        var adminAccount = new AdminAccount(adminUser);
         
-        await accountsManagers.CreateAdminAccount(adminAccount);
+        // var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName) 
+        //                 ?? throw new ApplicationException("Invalid ADMIN");
+        //
+        // var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
+        // await userManager.CreateAsync(adminUser, _adminOptions.Password);
+        //
+        // var name = Name.Create(_adminOptions.UserName).Value;
+        // var adminAccount = new AdminAccount(adminUser);
+        //
+        // await accountsManagers.CreateAdminAccount(adminAccount);
     }   
     
     private async Task SeedRolePermission(RolePermissionConfig seedData)
@@ -83,5 +89,39 @@ public class AccountSeederService(
         await permissionManager.AddRangeIfExist(permissionsToAdd);
         
         logger.LogInformation("Permissions added to database.");
+    }
+    
+    private async Task SeedAdmin(CancellationToken cancellationToken)
+    {
+        /*var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName)
+                        ?? throw new ApplicationException("Role admin couldn't be found");
+        
+        var adminExist = await userManager.Users
+            .AnyAsync(u => u.UserName == AdminAccount.RoleName, cancellationToken);
+        if(adminExist) return;
+        
+        var adminUserResult = User.Create(
+            _adminOptions.UserName, _adminOptions.Email, adminRole);
+        if (adminUserResult.IsFailure) return;
+        
+        await userManager.CreateAsync(adminUserResult.Value, _adminOptions.Password);
+
+        var adminAccount = new AdminAccount(adminUserResult.Value);
+        await accountsManagers.CreateAdminAccount(adminAccount, cancellationToken);
+        adminUserResult.Value.AdminAccount = adminAccount;*/
+        
+        
+        var adminRole = await roleManager.FindByNameAsync(AdminAccount.RoleName) 
+                        ?? throw new ApplicationException("Invalid ADMIN");
+        
+        if (await accountsManagers.AnyAdminAccountExists(cancellationToken)) return;
+        
+        var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
+        
+        await userManager.CreateAsync(adminUser, _adminOptions.Password);
+        
+        var adminAccount = new AdminAccount(adminUser);
+        
+        await accountsManagers.CreateAdminAccount(adminAccount, cancellationToken);
     }
 }

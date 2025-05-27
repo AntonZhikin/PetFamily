@@ -24,7 +24,7 @@ public class VolunteerRequestConfiguration : IEntityTypeConfiguration<Domain.Vol
             g.IsRequired();
             g.Property(c => c.Name).HasColumnName("name");
             g.Property(c => c.Surname).HasColumnName("surname");
-            g.Property(c => c.SecondName).HasColumnName("secondName");
+            g.Property(c => c.SecondName).HasColumnName("second_name");
         });
         
         builder.ComplexProperty(v => v.VolunteerInfo, g =>

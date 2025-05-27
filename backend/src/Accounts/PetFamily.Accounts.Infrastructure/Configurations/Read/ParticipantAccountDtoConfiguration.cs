@@ -12,7 +12,10 @@ public class ParticipantAccountDtoConfiguration : IEntityTypeConfiguration<Parti
         
         builder.HasKey(v => v.PartisipantAccountId);
         
-        // builder.Property(v => v.UserId)
-        //     .HasColumnName("user_id");
+        builder.Property(x => x.PartisipantAccountId)
+            .HasColumnName("id");
+        
+        builder.Property(v => v.UserId)
+            .HasColumnName("user_id");
     }
 }

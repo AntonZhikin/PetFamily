@@ -26,11 +26,18 @@ public static class DependencyInjection
         services.AddDbContexts(configuration);
         services.AddAccountsSeeding();
         services.AddDatabase();
-        
+        services
+            .AddIdentity<User, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<WriteAccountsDbContext>()
+            .AddDefaultTokenProviders(); 
         services.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
         services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
+        
         services
             .AddAuthentication(options =>
             {
@@ -45,13 +52,6 @@ public static class DependencyInjection
                 
                 options.TokenValidationParameters = TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
             });
-        services
-            .AddIdentity<User, Role>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<WriteAccountsDbContext>()
-            .AddDefaultTokenProviders(); 
         
         services.AddIdentity();
         

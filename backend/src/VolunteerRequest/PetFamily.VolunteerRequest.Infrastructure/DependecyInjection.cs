@@ -32,6 +32,9 @@ public static class DependencyInjection
         
         services.AddScoped<VolunteerRequestsWriteDbContext>(_ => 
             new VolunteerRequestsWriteDbContext(configuration.GetConnectionString("Database")!));
+        
+        services.AddScoped<IVolunteerRequestsReadDbContext, VolunteerRequestsReadDbContext>(_ =>
+            new VolunteerRequestsReadDbContext(configuration.GetConnectionString("Database")!));
 
         return services;
     }

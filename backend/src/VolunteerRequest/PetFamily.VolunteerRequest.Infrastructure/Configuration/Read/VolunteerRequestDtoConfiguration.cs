@@ -26,17 +26,17 @@ public class VolunteerRequestDtoConfiguration :
         
         builder.Property(v=> v.Name)
             .HasConversion<string>()
-            .HasColumnName("first_name")
+            .HasColumnName("name")
             .IsRequired();
         
         builder.Property(v=> v.Surname)
             .HasConversion<string>()
-            .HasColumnName("second_name")
+            .HasColumnName("surname")
             .IsRequired();
-        
-        builder.Property(v=> v.SecondName)
+
+        builder.Property(v => v.SecondName)
             .HasConversion<string>()
-            .HasColumnName("last_name");
+            .HasColumnName("second_name");
         
         builder.Property(v=> v.Status)
             .HasConversion<string>()

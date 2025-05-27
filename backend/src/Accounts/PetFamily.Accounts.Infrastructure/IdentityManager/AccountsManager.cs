@@ -59,4 +59,8 @@ public class AccountsManagers(WriteAccountsDbContext writeAccountsDbContext) : I
     {
         await writeAccountsDbContext.ParticipantAccounts.AddAsync(participant);
     }
+    public async Task<bool> AnyAdminAccountExists(CancellationToken cancellationToken = default)
+    {
+        return await writeAccountsDbContext.AdminAccounts.AnyAsync(cancellationToken);
+    }
 }
