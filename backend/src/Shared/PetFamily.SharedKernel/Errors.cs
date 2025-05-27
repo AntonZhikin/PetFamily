@@ -28,6 +28,8 @@ public static class Errors
         {
             return Error.Failure("failure", "failure");
         }
+        
+        
     }
 
     public static class User
@@ -35,6 +37,14 @@ public static class Errors
         public static Error InvalidCredentials(string? name = null)
         {
             return Error.Validation("credentials.is.invalid", $"credentials is invalid");
+        }
+    }
+    
+    public static class Review
+    {
+        public static Error Failure(string? name = null)
+        {
+            return Error.Failure("failure", "failure");
         }
     }
     

@@ -1,6 +1,7 @@
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
 using PetFamily.Core.DTOs.Species;
+using PetFamily.Core.DTOs.Volunteer;
 
 namespace PetFamily.Pets.Application;
 

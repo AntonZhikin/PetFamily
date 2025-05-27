@@ -1,4 +1,5 @@
 using FluentAssertions;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.VolunteerRequest.Domain.ValueObject;
 
 namespace PetFamily.UnitTests;
@@ -11,14 +12,15 @@ public class VolunteerRequestTests
         // arrange
         var requestId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        var volunteerInfo = VolunteerInfo.Create("Test info").Value;
+        var volunteerInfo = VolunteerInfo.Create(1).Value;
+        var fullname = FullName.Create("13341", "14", "4231").Value;
 
         // act
-        var result = VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId, volunteerInfo);
+        var result = VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId, fullname, volunteerInfo);
 
         // assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Status.Should().Be(VolunteerRequestStatus.Create(Status.Submitted).Value);
+        result.Value.Status.Should().Be(RequestStatus.Submitted);
         result.Value.UserId.Should().Be(userId);
         result.Value.VolunteerInfo.Should().Be(volunteerInfo);
     }
@@ -31,11 +33,11 @@ public class VolunteerRequestTests
         var adminId = Guid.NewGuid();
 
         // act
-        request.TakeForReview(adminId);
+        request.TakeInReview(adminId);
 
         // assert
         request.AdminId.Should().Be(adminId);
-        request.Status.Should().Be(VolunteerRequestStatus.Create(Status.OnReview).Value);
+        request.Status.Should().Be(RequestStatus.OnReview);
     }
 
     [Fact]
@@ -52,7 +54,7 @@ public class VolunteerRequestTests
         // assert
         request.AdminId.Should().Be(adminId);
         request.RejectionComment.Should().Be(comment);
-        request.Status.Should().Be(VolunteerRequestStatus.Create(Status.RevisionRequired).Value);
+        request.Status.Should().Be(RequestStatus.RevisionRequired);
     }
 
     [Fact]
@@ -69,7 +71,7 @@ public class VolunteerRequestTests
         // assert
         request.AdminId.Should().Be(adminId);
         request.RejectionComment.Should().Be(comment);
-        request.Status.Should().Be(VolunteerRequestStatus.Create(Status.Rejected).Value);
+        request.Status.Should().Be(RequestStatus.Rejected);
     }
 
     [Fact]
@@ -78,7 +80,7 @@ public class VolunteerRequestTests
         // arrange
         var request = CreateSampleRequest();
         var adminId = Guid.NewGuid();
-        var comment = RejectionComment.Create("Well done").Value;
+        var comment = "Well done";
 
         // act
         request.SetApprovedStatus(adminId, comment);
@@ -86,14 +88,15 @@ public class VolunteerRequestTests
         // assert
         request.AdminId.Should().Be(adminId);
         request.RejectionComment.Should().Be(comment);
-        request.Status.Should().Be(VolunteerRequestStatus.Create(Status.Approved).Value);
+        request.Status.Should().Be(RequestStatus.Approved);
     }
 
     private VolunteerRequest.Domain.VolunteerRequest CreateSampleRequest()
     {
         var requestId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        var volunteerInfo = VolunteerInfo.Create("Some info").Value;
-        return VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId, volunteerInfo).Value;
+        var volunteerInfo = VolunteerInfo.Create(1).Value;
+        var fullname = FullName.Create("13341", "14", "4231").Value;
+        return VolunteerRequest.Domain.VolunteerRequest.Create(requestId, userId,fullname, volunteerInfo).Value;
     }
 }

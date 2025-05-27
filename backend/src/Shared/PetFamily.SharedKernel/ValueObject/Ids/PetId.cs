@@ -9,7 +9,7 @@ public class PetId : ComparableValueObject
         Value = value;
     }
     
-    public Guid Value { get; init; }
+    public Guid Value { get; }
 
     public static PetId NewPetId() => new(Guid.NewGuid());
 

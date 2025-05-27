@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
+using PetFamily.Core.DTOs.Volunteer;
 
 namespace PetFamily.Pets.Infrastructure.Configurations.Read;
 

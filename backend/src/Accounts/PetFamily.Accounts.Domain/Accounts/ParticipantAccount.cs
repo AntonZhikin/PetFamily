@@ -17,6 +17,9 @@ public class ParticipantAccount
         User = user;
         UserId = user.Id;
     }
+    public DateTime? BannedForRequestsUntil { get; set; }
+    public void BanForRequestsForWeek(DateTime date) =>
+        BannedForRequestsUntil = date;
     
     public Guid UserId { get; set; }
     public User User { get; set; }

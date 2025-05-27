@@ -11,9 +11,12 @@ public class AdminAccountDtoConfiguration : IEntityTypeConfiguration<AdminAccoun
     {
         builder.ToTable("admin_accounts");
         
-        builder.HasKey(v => v.Id);
+        builder.HasKey(v => v.AdminAccountId);
         
-        // builder.Property(v => v.UserId)
-        //     .HasColumnName("user_id");
+        builder.Property(x => x.AdminAccountId)
+            .HasColumnName("id");
+        
+        builder.Property(v => v.UserId)
+            .HasColumnName("user_id");
     }
 }

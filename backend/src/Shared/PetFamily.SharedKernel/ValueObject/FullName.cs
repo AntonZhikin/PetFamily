@@ -8,10 +8,10 @@ public record FullName
     private FullName() { }
     
     public string Name { get; }
-    public string Surname { get; }
+    public string Surname { get; } 
     public string SecondName { get; }
 
-    private FullName(string name, string surname, string secondName)
+    public FullName(string name, string surname, string secondName)
     {
         Name = name;
         Surname = surname;

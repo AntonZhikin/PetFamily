@@ -24,6 +24,17 @@ public class AccountsManagers(WriteAccountsDbContext writeAccountsDbContext) : I
         writeAccountsDbContext.ParticipantAccounts.Add(participantAccount);
         await writeAccountsDbContext.SaveChangesAsync(cancellationToken);
     }
+    
+    public async Task<UnitResult<Error>> CreateVolunteerAccount(
+        VolunteerAccount volunteerAccount, CancellationToken cancellationToken)
+    {
+        writeAccountsDbContext.VolunteerAccounts.Add(volunteerAccount);
+        var result = await writeAccountsDbContext.SaveChangesAsync(cancellationToken);
+        
+        return result <= 0 ?
+            Errors.General.ValueIsInvalid("could.not.create.volunteer_account") :
+            Result.Success<Error>();
+    }
 
     public async Task<Result<Role, Error>> GetRole(RoleName roleName)
     {
@@ -47,5 +58,9 @@ public class AccountsManagers(WriteAccountsDbContext writeAccountsDbContext) : I
     public async Task AddParticipant(ParticipantAccount participant)
     {
         await writeAccountsDbContext.ParticipantAccounts.AddAsync(participant);
+    }
+    public async Task<bool> AnyAdminAccountExists(CancellationToken cancellationToken = default)
+    {
+        return await writeAccountsDbContext.AdminAccounts.AnyAsync(cancellationToken);
     }
 }

@@ -1,78 +1,101 @@
 using CSharpFunctionalExtensions;
-using PetFamily.Core.RolesPermissions;
 using PetFamily.Kernel;
+using PetFamily.Kernel.BaseClasses;
+using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.VolunteerRequest.Domain.ValueObject;
 
 namespace PetFamily.VolunteerRequest.Domain;
 
-public class VolunteerRequest
+public class VolunteerRequest : SoftDeletableEntity<VolunteerRequestId>
 {
-    //efcore
-    private VolunteerRequest() { }
-
-    private VolunteerRequest(
-        VolunteerRequestId id,
-        Guid userId,
-        VolunteerInfo volunteerInfo)
-    {
-        UserId = userId;
-        VolunteerInfo = volunteerInfo;
-        Status = VolunteerRequestStatus.Create(ValueObject.Status.Submitted).Value;
-    }
+    private VolunteerRequest(VolunteerRequestId id) : base(id) { }
     
-    public Guid VolunteerRequestId { get; private set; }
-    
-    public Guid AdminId { get; private set; }
-    
+    public Guid? AdminId { get; private set; }
     public Guid UserId { get; private set; }
     
     public Guid DiscussionId { get; private set; }
-    
     public VolunteerInfo VolunteerInfo { get; private set; }
+    public FullName FullName { get; private set; }
+    public RejectionComment? RejectionComment { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public RequestStatus Status { get; private set; }
+    public VolunteerRequest(
+        VolunteerRequestId id,
+        Guid userId,
+        FullName fullName,
+        VolunteerInfo volunteerInfo) : base(id)
+    {
+        Id = id;
+        UserId = userId;
+        FullName = fullName;
+        VolunteerInfo = volunteerInfo;
+        Status = RequestStatus.Submitted;
+    }
     
-    public RejectionComment RejectionComment { get; private set; }
-    
-    public DateTime CreatedOn { get; private set; }
-    
-    public VolunteerRequestStatus Status { get; private set; }
-    
-    // Methods
+    private VolunteerRequest(
+        VolunteerRequestId id,
+        Guid userId,
+        FullName fullName,
+        VolunteerInfo volunteerInfo,
+        RejectionComment rejectionComment,
+        Guid adminId,
+        Guid discussionId) : base(id)
+    {
+        Id = id;
+        UserId = userId;
+        FullName = fullName;
+        VolunteerInfo = volunteerInfo;
+        Status = RequestStatus.Submitted;
+        RejectionComment = rejectionComment;
+        CreatedAt = DateTime.UtcNow;
+        AdminId = adminId;
+        DiscussionId = discussionId;
+    }
 
+    
     public static Result<VolunteerRequest, Error> Create(
         VolunteerRequestId requestId, 
         Guid userId, 
+        FullName fullName,
         VolunteerInfo volunteerInfo)
     {
-        var request = new VolunteerRequest(requestId, userId, volunteerInfo);
+        var request = new VolunteerRequest(requestId, userId, fullName, volunteerInfo);
         
         return request;
     }
 
-    public void TakeForReview(Guid adminId)
+    public void TakeInReview(Guid adminId)
     {
         AdminId = adminId;
-        Status = VolunteerRequestStatus.Create(ValueObject.Status.OnReview).Value;
+        Status = RequestStatus.OnReview;
     }
     
-    public void SetRevisionRequiredStatus(Guid adminId, RejectionComment rejectionComment)
+    public void SetRevisionRequiredStatus(
+        Guid adminId,
+        RejectionComment rejectedComment)
     {
-        AdminId = adminId;
-        RejectionComment = rejectionComment;
-        Status = VolunteerRequestStatus.Create(ValueObject.Status.RevisionRequired).Value;
+        Status = RequestStatus.RevisionRequired;
+        RejectionComment = rejectedComment;
     }
 
-    public void SetRejectStatus(Guid adminId,RejectionComment rejectionComment)
+    public void SetApprovedStatus(Guid adminId, string comment)
     {
-        AdminId = adminId;
-        RejectionComment = rejectionComment;
-        Status = VolunteerRequestStatus.Create(ValueObject.Status.Rejected).Value;
+        Status = RequestStatus.Approved;
+        RejectionComment = null;
     }
     
-    public void SetApprovedStatus(Guid adminId,RejectionComment rejectionComment)
+    public void SetRejectStatus(
+        Guid adminId,
+        RejectionComment rejectedComment)
     {
-        AdminId = adminId;
-        RejectionComment = rejectionComment;
-        Status = VolunteerRequestStatus.Create(ValueObject.Status.Approved).Value;
+        Status = RequestStatus.Rejected;
+        RejectionComment = rejectedComment;
+    }
+    
+    public void Refresh(
+        Guid adminId, string message)
+    {
+        Status = RequestStatus.Submitted;
     }
 }

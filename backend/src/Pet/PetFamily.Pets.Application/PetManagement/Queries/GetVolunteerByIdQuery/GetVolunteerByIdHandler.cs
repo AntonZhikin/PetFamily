@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
+using PetFamily.Core.DTOs.Volunteer;
 
 namespace PetFamily.Pets.Application.PetManagement.Queries.GetVolunteerByIdQuery;
 

@@ -5,18 +5,20 @@ namespace PetFamily.VolunteerRequest.Domain.ValueObject;
 
 public record VolunteerInfo
 {
-    public string Value { get; }
+    public const string DB_COLUMN_AGE = "age";
+    private VolunteerInfo() { }
+    public int Age { get; }
 
-    public VolunteerInfo(string value)
+    private VolunteerInfo(int age)
     {
-        Value = value;
+        Age = age;
     }
 
-    public static Result<VolunteerInfo, Error> Create(string value)
+    public static Result<VolunteerInfo, Error> Create(int age)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(age.ToString()))
             return Errors.General.ValueIsInvalid("VolunteerInfo");
         
-        return new VolunteerInfo(value);
+        return new VolunteerInfo(age);
     }
 }

@@ -1,30 +1,97 @@
 {
-  "Permissions": {
-    "Volunteer": [
-      "volunteer.create",
-      "volunteer.get",
-      "volunteer.update",
-      "volunteer.delete"
-    ]
-  },
   "Roles": {
     "Admin": [
-      "volunteer.create",
-      "volunteer.get",
-      "volunteer.update",
-      "volunteer.delete"
-    ],
-    "Participant": [
-      "volunteer.create",
-      "volunteer.get",
-      "volunteer.update",
-      "volunteer.delete"
+      "accounts.read",
+      "accounts.update",
+      "request.review",
+      "request.create",
+      "request.read",
+      "request.update",
+      "request.delete",
+      "discussions.update",
+      "discussions.read",
+      "volunteers.create",
+      "volunteers.read",
+      "volunteers.update",
+      "volunteers.delete",
+      "pets.read",
+      "species.create",
+      "species.read",
+      "species.update",
+      "species.delete",
+      "breeds.create",
+      "breeds.read",
+      "breeds.update",
+      "breeds.delete",
+      "files.read",
+      "files.upload",
+      "files.delete"
     ],
     "Volunteer": [
-      "volunteer.create",
-      "volunteer.get",
-      "volunteer.update",
-      "volunteer.delete"
+      "volunteers.read",
+      "volunteers.update",
+      "pets.read",
+      "species.read",
+      "breeds.read",
+      "files.read",
+      "files.upload",
+      "files.delete"
+    ],
+    "Participant": [
+      "request.create",
+      "request.read",
+      "request.update",
+      "discussions.update",
+      "discussions.read",
+      "volunteers.read",
+      "pets.read",
+      "species.read",
+      "breeds.read",
+      "files.read",
+      "files.upload"
+    ]
+  },
+  "Permissions": {
+    "Accounts": [
+      "accounts.read",
+      "accounts.update"
+    ],
+    "VolunteerRequests": [
+      "request.create",
+      "request.review",
+      "request.read",
+      "request.update",
+      "request.delete"
+    ],
+    "Discussions": [
+      "discussions.update",
+      "discussions.read"
+    ],
+    "Volunteers": [
+      "volunteers.create",
+      "volunteers.read",
+      "volunteers.update",
+      "volunteers.delete"
+    ],
+    "Pets": [
+      "pets.read"
+    ],
+    "Species": [
+      "species.create",
+      "species.read",
+      "species.update",
+      "species.delete"
+    ],
+    "Breeds": [
+      "breeds.create",
+      "breeds.read",
+      "breeds.update",
+      "breeds.delete"
+    ],
+    "Files": [
+      "files.read",
+      "files.upload",
+      "files.delete"
     ]
   }
 }

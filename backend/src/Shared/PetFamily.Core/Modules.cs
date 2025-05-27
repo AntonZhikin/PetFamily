@@ -4,5 +4,6 @@ public enum Modules
 {
     Pets,
     Specie,
-    Accounts
+    Accounts,
+    VolunteerRequests
 }

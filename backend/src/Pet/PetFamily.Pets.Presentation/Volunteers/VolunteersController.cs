@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetFamily.Framework;
+using PetFamily.Framework.Authorization;
 using PetFamily.Kernel.ValueObject;
 using PetFamily.Pets.Application.PetManagement.Commands.AddPet;
 using PetFamily.Pets.Application.PetManagement.Commands.Create;
@@ -25,6 +26,7 @@ using PetFamily.Pets.Controllers.Volunteers.Request;
 
 namespace PetFamily.Pets.Controllers.Volunteers;
 
+[Authorize]
 public class  VolunteersController : ApplicationController
 {
     [HttpGet("volunteer-by-id")]
@@ -40,7 +42,7 @@ public class  VolunteersController : ApplicationController
         return Ok(response);
     }
 
-    
+    [Permission(PermissionsConfig.Volunteers.Read)]
     [HttpGet]
     public async Task<ActionResult> Get(
         [FromQuery] GetVolunteersWithPaginationRequest request,
@@ -83,38 +85,6 @@ public class  VolunteersController : ApplicationController
 
         return Ok(result.Value);
     }
-    
-    /*[Authorize]
-    [HttpPut("{id:guid}/social-networks")]
-    public async Task<ActionResult> UpdateSocialNetwork(
-        [FromRoute] Guid id,
-        [FromServices] UpdateSocialNetworkHandler handler,
-        [FromBody] UpdateSocialNetworkRequest request,
-        [FromServices] IValidator<UpdateSocialNetworkCommand> validator,
-        CancellationToken cancellationToken)
-    {
-        var result = await handler.Handle(request.ToCommand(id), cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
-
-        return Ok(result.Value);
-    }*/
-    
-    /*[Authorize]
-    [HttpPut("{id:guid}/assistance-detail")]
-    public async Task<ActionResult> UpdateAssistanceDetail(
-        [FromRoute] Guid id,
-        [FromServices] UpdateAssistanceDetailHandler handler,
-        [FromBody] UpdateAssistanceDetailRequest request,
-        [FromServices] IValidator<UpdateAssistanceDetailCommand> validator,
-        CancellationToken cancellationToken)
-    {
-        var result = await handler.Handle(request.ToCommand(id), cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
-
-        return Ok(result.Value);
-    }*/
     
     [Authorize]
     [HttpDelete("{id:guid}/soft-delete")]

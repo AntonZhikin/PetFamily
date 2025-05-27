@@ -12,6 +12,7 @@ public class VolunteerAccount
     private VolunteerAccount(){}
     public VolunteerAccount(User user)
     {
+        Id = Guid.NewGuid();
         User = user;
         UserId = user.Id;
     }

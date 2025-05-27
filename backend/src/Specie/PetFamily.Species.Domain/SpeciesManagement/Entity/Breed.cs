@@ -1,5 +1,6 @@
 using PetFamily.Core.Abstractions;
 using PetFamily.Kernel;
+using PetFamily.Kernel.BaseClasses;
 using PetFamily.Kernel.ValueObject;
 using PetFamily.Kernel.ValueObject.Ids;
 using PetFamily.Species.Domain.SpeciesManagement.AggregateRoot;

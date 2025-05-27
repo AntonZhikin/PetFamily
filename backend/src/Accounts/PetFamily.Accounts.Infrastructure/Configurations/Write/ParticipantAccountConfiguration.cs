@@ -15,5 +15,8 @@ public class ParticipantAccountConfiguration : IEntityTypeConfiguration<Particip
         // builder.HasOne(a => a.User)
         //     .WithOne()
         //     .HasForeignKey<ParticipantAccount>(a => a.UserId);
+        builder.Property(n => n.BannedForRequestsUntil)
+            .IsRequired(false)
+            .HasColumnName("banned_for_requests_until");
     }
 }
