@@ -1,6 +1,6 @@
 namespace PetFamily.Disscusion.Domain;
 
-public enum DisscusionStatus
+public enum DiscussionStatus
 {
     Open,
     Closed

@@ -60,16 +60,25 @@ public static class Errors
         }
     }
 
-    public static class Disscusion
+    public static class Discussion
     {
-        public static Error ClosedDissusion()
+        public static Error ClosedDiscussion()
         {
             return Error.Failure("disscusion", "this disscusion is closed");
         }
 
-        public static Error UserNotInDisscusion()
+        public static Error UserNotInDiscussion()
         {
             return Error.Failure("disscusion", "user not found of this disscusion");
+        }
+        
+        public static Error AlreadyClosed()
+        {
+            return Error.Failure("disscusion", "already clodes");
+        }
+        public static Error NotCreated()
+        {
+            return Error.Failure("disscusion", "disscusion not created");
         }
     }
 }
