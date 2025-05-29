@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PetFamily.Disscusion.Domain.AggregateRoot;
 
 namespace PetFamily.Disscusion.Infrastructure.DbContext;
 
@@ -7,7 +8,7 @@ public class DiscussionsWriteDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     private readonly string _connectionString;
     
-    public DbSet<Domain.AggregateRoot.Discussion> Discussions => Set<Domain.AggregateRoot.Discussion>();
+    public DbSet<Domain.AggregateRoot.Discussion> Discussions => Set<Discussion>();
     
     public DiscussionsWriteDbContext(string connectionString)
     {

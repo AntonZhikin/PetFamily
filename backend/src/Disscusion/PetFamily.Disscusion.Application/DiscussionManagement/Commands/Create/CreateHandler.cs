@@ -31,7 +31,7 @@ public class CreateHandler : ICommandHandler<Guid, CreateCommand>
     }
     public async Task<Result<Guid, ErrorList>> Handle(CreateCommand command, CancellationToken cancellationToken)
     {
-        var transaction =  await _unitOfWork.BeginTransaction(cancellationToken);
+        using var transaction =  await _unitOfWork.BeginTransaction(cancellationToken);
         
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
         if (validationResult.IsValid == false)
