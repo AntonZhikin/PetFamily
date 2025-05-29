@@ -6,6 +6,9 @@ using PetFamily.Accounts.Infrastructure;
 using PetFamily.Accounts.Infrastructure.DbContexts;
 using PetFamily.Accounts.Infrastructure.Seeding;
 using PetFamily.Accounts.Presentation;
+using PetFamily.Disscusion.Application;
+using PetFamily.Disscusion.Infrastructure;
+using PetFamily.Disscusion.Presentation;
 using PetFamily.Pets.Application;
 using PetFamily.Pets.Controllers.Volunteers;
 using PetFamily.Pets.Infrastructure;
@@ -83,13 +86,18 @@ builder.Services
     .AddAccountsInfrastructure(builder.Configuration)
 
     .AddVolunteerRequestApplication()
-    .AddVolunteerRequestsInfrastructure(builder.Configuration);
+    .AddVolunteerRequestsInfrastructure(builder.Configuration)
+
+    .AddDiscussionApplication()
+    .AddDiscussionsInfrastructure(builder.Configuration)
+    .AddDiscussionPresentation();
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(VolunteersController).Assembly)
     .AddApplicationPart(typeof(SpeciesController).Assembly)
     .AddApplicationPart(typeof(AccountsController).Assembly)
-    .AddApplicationPart(typeof(VolunteerRequestsController).Assembly);
+    .AddApplicationPart(typeof(VolunteerRequestsController).Assembly)
+    .AddApplicationPart(typeof(DiscussionsController).Assembly);
 
 var app = builder.Build();
 
