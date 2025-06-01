@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Disscusion.Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Disscusion.Presentation", "src\Disscusion\PetFamily.Disscusion.Presentation\PetFamily.Disscusion.Presentation.csproj", "{87953FC1-0885-4CFF-8AC3-E0A8FFACE2CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesService", "FilesService\FilesService.csproj", "{55919144-A56D-4BD8-8AC3-85A1B9D61678}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{87953FC1-0885-4CFF-8AC3-E0A8FFACE2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87953FC1-0885-4CFF-8AC3-E0A8FFACE2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87953FC1-0885-4CFF-8AC3-E0A8FFACE2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55919144-A56D-4BD8-8AC3-85A1B9D61678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55919144-A56D-4BD8-8AC3-85A1B9D61678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55919144-A56D-4BD8-8AC3-85A1B9D61678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55919144-A56D-4BD8-8AC3-85A1B9D61678}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1769FCB4-0FAF-4820-AF56-C1F3F05A456E} = {0F3E2943-A69F-4693-A0E4-EDBDD853F1AC}
