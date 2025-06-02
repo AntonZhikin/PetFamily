@@ -82,9 +82,9 @@ public class Pet : SoftDeletableEntity<PetId>
     
     public RequisiteList Requisites { get; private set;}
     public DateTime DateCreate { get; private set;}
-    public IReadOnlyList<PetPhoto> Photos => _photos;
-
-    private List<PetPhoto> _photos = [];
+    
+    public MediaFile? Avatar { get; private set; }
+    public IReadOnlyList<MediaFile> Photos { get; private set; } = null!;
     
     public void UpdatePhotos(List<PetPhoto> photos)
     {

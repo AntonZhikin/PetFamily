@@ -17,12 +17,6 @@ public class PetDtoConfiguration : IEntityTypeConfiguration<PetDto>
 
         builder.HasKey(p => p.Id);
 
-        builder.Property(i => i.Photos)
-            .HasConversion(
-                photos => JsonSerializer.Serialize(string.Empty, JsonSerializerOptions.Default),
-                json => JsonSerializer
-                    .Deserialize<PetPhotoDto[]>(json, JsonSerializerOptions.Default)!);
-
         builder.ComplexProperty(c => c.Address, b =>
         {
             b.IsRequired();
@@ -42,9 +36,44 @@ public class PetDtoConfiguration : IEntityTypeConfiguration<PetDto>
                 .HasColumnName("breed_id");
         });
         
+        builder.Ignore(p => p.AvatarUrl);
+            
+        builder.OwnsOne(p => p.Avatar, ab =>
+        {
+            ab.ToJson("avatar");
+                
+            ab.Property(a => a.FileKey)
+                .IsRequired()
+                .HasColumnName("key");
+
+            ab.Property(a => a.FileType)
+                .HasConversion<string>()
+                .IsRequired()
+                .HasColumnName("type");
+                
+            ab.Property(a => a.BucketName)
+                .IsRequired()
+                .HasColumnName("bucket_name");
+
+            ab.Property(a => a.FileName)
+                .IsRequired()
+                .HasColumnName("file_name");
+
+            ab.Property(p => p.IsMain)
+                .IsRequired(false)
+                .HasColumnName("is_main");
+        });
+            
+        builder.Ignore(p => p.PhotosUrls);
+
+        builder.Property(p => p.Photos)
+            .HasConversion(
+                photos => JsonSerializer
+                    .Serialize(photos, JsonSerializerOptions.Default),
+
+                json => JsonSerializer
+                    .Deserialize<IReadOnlyList<MediaFileDto>>(
+                        json, JsonSerializerOptions.Default)!);
         
-        // builder.Property(c => c.Position)
-        //     .IsRequired()
-        //     .HasColumnName("position");
     }
 }

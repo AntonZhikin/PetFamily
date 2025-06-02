@@ -15,11 +15,16 @@ public class PetDto
     public float Height { get; init; }
     public string PhoneNumber { get; init; } = string.Empty;
     public bool IsNeutered { get; init; } 
+    
     public DateTime DateOfBirth { get; init; }
     public bool IsVaccine { get; init; } 
+    
     public HelpStatus HelpStatus { get; init; }
+    
     public DateTime DateCreate { get; init; }
     public SpeciesBreedDto SpeciesBreedDto { get; init; }
-    public PetPhotoDto[] Photos { get; init; } = [];
-
+    public string AvatarUrl { get; set; } = string.Empty;
+    public MediaFileDto? Avatar { get; init; }
+    public IReadOnlyList<string> PhotosUrls { get; set; } = [];
+    public IReadOnlyList<MediaFileDto> Photos { get; set; } = [];
 }
