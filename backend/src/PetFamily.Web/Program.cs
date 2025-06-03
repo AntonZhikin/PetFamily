@@ -1,3 +1,4 @@
+using FilesService.Communication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -73,6 +74,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSerilog();
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddFileHttpCommunication(builder.Configuration);
 
 builder.Services
     .AddPetsApplication()

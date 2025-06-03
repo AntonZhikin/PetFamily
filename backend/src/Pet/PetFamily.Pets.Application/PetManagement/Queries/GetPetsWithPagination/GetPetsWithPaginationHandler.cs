@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using FilesService.Communication;
+using FilesService.Contract;
 using PetFamily.Core.Abstractions;
 using PetFamily.Core.DTOs;
 using PetFamily.Core.DTOs.Pets;
@@ -10,13 +12,15 @@ namespace PetFamily.Pets.Application.PetManagement.Queries.GetPetsWithPagination
 public class GetPetsWithPaginationHandler : IQueryHandler<PagedList<PetDto>, GetPetsWithPaginationQuery>
 {
     private readonly IReadDbContext _readDbContext;
+    private readonly FileHttpClient _httpClient;
 
-    public GetPetsWithPaginationHandler(IReadDbContext readDbContext)
+    public GetPetsWithPaginationHandler(IReadDbContext readDbContext, FileHttpClient httpClient)
     {
         _readDbContext = readDbContext;
+        _httpClient = httpClient;
     }
     
-    public Task<PagedList<PetDto>> Handle(GetPetsWithPaginationQuery query, 
+    public async Task<PagedList<PetDto>> Handle(GetPetsWithPaginationQuery query, 
         CancellationToken cancellationToken = default)
     {
         var petQuery = _readDbContext.Pets.AsQueryable();
@@ -60,7 +64,31 @@ public class GetPetsWithPaginationHandler : IQueryHandler<PagedList<PetDto>, Get
             !string.IsNullOrEmpty(query.Color),
             p => p.Color == query.Color);
         
-        return petQuery
+        var result =  await petQuery
             .ToPagedList(query.Page, query.PageSize, cancellationToken);
+        
+        /*foreach (var petDto in result.Items)
+        {
+            var getAvatarUrlResult = await _httpClient.GetFilesPresignedUrls(
+                petDto.Avatar.FileName,
+                new GetFilesPresignedUrlsRequest(petDto.Avatar.BucketName),
+                cancellationToken);
+            if (getAvatarUrlResult.IsSuccess)
+                petDto.AvatarUrl = getAvatarUrlResult.Value.Url;
+        
+            List<string> photosUrls = [];
+            foreach (var photo in petDto.Photos)
+            {
+                var getPresignedPhotoUrlRequest = new GetPresignedUrlRequest(Constants.BUCKET_NAME_PHOTOS);
+                var getPhotoUrlResult = await _httpClient.GetPresignedUrl(
+                    photo.FileName,
+                    getPresignedPhotoUrlRequest,
+                    cancellationToken);
+                if(getPhotoUrlResult.IsSuccess)
+                    photosUrls.Add(getPhotoUrlResult.Value.Url);
+            }
+            petDto.PhotosUrls = photosUrls;
+        }*/
+        return result;
     }
 }
